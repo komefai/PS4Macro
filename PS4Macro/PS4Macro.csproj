@@ -36,8 +36,8 @@
       <HintPath>..\packages\EasyHook.2.7.6270\lib\net40\EasyHook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PS4RemotePlayInterceptor, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PS4RemotePlayInterceptor.0.1.0\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
+    <Reference Include="PS4RemotePlayInterceptor, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PS4RemotePlayInterceptor.0.1.2\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

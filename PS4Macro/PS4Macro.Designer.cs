@@ -33,6 +33,9 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.recordButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.urlToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // playButton
@@ -85,19 +88,44 @@
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.urlToolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 46);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(284, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 5;
+            // 
+            // urlToolStripStatusLabel
+            // 
+            this.urlToolStripStatusLabel.IsLink = true;
+            this.urlToolStripStatusLabel.Name = "urlToolStripStatusLabel";
+            this.urlToolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
+            this.urlToolStripStatusLabel.Text = "http://komefai.com";
+            this.urlToolStripStatusLabel.Click += new System.EventHandler(this.urlToolStripStatusLabel_Click);
+            // 
             // PS4Macro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 47);
+            this.ClientSize = new System.Drawing.Size(284, 68);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.recordButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(this.playButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "PS4Macro";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PS4 Macro";
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -108,6 +136,8 @@
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button recordButton;
         private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel urlToolStripStatusLabel;
     }
 }
 

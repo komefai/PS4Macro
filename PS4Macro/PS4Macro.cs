@@ -84,5 +84,10 @@ namespace PS4Macro
             m_MacroPlayer.Clear();
             UpdateButtons();
         }
+
+        private void urlToolStripStatusLabel_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://komefai.com");
+        }
     }
 }
