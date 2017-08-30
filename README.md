@@ -13,6 +13,14 @@ Automation utility for PS4 Remote Play written in C#.
 - Status Indicators
 - ...
 
+#### Troubleshoot
+
+Reinstall NuGet Package
+
+```
+Update-Package –reinstall PS4RemotePlayInterceptor
+```
+
 #### Resources
 
 - [PS4RemotePlayInterceptor](https://github.com/komefai/PS4RemotePlayInterceptor)
