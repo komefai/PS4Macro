@@ -8,7 +8,9 @@ Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterce
 
 ## Usage
 
-You must have DualShock 4 controller plugged in via USB with PS4 Remote Play running. 
+**Download latest version [here](https://github.com/komefai/PS4Macro/releases)!**
+
+⚠️ You must have DualShock 4 controller plugged in via USB with PS4 Remote Play running. 
 
 To record, click on record button to arm recording then press play to start recording controls. To stop recording, click on record button to unarm. The macro will then play the controls in a loop.
 
