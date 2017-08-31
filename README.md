@@ -11,6 +11,7 @@ Automation utility for PS4 Remote Play written in C#.
 - Save/Load
 - Playback Timeline UI
 - Status Indicators
+- Scripting
 - ...
 
 #### Troubleshoot
