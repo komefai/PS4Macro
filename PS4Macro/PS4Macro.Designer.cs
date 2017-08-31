@@ -121,7 +121,7 @@
             this.MaximizeBox = false;
             this.Name = "PS4Macro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PS4 Macro";
+            this.Text = "PS4 Macro - v0.1";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);

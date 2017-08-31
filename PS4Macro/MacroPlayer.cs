@@ -35,7 +35,7 @@ namespace PS4Macro
         public bool IsPlaying { get; private set; }
         public bool IsRecording { get; private set; }
         public int CurrentTick { get; private set; }
-        public List<DualshockState> Sequence { get; private set; }
+        public List<DualShockState> Sequence { get; private set; }
 
         /* Constructor */
         public MacroPlayer()
@@ -43,7 +43,7 @@ namespace PS4Macro
             IsPlaying = false;
             IsRecording = false;
             CurrentTick = 0;
-            Sequence = new List<DualshockState>();
+            Sequence = new List<DualShockState>();
         }
 
 
@@ -70,10 +70,10 @@ namespace PS4Macro
 
         public void Clear()
         {
-            Sequence = new List<DualshockState>();
+            Sequence = new List<DualShockState>();
         }
 
-        public void OnReceiveData(ref DualshockState state)
+        public void OnReceiveData(ref DualShockState state)
         {
             if (IsPlaying)
             {
