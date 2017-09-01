@@ -1,10 +1,10 @@
-# PS4 Macro
+﻿# PS4 Macro
 
 Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterceptor](https://github.com/komefai/PS4RemotePlayInterceptor).
 
 #### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/Screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot.png)
 
 ## Usage
 
