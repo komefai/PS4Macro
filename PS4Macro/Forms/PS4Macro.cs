@@ -58,6 +58,26 @@ namespace PS4Macro
 
         /* Macro Player */
         #region MacroPlayer_PropertyChanged
+        private void UpdateCurrentTick()
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                // Invalid sequence
+                if (m_MacroPlayer.Sequence == null || m_MacroPlayer.Sequence.Count <= 0)
+                {
+                    currentTickToolStripStatusLabel.Text = "-";
+                }
+                // Valid sequence
+                else
+                {
+                    currentTickToolStripStatusLabel.Text = string.Format("{0}/{1}",
+                        m_MacroPlayer.CurrentTick.ToString(),
+                        m_MacroPlayer.Sequence.Count.ToString()
+                    );
+                }
+            });
+        }
+
         private void MacroPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -77,20 +97,13 @@ namespace PS4Macro
 
                 case "CurrentTick":
                     {
-                        BeginInvoke((MethodInvoker)delegate
-                        {
-                            currentTickToolStripStatusLabel.Text = string.Format("{0}/{1}",
-                                m_MacroPlayer.CurrentTick.ToString(),
-                                m_MacroPlayer.Sequence == null ? "?" : m_MacroPlayer.Sequence.Count.ToString()
-                            );
-                        });
+                        UpdateCurrentTick();
                         break;
                     }
 
                 case "Sequence":
                     {
-                        if (m_MacroPlayer.Sequence == null || m_MacroPlayer.Sequence.Count <= 0)
-                            currentTickToolStripStatusLabel.Text = "-";
+                        UpdateCurrentTick();
                         break;
                     }
             }
