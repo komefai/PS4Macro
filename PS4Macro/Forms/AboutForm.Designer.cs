@@ -1,4 +1,4 @@
-﻿namespace PS4Macro
+﻿namespace PS4Macro.Forms
 {
     partial class AboutForm
     {

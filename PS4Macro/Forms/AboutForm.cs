@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PS4Macro
+namespace PS4Macro.Forms
 {
     public partial class AboutForm : Form
     {

@@ -29,7 +29,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace PS4Macro
+namespace PS4Macro.Classes
 {
     public class MacroPlayer : INotifyPropertyChanged
     {

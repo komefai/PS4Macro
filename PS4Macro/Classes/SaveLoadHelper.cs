@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PS4Macro
+namespace PS4Macro.Classes
 {
     public class SaveLoadHelper : INotifyPropertyChanged
     {
