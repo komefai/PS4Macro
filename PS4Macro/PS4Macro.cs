@@ -119,6 +119,8 @@ namespace PS4Macro
 
         /* Menu strip methods */
         #region Menu Strip
+
+        #region File
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Clear();
@@ -144,6 +146,30 @@ namespace PS4Macro
         {
             Application.Exit();
         }
+        #endregion
+
+        #region Playback
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Play();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Pause();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Stop();
+        }
+
+        private void recordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Record();
+        }
+        #endregion
+
         #endregion
 
         /* Status strip methods */
