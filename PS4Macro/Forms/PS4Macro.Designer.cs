@@ -101,7 +101,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(216, 33);
+            this.clearButton.Location = new System.Drawing.Point(246, 33);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(56, 23);
             this.clearButton.TabIndex = 4;
@@ -117,7 +117,7 @@
             this.currentTickToolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 67);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(284, 22);
+            this.statusStrip.Size = new System.Drawing.Size(314, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 5;
             // 
@@ -132,7 +132,7 @@
             // separatorToolStripStatusLabel
             // 
             this.separatorToolStripStatusLabel.Name = "separatorToolStripStatusLabel";
-            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(145, 17);
+            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(175, 17);
             this.separatorToolStripStatusLabel.Spring = true;
             // 
             // currentTickToolStripStatusLabel
@@ -149,7 +149,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip.Size = new System.Drawing.Size(314, 24);
             this.menuStrip.TabIndex = 6;
             // 
             // fileToolStripMenuItem
@@ -267,7 +267,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -276,14 +276,14 @@
             this.statusHighlightLabel.BackColor = System.Drawing.Color.Orange;
             this.statusHighlightLabel.Location = new System.Drawing.Point(0, 22);
             this.statusHighlightLabel.Name = "statusHighlightLabel";
-            this.statusHighlightLabel.Size = new System.Drawing.Size(284, 2);
+            this.statusHighlightLabel.Size = new System.Drawing.Size(314, 2);
             this.statusHighlightLabel.TabIndex = 7;
             // 
             // PS4Macro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 89);
+            this.ClientSize = new System.Drawing.Size(314, 89);
             this.Controls.Add(this.statusHighlightLabel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
