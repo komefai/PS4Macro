@@ -37,6 +37,7 @@ namespace PS4Macro
     public partial class PS4Macro : Form
     {
         private MacroPlayer m_MacroPlayer;
+        private SaveLoadHelper m_SaveLoadHelper;
 
         /* Constructor */
         public PS4Macro()
@@ -46,6 +47,9 @@ namespace PS4Macro
             // Create macro player
             m_MacroPlayer = new MacroPlayer();
             m_MacroPlayer.PropertyChanged += MacroPlayer_PropertyChanged;
+
+            // Create save/load helper
+            m_SaveLoadHelper = new SaveLoadHelper(m_MacroPlayer);
 
             // Inject into PS4 Remote Play
             Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
@@ -70,7 +74,10 @@ namespace PS4Macro
 
                 case "CurrentTick":
                     {
-                        currentTickToolStripStatusLabel.Text = m_MacroPlayer.CurrentTick.ToString();
+                        BeginInvoke((MethodInvoker)delegate
+                        {
+                            currentTickToolStripStatusLabel.Text = m_MacroPlayer.CurrentTick.ToString();
+                        });
                         break;
                     }
 
@@ -107,6 +114,35 @@ namespace PS4Macro
         private void clearButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Clear();
+        }
+        #endregion
+
+        /* Menu strip methods */
+        #region Menu Strip
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Clear();
+            m_SaveLoadHelper.ClearCurrentFile();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_SaveLoadHelper.Load();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_SaveLoadHelper.Save();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_SaveLoadHelper.SaveAs();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
         #endregion
 

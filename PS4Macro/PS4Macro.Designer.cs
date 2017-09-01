@@ -35,6 +35,8 @@
             this.clearButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.urlToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.separatorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.currentTickToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +47,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
-            this.separatorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.currentTickToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -121,6 +121,18 @@
             this.urlToolStripStatusLabel.Text = "http://komefai.com";
             this.urlToolStripStatusLabel.Click += new System.EventHandler(this.urlToolStripStatusLabel_Click);
             // 
+            // separatorToolStripStatusLabel
+            // 
+            this.separatorToolStripStatusLabel.Name = "separatorToolStripStatusLabel";
+            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(144, 17);
+            this.separatorToolStripStatusLabel.Spring = true;
+            // 
+            // currentTickToolStripStatusLabel
+            // 
+            this.currentTickToolStripStatusLabel.Name = "currentTickToolStripStatusLabel";
+            this.currentTickToolStripStatusLabel.Size = new System.Drawing.Size(13, 17);
+            this.currentTickToolStripStatusLabel.Text = "0";
+            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -147,42 +159,47 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(120, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // statusHighlightLabel
             // 
@@ -191,18 +208,6 @@
             this.statusHighlightLabel.Name = "statusHighlightLabel";
             this.statusHighlightLabel.Size = new System.Drawing.Size(284, 2);
             this.statusHighlightLabel.TabIndex = 7;
-            // 
-            // separatorToolStripStatusLabel
-            // 
-            this.separatorToolStripStatusLabel.Name = "separatorToolStripStatusLabel";
-            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(113, 17);
-            this.separatorToolStripStatusLabel.Spring = true;
-            // 
-            // currentTickToolStripStatusLabel
-            // 
-            this.currentTickToolStripStatusLabel.Name = "currentTickToolStripStatusLabel";
-            this.currentTickToolStripStatusLabel.Size = new System.Drawing.Size(13, 17);
-            this.currentTickToolStripStatusLabel.Text = "0";
             // 
             // PS4Macro
             // 

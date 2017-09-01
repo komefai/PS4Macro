@@ -134,6 +134,16 @@ namespace PS4Macro
             CurrentTick = 0;
         }
 
+        public void LoadFile(string path)
+        {
+            Sequence = DualShockState.Deserialize(path);
+        }
+
+        public void SaveFile(string path)
+        {
+            DualShockState.Serialize(path, Sequence);
+        }
+
         public void OnReceiveData(ref DualShockState state)
         {
             if (IsPlaying)
