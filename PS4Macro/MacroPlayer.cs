@@ -25,17 +25,77 @@
 using PS4RemotePlayInterceptor;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace PS4Macro
 {
-    public class MacroPlayer
+    public class MacroPlayer : INotifyPropertyChanged
     {
-        public bool IsPlaying { get; private set; }
-        public bool IsRecording { get; private set; }
-        public int CurrentTick { get; private set; }
-        public List<DualShockState> Sequence { get; private set; }
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        private bool m_IsPlaying = false;
+        public bool IsPlaying
+        {
+            get { return m_IsPlaying; }
+            private set
+            {
+                if (value != m_IsPlaying)
+                {
+                    m_IsPlaying = value;
+                    NotifyPropertyChanged("IsPlaying");
+                }
+            }
+        }
+
+        private bool m_IsRecording = false;
+        public bool IsRecording
+        {
+            get { return m_IsRecording; }
+            private set
+            {
+                if (value != m_IsRecording)
+                {
+                    m_IsRecording = value;
+                    NotifyPropertyChanged("IsRecording");
+                }
+            }
+        }
+
+        private int m_CurrentTick = 0;
+        public int CurrentTick
+        {
+            get { return m_CurrentTick; }
+            private set
+            {
+                if (value != m_CurrentTick)
+                {
+                    m_CurrentTick = value;
+                    NotifyPropertyChanged("CurrentTick");
+                }
+            }
+        }
+
+        private List<DualShockState> m_Sequence = new List<DualShockState>();
+        public List<DualShockState> Sequence
+        {
+            get { return m_Sequence; }
+            private set
+            {
+                if (value != m_Sequence)
+                {
+                    m_Sequence = value;
+                    NotifyPropertyChanged("Sequence");
+                }
+            }
+        }
 
         /* Constructor */
         public MacroPlayer()

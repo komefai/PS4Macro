@@ -38,56 +38,84 @@ namespace PS4Macro
     {
         private MacroPlayer m_MacroPlayer;
 
+        /* Constructor */
         public PS4Macro()
         {
             InitializeComponent();
 
+            // Create macro player
             m_MacroPlayer = new MacroPlayer();
+            m_MacroPlayer.PropertyChanged += MacroPlayer_PropertyChanged;
 
             // Inject into PS4 Remote Play
             Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
             Interceptor.Inject();
         }
 
-        private void UpdateButtons()
+        private void MacroPlayer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            playButton.ForeColor = m_MacroPlayer.IsPlaying ? Color.Green : DefaultForeColor;
-            recordButton.ForeColor = m_MacroPlayer.IsRecording ? Color.Red : DefaultForeColor;
+            switch (e.PropertyName)
+            {
+                case "IsPlaying":
+                    {
+                        playButton.ForeColor = m_MacroPlayer.IsPlaying ? Color.Green : DefaultForeColor;
+                        break;
+                    }
+
+                case "IsRecording":
+                    {
+                        recordButton.ForeColor = m_MacroPlayer.IsRecording ? Color.Red : DefaultForeColor;
+                        break;
+                    }
+
+                case "CurrentTick":
+                    {
+                        currentTickToolStripStatusLabel.Text = m_MacroPlayer.CurrentTick.ToString();
+                        break;
+                    }
+
+                case "Sequence":
+                    {
+                        break;
+                    }
+            }
         }
+
+        /* Playback buttons methods */
+        #region Playback Buttons
 
         private void playButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Play();
-            UpdateButtons();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Pause();
-            UpdateButtons();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Stop();
-            UpdateButtons();
         }
 
         private void recordButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Record();
-            UpdateButtons();
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Clear();
-            UpdateButtons();
         }
+        #endregion
 
+        /* Status strip methods */
+        #region Status Strip
         private void urlToolStripStatusLabel_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://komefai.com");
         }
+        #endregion
     }
 }
