@@ -56,17 +56,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MacroPlayer.cs" />
-    <Compile Include="PS4Macro.cs">
+    <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PS4Macro.Designer.cs">
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MacroPlayer.cs" />
+    <Compile Include="Forms\PS4Macro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PS4Macro.Designer.cs">
       <DependentUpon>PS4Macro.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveLoadHelper.cs" />
-    <EmbeddedResource Include="PS4Macro.resx">
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PS4Macro.resx">
       <DependentUpon>PS4Macro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -110,6 +119,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\icon.ico" />
+    <Content Include="Resources\icon_img.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
