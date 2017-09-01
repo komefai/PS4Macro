@@ -18,10 +18,10 @@ See [this video](https://youtu.be/txI9AOEAk58) for more details.
 
 ## To-Do List
 
-- Save/Load
-- Hotkeys
+- ~~Save/Load~~
+- ~~Keyboard Shortcuts~~
+- ~~Status Indicators~~
 - Playback Timeline UI
-- Status Indicators
 - Scripting
 - ...
 
