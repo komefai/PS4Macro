@@ -70,13 +70,24 @@ namespace PS4Macro.Classes
 
         public void Save()
         {
+            // Currently has a file loaded
             if (!string.IsNullOrWhiteSpace(CurrentFile))
             {
-                // Save
-                m_MacroPlayer.SaveFile(CurrentFile);
+                if (File.Exists(CurrentFile))
+                {
+                    // Save
+                    m_MacroPlayer.SaveFile(CurrentFile);
+                }
+                else
+                {
+                    // Save as
+                    SaveAs(DEFAULT_FILE_NAME);
+                }
             }
+            // No file loaded
             else
             {
+                // Save as
                 SaveAs(DEFAULT_FILE_NAME);
             }
         }
