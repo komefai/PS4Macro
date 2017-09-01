@@ -35,7 +35,7 @@
             this.recordButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.urlToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.fileNameToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.separatorToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentTickToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -112,7 +112,7 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.urlToolStripStatusLabel,
+            this.fileNameToolStripStatusLabel,
             this.separatorToolStripStatusLabel,
             this.currentTickToolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 67);
@@ -121,18 +121,16 @@
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 5;
             // 
-            // urlToolStripStatusLabel
+            // fileNameToolStripStatusLabel
             // 
-            this.urlToolStripStatusLabel.IsLink = true;
-            this.urlToolStripStatusLabel.Name = "urlToolStripStatusLabel";
-            this.urlToolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
-            this.urlToolStripStatusLabel.Text = "http://komefai.com";
-            this.urlToolStripStatusLabel.Click += new System.EventHandler(this.urlToolStripStatusLabel_Click);
+            this.fileNameToolStripStatusLabel.Name = "fileNameToolStripStatusLabel";
+            this.fileNameToolStripStatusLabel.Size = new System.Drawing.Size(70, 17);
+            this.fileNameToolStripStatusLabel.Text = "untitled.xml";
             // 
             // separatorToolStripStatusLabel
             // 
             this.separatorToolStripStatusLabel.Name = "separatorToolStripStatusLabel";
-            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(175, 17);
+            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(186, 17);
             this.separatorToolStripStatusLabel.Spring = true;
             // 
             // currentTickToolStripStatusLabel
@@ -267,7 +265,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -316,7 +314,7 @@
         private System.Windows.Forms.Button recordButton;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel urlToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel fileNameToolStripStatusLabel;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;

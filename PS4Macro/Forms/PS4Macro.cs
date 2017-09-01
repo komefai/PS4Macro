@@ -50,6 +50,7 @@ namespace PS4Macro
 
             // Create save/load helper
             m_SaveLoadHelper = new SaveLoadHelper(m_MacroPlayer);
+            m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
             // Inject into PS4 Remote Play
             Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
@@ -106,6 +107,24 @@ namespace PS4Macro
                         UpdateCurrentTick();
                         break;
                     }
+            }
+        }
+        #endregion
+
+        /* Save/Load Helper */
+        #region SaveLoadHelper_PropertyChanged
+        private void SaveLoadHelper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CurrentFile")
+            {
+                if (m_SaveLoadHelper.CurrentFile == null)
+                {
+                    fileNameToolStripStatusLabel.Text = SaveLoadHelper.DEFAULT_FILE_NAME;
+                }
+                else
+                {
+                    fileNameToolStripStatusLabel.Text = System.IO.Path.GetFileName(m_SaveLoadHelper.CurrentFile);
+                }
             }
         }
         #endregion
@@ -204,10 +223,7 @@ namespace PS4Macro
 
         /* Status strip methods */
         #region Status Strip
-        private void urlToolStripStatusLabel_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://komefai.com");
-        }
+
         #endregion
     }
 }

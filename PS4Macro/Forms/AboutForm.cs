@@ -15,5 +15,10 @@ namespace PS4Macro
         {
             InitializeComponent();
         }
+
+        private void bioLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://komefai.com");
+        }
     }
 }

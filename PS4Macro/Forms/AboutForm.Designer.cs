@@ -54,6 +54,7 @@
             this.bioLinkLabel.TabIndex = 1;
             this.bioLinkLabel.TabStop = true;
             this.bioLinkLabel.Text = "http://komefai.com";
+            this.bioLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.bioLinkLabel_LinkClicked);
             // 
             // iconPictureBox
             // 

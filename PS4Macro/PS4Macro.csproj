@@ -62,7 +62,7 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MacroPlayer.cs" />
+    <Compile Include="Classes\MacroPlayer.cs" />
     <Compile Include="Forms\PS4Macro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,7 +71,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveLoadHelper.cs" />
+    <Compile Include="Classes\SaveLoadHelper.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

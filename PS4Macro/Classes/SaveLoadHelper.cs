@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -7,13 +9,36 @@ using System.Windows.Forms;
 
 namespace PS4Macro
 {
-    public class SaveLoadHelper
+    public class SaveLoadHelper : INotifyPropertyChanged
     {
+        public const string DEFAULT_FILE_NAME = "untitled.xml";
         private const string FILTER = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
 
-        private MacroPlayer m_MacroPlayer;
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
-        public string CurrentFile { get; private set; }
+        #region Properties
+        private string m_CurrentFile = null;
+        public string CurrentFile
+        {
+            get { return m_CurrentFile; }
+            private set
+            {
+                if (value != m_CurrentFile)
+                {
+                    m_CurrentFile = value;
+                    NotifyPropertyChanged("CurrentFile");
+                }
+            }
+        }
+        #endregion
+
+        private MacroPlayer m_MacroPlayer;
 
         /* Constructor */
         public SaveLoadHelper(MacroPlayer macroPlayer)
@@ -52,11 +77,11 @@ namespace PS4Macro
             }
             else
             {
-                SaveAs();
+                SaveAs(DEFAULT_FILE_NAME);
             }
         }
 
-        public void SaveAs()
+        public void SaveAs(string fileName = null)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -64,6 +89,7 @@ namespace PS4Macro
             saveFileDialog.Filter = FILTER;
             saveFileDialog.FilterIndex = 0;
             saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = fileName == null ? Path.GetFileName(CurrentFile) : fileName;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
