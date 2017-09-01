@@ -131,6 +131,7 @@ namespace PS4Macro
         public void Clear()
         {
             Sequence = new List<DualShockState>();
+            CurrentTick = 0;
         }
 
         public void OnReceiveData(ref DualShockState state)
