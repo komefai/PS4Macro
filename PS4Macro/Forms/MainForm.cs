@@ -55,6 +55,19 @@ namespace PS4Macro.Forms
 
             // Setup callback to interceptor
             Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
+
+            // Attempt to inject into PS4 Remote Play
+            try
+            {
+                Interceptor.Inject();
+            }
+            // Injection failed
+            catch (InterceptorException)
+            {
+                MessageBox.Show("Unable to inject to PS4 Remote Play. Make sure PS4 Remote Play is running or try restarting it.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(-1);
+            }
+
             // Start watchdog to automatically inject when possible
             Interceptor.Watchdog.Start();
         }

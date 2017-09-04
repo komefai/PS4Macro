@@ -4,7 +4,7 @@ Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterce
 
 #### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_2_0.png)
+![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_2_1.png)
 
 ## Usage
 

@@ -39,14 +39,14 @@ namespace PS4Macro
         static void Main()
         {
             // Add the event handler for handling UI thread exceptions to the event.
-            //Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
+            Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
 
             // Set the unhandled exception mode to force all Windows Forms errors
             // to go through the handler.
-            //Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
             // Add the event handler for handling non-UI thread exceptions to the event. 
-            //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandledException);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
