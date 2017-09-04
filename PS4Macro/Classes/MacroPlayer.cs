@@ -158,8 +158,16 @@ namespace PS4Macro.Classes
                 // Playing
                 else
                 {
-                    if (Sequence[CurrentTick] != null)
-                        state = Sequence[CurrentTick];
+                    DualShockState newState = Sequence[CurrentTick];
+                    DualShockState oldState = state;
+
+                    if (newState != null)
+                    {
+                        // Update the state
+                        state = newState;
+                        // Use old frame counter
+                        state.FrameCounter = oldState.FrameCounter;
+                    }
                 }
 
                 // Increment tick
