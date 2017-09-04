@@ -1,4 +1,4 @@
-﻿// PS4Macro (File: PS4Macro.cs)
+﻿// PS4Macro (File: Forms/MainForm.cs)
 //
 // Copyright (c) 2017 Komefai
 //
@@ -53,18 +53,10 @@ namespace PS4Macro.Forms
             m_SaveLoadHelper = new SaveLoadHelper(m_MacroPlayer);
             m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
-            // Attempt to inject into PS4 Remote Play
-            try
-            {
-                Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
-                Interceptor.Inject();
-            }
-            // Injection failed
-            catch (InterceptorException)
-            {
-                MessageBox.Show("Unable to inject to PS4 Remote Play", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(-1);
-            }
+            // Setup callback to interceptor
+            Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
+            // Start watchdog to automatically inject when possible
+            Interceptor.Watchdog.Start();
         }
 
         /* Macro Player */

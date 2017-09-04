@@ -1,4 +1,4 @@
-﻿// PS4Macro (File: MacroPlayer.cs)
+﻿// PS4Macro (File: Classes/MacroPlayer.cs)
 //
 // Copyright (c) 2017 Komefai
 //
