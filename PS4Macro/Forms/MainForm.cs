@@ -62,10 +62,14 @@ namespace PS4Macro.Forms
                 Interceptor.Inject();
             }
             // Injection failed
-            catch (InterceptorException)
+            catch (InterceptorException ex)
             {
-                MessageBox.Show("Unable to inject to PS4 Remote Play. Make sure PS4 Remote Play is running or try restarting it.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(-1);
+                // Only handle when PS4 Remote Play is in used by another injection
+                if (ex.InnerException.Message.Equals("STATUS_INTERNAL_ERROR: Unknown error in injected C++ completion routine. (Code: 15)"))
+                {
+                    MessageBox.Show("PS4 Remote Play has been injected by another executable. Restart PS4 Remote Play and try again.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(-1);
+                }
             }
 
             // Start watchdog to automatically inject when possible
