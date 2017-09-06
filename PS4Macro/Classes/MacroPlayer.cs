@@ -165,8 +165,9 @@ namespace PS4Macro.Classes
                     {
                         // Update the state
                         state = newState;
-                        // Use old frame counter
-                        state.FrameCounter = oldState.FrameCounter;
+                        // Replace battery status
+                        state.Battery = oldState.Battery;
+                        state.IsCharging = oldState.IsCharging;
                     }
                 }
 
