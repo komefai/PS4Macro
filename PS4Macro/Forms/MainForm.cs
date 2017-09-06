@@ -65,7 +65,7 @@ namespace PS4Macro.Forms
             catch (InterceptorException ex)
             {
                 // Only handle when PS4 Remote Play is in used by another injection
-                if (ex.InnerException.Message.Equals("STATUS_INTERNAL_ERROR: Unknown error in injected C++ completion routine. (Code: 15)"))
+                if (ex.InnerException != null && ex.InnerException.Message.Equals("STATUS_INTERNAL_ERROR: Unknown error in injected C++ completion routine. (Code: 15)"))
                 {
                     MessageBox.Show("The process has been injected by another executable. Restart PS4 Remote Play and try again.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Environment.Exit(-1);
