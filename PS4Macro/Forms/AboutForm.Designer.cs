@@ -32,6 +32,7 @@
             this.bioLinkLabel = new System.Windows.Forms.LinkLabel();
             this.iconPictureBox = new System.Windows.Forms.PictureBox();
             this.titleLabel = new System.Windows.Forms.Label();
+            this.githubLinkLabel = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,7 +40,7 @@
             // 
             this.createdByLabel.AutoSize = true;
             this.createdByLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.createdByLabel.Location = new System.Drawing.Point(109, 53);
+            this.createdByLabel.Location = new System.Drawing.Point(109, 64);
             this.createdByLabel.Name = "createdByLabel";
             this.createdByLabel.Size = new System.Drawing.Size(154, 20);
             this.createdByLabel.TabIndex = 0;
@@ -48,7 +49,7 @@
             // bioLinkLabel
             // 
             this.bioLinkLabel.AutoSize = true;
-            this.bioLinkLabel.Location = new System.Drawing.Point(113, 76);
+            this.bioLinkLabel.Location = new System.Drawing.Point(113, 87);
             this.bioLinkLabel.Name = "bioLinkLabel";
             this.bioLinkLabel.Size = new System.Drawing.Size(98, 13);
             this.bioLinkLabel.TabIndex = 1;
@@ -76,11 +77,22 @@
             this.titleLabel.TabIndex = 3;
             this.titleLabel.Text = "PS4 Macro";
             // 
+            // githubLinkLabel
+            // 
+            this.githubLinkLabel.AutoSize = true;
+            this.githubLinkLabel.Location = new System.Drawing.Point(113, 36);
+            this.githubLinkLabel.Name = "githubLinkLabel";
+            this.githubLinkLabel.Size = new System.Drawing.Size(192, 13);
+            this.githubLinkLabel.TabIndex = 4;
+            this.githubLinkLabel.TabStop = true;
+            this.githubLinkLabel.Text = "https://github.com/komefai/PS4Macro";
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 110);
+            this.ClientSize = new System.Drawing.Size(314, 113);
+            this.Controls.Add(this.githubLinkLabel);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.iconPictureBox);
             this.Controls.Add(this.bioLinkLabel);
@@ -103,5 +115,6 @@
         private System.Windows.Forms.LinkLabel bioLinkLabel;
         private System.Windows.Forms.PictureBox iconPictureBox;
         private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.LinkLabel githubLinkLabel;
     }
 }
