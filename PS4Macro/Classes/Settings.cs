@@ -35,12 +35,12 @@ namespace PS4Macro.Classes
     {
         public const string FILE_PATH = "settings.xml";
 
-        public bool EnableWatchdog { get; set; }
+        public bool AutoInject { get; set; }
         public string StartupFile { get; set; }
 
         public Settings()
         {
-            EnableWatchdog = false;
+            AutoInject = false;
             StartupFile = null;
         }
 

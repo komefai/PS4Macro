@@ -70,7 +70,7 @@ namespace PS4Macro.Forms
             m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
             // Enable watchdog based on settings
-            if (!Program.Settings.EnableWatchdog)
+            if (!Program.Settings.AutoInject)
             {
                 Interceptor.InjectionMode = InjectionMode.Compatibility;
             }
@@ -92,7 +92,7 @@ namespace PS4Macro.Forms
                 else
                 {
                     // Handle exception if watchdog is disabled
-                    if (!Program.Settings.EnableWatchdog)
+                    if (!Program.Settings.AutoInject)
                     {
                         MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType().ToString(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Environment.Exit(-1);
@@ -101,7 +101,7 @@ namespace PS4Macro.Forms
             }
 
             // Start watchdog to automatically inject when possible
-            if (Program.Settings.EnableWatchdog)
+            if (Program.Settings.AutoInject)
             {
                 Interceptor.Watchdog.Start();
             }
@@ -122,6 +122,10 @@ namespace PS4Macro.Forms
             }
             else if (m_ControlMode == ControlMode.Script)
             {
+                // Stop macro player
+                if (m_MacroPlayer.IsRecording) m_MacroPlayer.Record();
+                m_MacroPlayer.Stop();
+
                 // Setup callback to interceptor
                 Interceptor.Callback = new InterceptionDelegate(m_ScriptHost.OnReceiveData);
 
