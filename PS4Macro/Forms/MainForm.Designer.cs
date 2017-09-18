@@ -52,9 +52,14 @@
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.screenshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageHashToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resizeRemotePlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
+            this.scriptButton = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -144,6 +149,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.playbackToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -254,6 +260,39 @@
             this.recordToolStripMenuItem.Text = "Record";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.screenshotToolStripMenuItem,
+            this.imageHashToolToolStripMenuItem,
+            this.resizeRemotePlayToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // screenshotToolStripMenuItem
+            // 
+            this.screenshotToolStripMenuItem.Name = "screenshotToolStripMenuItem";
+            this.screenshotToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Tab)));
+            this.screenshotToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.screenshotToolStripMenuItem.Text = "Screenshot";
+            this.screenshotToolStripMenuItem.Click += new System.EventHandler(this.screenshotToolStripMenuItem_Click);
+            // 
+            // imageHashToolToolStripMenuItem
+            // 
+            this.imageHashToolToolStripMenuItem.Name = "imageHashToolToolStripMenuItem";
+            this.imageHashToolToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.imageHashToolToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.imageHashToolToolStripMenuItem.Text = "Image Hash Tool";
+            this.imageHashToolToolStripMenuItem.Click += new System.EventHandler(this.imageHashToolToolStripMenuItem_Click);
+            // 
+            // resizeRemotePlayToolStripMenuItem
+            // 
+            this.resizeRemotePlayToolStripMenuItem.Name = "resizeRemotePlayToolStripMenuItem";
+            this.resizeRemotePlayToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.resizeRemotePlayToolStripMenuItem.Text = "Resize Remote Play";
+            this.resizeRemotePlayToolStripMenuItem.Click += new System.EventHandler(this.resizeRemotePlayToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -265,7 +304,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -277,11 +316,22 @@
             this.statusHighlightLabel.Size = new System.Drawing.Size(314, 2);
             this.statusHighlightLabel.TabIndex = 7;
             // 
+            // scriptButton
+            // 
+            this.scriptButton.Location = new System.Drawing.Point(196, 33);
+            this.scriptButton.Name = "scriptButton";
+            this.scriptButton.Size = new System.Drawing.Size(44, 23);
+            this.scriptButton.TabIndex = 8;
+            this.scriptButton.Text = "Script";
+            this.scriptButton.UseVisualStyleBackColor = true;
+            this.scriptButton.Click += new System.EventHandler(this.scriptButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(314, 89);
+            this.Controls.Add(this.scriptButton);
             this.Controls.Add(this.statusHighlightLabel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
@@ -297,6 +347,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PS4 Macro - v0.2.2 (BETA)";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
@@ -334,6 +385,11 @@
         private System.Windows.Forms.ToolStripMenuItem recordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Button scriptButton;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem screenshotToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageHashToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resizeRemotePlayToolStripMenuItem;
     }
 }
 

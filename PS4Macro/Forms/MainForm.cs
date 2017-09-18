@@ -35,9 +35,22 @@ using System.Windows.Forms;
 
 namespace PS4Macro.Forms
 {
+    enum ControlMode
+    {
+        Macro,
+        Script
+    }
+
     public partial class MainForm : Form
     {
+        private const string CURRENT_TICK_DEFAULT_TEXT = "-";
+
         private MacroPlayer m_MacroPlayer;
+        
+        private ControlMode m_ControlMode;
+        private PS4MacroAPI.ScriptBase m_SelectedScript;
+        private ScriptHost m_ScriptHost;
+
         private SaveLoadHelper m_SaveLoadHelper;
 
         /* Constructor */
@@ -49,12 +62,18 @@ namespace PS4Macro.Forms
             m_MacroPlayer = new MacroPlayer();
             m_MacroPlayer.PropertyChanged += MacroPlayer_PropertyChanged;
 
+            // Set control mode
+            SetControlMode(ControlMode.Macro);
+
             // Create save/load helper
-            m_SaveLoadHelper = new SaveLoadHelper(m_MacroPlayer);
+            m_SaveLoadHelper = new SaveLoadHelper(this, m_MacroPlayer);
             m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
-            // Setup callback to interceptor
-            Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
+            // Enable watchdog based on settings
+            if (!Program.Settings.EnableWatchdog)
+            {
+                Interceptor.InjectionMode = InjectionMode.Compatibility;
+            }
 
             // Attempt to inject into PS4 Remote Play
             try
@@ -70,10 +89,68 @@ namespace PS4Macro.Forms
                     MessageBox.Show("The process has been injected by another executable. Restart PS4 Remote Play and try again.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Environment.Exit(-1);
                 }
+                else
+                {
+                    // Throw exception if watchdog is disabled
+                    if (!Program.Settings.EnableWatchdog)
+                        throw;
+                }
             }
 
             // Start watchdog to automatically inject when possible
-            Interceptor.Watchdog.Start();
+            if (Program.Settings.EnableWatchdog)
+            {
+                Interceptor.Watchdog.Start();
+            }
+        }
+
+        private void SetControlMode(ControlMode controlMode)
+        {
+            m_ControlMode = controlMode;
+
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                // Setup callback to interceptor
+                Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
+
+                recordButton.Enabled = true;
+                clearButton.Enabled = true;
+                scriptButton.Enabled = false;
+            }
+            else if (m_ControlMode == ControlMode.Script)
+            {
+                // Setup callback to interceptor
+                Interceptor.Callback = new InterceptionDelegate(m_ScriptHost.OnReceiveData);
+
+                recordButton.Enabled = false;
+                clearButton.Enabled = false;
+                scriptButton.Enabled = true;
+                currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
+            }
+        }
+
+        public void LoadMacro(string path)
+        {
+            SetControlMode(ControlMode.Macro);
+            m_MacroPlayer.LoadFile(path);
+        }
+
+        public void LoadScript(string path)
+        {
+            var script = PS4MacroAPI.Internal.ScriptUtility.LoadScript(path);
+            m_SelectedScript = script;
+
+            m_ScriptHost = new ScriptHost(m_SelectedScript);
+            m_ScriptHost.PropertyChanged += ScriptHost_PropertyChanged;
+
+            SetControlMode(ControlMode.Script);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // Load startup file
+            if (Program.Settings.StartupFile != null)
+                m_SaveLoadHelper.DirectLoad(Program.Settings.StartupFile);
         }
 
         /* Macro Player */
@@ -85,7 +162,7 @@ namespace PS4Macro.Forms
                 // Invalid sequence
                 if (m_MacroPlayer.Sequence == null || m_MacroPlayer.Sequence.Count <= 0)
                 {
-                    currentTickToolStripStatusLabel.Text = "-";
+                    currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
                 }
                 // Valid sequence
                 else
@@ -105,6 +182,12 @@ namespace PS4Macro.Forms
                 case "IsPlaying":
                     {
                         playButton.ForeColor = m_MacroPlayer.IsPlaying ? Color.Green : DefaultForeColor;
+                        break;
+                    }
+
+                case "IsPaused":
+                    {
+                        playButton.ForeColor = m_MacroPlayer.IsPaused ? DefaultForeColor : playButton.ForeColor;
                         break;
                     }
 
@@ -130,6 +213,34 @@ namespace PS4Macro.Forms
         }
         #endregion
 
+        /* Script Host */
+        #region ScriptHost_PropertyChanged
+        private void ScriptHost_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "IsRunning":
+                    {
+                        playButton.ForeColor = m_ScriptHost.IsRunning ? Color.Green : DefaultForeColor;
+                        break;
+                    }
+
+                case "IsPaused":
+                    {
+                        if (m_ScriptHost.IsPaused && m_ScriptHost.IsRunning)
+                        {
+                            playButton.ForeColor = DefaultForeColor;
+                        }
+                        else if (!m_ScriptHost.IsPaused && m_ScriptHost.IsRunning)
+                        {
+                            playButton.ForeColor = Color.Green;
+                        }
+                        break;
+                    }
+            }
+        }
+        #endregion
+
         /* Save/Load Helper */
         #region SaveLoadHelper_PropertyChanged
         private void SaveLoadHelper_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -139,6 +250,7 @@ namespace PS4Macro.Forms
                 if (m_SaveLoadHelper.CurrentFile == null)
                 {
                     fileNameToolStripStatusLabel.Text = SaveLoadHelper.DEFAULT_FILE_NAME;
+                    currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
                 }
                 else
                 {
@@ -153,27 +265,62 @@ namespace PS4Macro.Forms
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            m_MacroPlayer.Play();
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Play();
+            }
+            else if (m_ControlMode == ControlMode.Script)
+            {
+                m_ScriptHost.Play();
+            }
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
-            m_MacroPlayer.Pause();
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Pause();
+            }
+            else if (m_ControlMode == ControlMode.Script)
+            {
+                m_ScriptHost.Pause();
+            }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            m_MacroPlayer.Stop();
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Stop();
+            }
+            else if (m_ControlMode == ControlMode.Script)
+            {
+                m_ScriptHost.Stop();
+            }
         }
 
         private void recordButton_Click(object sender, EventArgs e)
         {
-            m_MacroPlayer.Record();
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Record();
+            }
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-            m_MacroPlayer.Clear();
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Clear();
+            }
+        }
+        #endregion
+
+        /* Script buttons methods */
+        #region Script Buttons
+        private void scriptButton_Click(object sender, EventArgs e)
+        {
+            m_ScriptHost.ShowForm(this);
         }
         #endregion
 
@@ -183,6 +330,7 @@ namespace PS4Macro.Forms
         #region File
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SetControlMode(ControlMode.Macro);
             m_MacroPlayer.Clear();
             m_SaveLoadHelper.ClearCurrentFile();
         }
@@ -227,6 +375,36 @@ namespace PS4Macro.Forms
         private void recordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Record();
+        }
+        #endregion
+
+        #region Tools
+        private void screenshotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frame = PS4MacroAPI.Internal.ScriptUtility.CaptureFrame();
+            var folder = "screenshots";
+
+            // Create folder if not exist
+            System.IO.Directory.CreateDirectory(folder);
+
+            if (frame != null)
+            {
+                frame.Save(folder + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png");
+            }
+            else
+            {
+                MessageBox.Show("---- CAPTURE FAILED!");
+            }
+        }
+
+        private void imageHashToolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ImageHashForm().Show();
+        }
+
+        private void resizeRemotePlayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ResizeRemotePlayForm().ShowDialog(this);
         }
         #endregion
 

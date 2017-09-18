@@ -22,6 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using PS4Macro.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,7 +37,8 @@ namespace PS4Macro.Classes
     public class SaveLoadHelper : INotifyPropertyChanged
     {
         public const string DEFAULT_FILE_NAME = "untitled.xml";
-        private const string FILTER = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+        private const string SAVE_FILTER = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
+        private const string LOAD_FILTER = "Supported Files (*.xml, *.dll)|*.xml;*.dll|All files (*.*)|*.*";
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,11 +64,13 @@ namespace PS4Macro.Classes
         }
         #endregion
 
+        private MainForm m_MainForm;
         private MacroPlayer m_MacroPlayer;
 
         /* Constructor */
-        public SaveLoadHelper(MacroPlayer macroPlayer)
+        public SaveLoadHelper(MainForm mainForm, MacroPlayer macroPlayer)
         {
+            m_MainForm = mainForm;
             m_MacroPlayer = macroPlayer;
         }
 
@@ -75,20 +79,49 @@ namespace PS4Macro.Classes
             CurrentFile = null;
         }
 
+        public void DirectLoad(string filename)
+        {
+            // Load
+            CurrentFile = filename;
+
+            try
+            {
+                // Macro
+                if (CurrentFile.EndsWith("xml"))
+                {
+                    m_MainForm.LoadMacro(CurrentFile);
+                }
+                // Script
+                else if (CurrentFile.EndsWith("dll"))
+                {
+                    m_MainForm.LoadScript(CurrentFile);
+                }
+                // Invalid
+                else
+                {
+                    ClearCurrentFile();
+                }
+            }
+            catch (Exception ex)
+            {
+                ClearCurrentFile();
+                MessageBox.Show(ex.Message, "Open Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void Load()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.InitialDirectory = Assembly.GetExecutingAssembly().Location;
-            openFileDialog.Filter = FILTER;
+            openFileDialog.Filter = LOAD_FILTER;
             openFileDialog.FilterIndex = 0;
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 // Load
-                CurrentFile = openFileDialog.FileName;
-                m_MacroPlayer.LoadFile(CurrentFile);
+                DirectLoad(openFileDialog.FileName);
             }
         }
 
@@ -121,7 +154,7 @@ namespace PS4Macro.Classes
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.InitialDirectory = Assembly.GetExecutingAssembly().Location;
-            saveFileDialog.Filter = FILTER;
+            saveFileDialog.Filter = SAVE_FILTER;
             saveFileDialog.FilterIndex = 0;
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.FileName = fileName == null ? Path.GetFileName(CurrentFile) : fileName;

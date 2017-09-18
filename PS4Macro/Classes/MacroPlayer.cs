@@ -56,6 +56,20 @@ namespace PS4Macro.Classes
             }
         }
 
+        private bool m_IsPaused = false;
+        public bool IsPaused
+        {
+            get { return m_IsPaused; }
+            private set
+            {
+                if (value != m_IsPaused)
+                {
+                    m_IsPaused = value;
+                    NotifyPropertyChanged("IsPaused");
+                }
+            }
+        }
+
         private bool m_IsRecording = false;
         public bool IsRecording
         {
@@ -88,7 +102,7 @@ namespace PS4Macro.Classes
         public List<DualShockState> Sequence
         {
             get { return m_Sequence; }
-            private set
+            set
             {
                 if (value != m_Sequence)
                 {
@@ -103,6 +117,7 @@ namespace PS4Macro.Classes
         public MacroPlayer()
         {
             IsPlaying = false;
+            IsPaused = false;
             IsRecording = false;
             CurrentTick = 0;
             Sequence = new List<DualShockState>();
@@ -112,16 +127,19 @@ namespace PS4Macro.Classes
         public void Play()
         {
             IsPlaying = true;
+            IsPaused = false;
         }
 
         public void Pause()
         {
-            IsPlaying = false;
+            IsPlaying = true;
+            IsPaused = true;
         }
 
         public void Stop()
         {
             IsPlaying = false;
+            IsPaused = false;
             CurrentTick = 0;
         }
 
@@ -148,7 +166,7 @@ namespace PS4Macro.Classes
 
         public void OnReceiveData(ref DualShockState state)
         {
-            if (IsPlaying)
+            if (IsPlaying && !IsPaused)
             {
                 // Recording
                 if (IsRecording)

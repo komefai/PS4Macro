@@ -22,6 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using PS4Macro.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,9 @@ namespace PS4Macro
 {
     static class Program
     {
+        private static Settings m_Settings = Settings.LoadOrCreate();
+        public static Settings Settings => m_Settings;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
