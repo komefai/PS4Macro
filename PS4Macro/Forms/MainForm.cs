@@ -156,7 +156,7 @@ namespace PS4Macro.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             // Load startup file
-            if (Program.Settings.StartupFile != null)
+            if (!string.IsNullOrWhiteSpace(Program.Settings.StartupFile))
                 m_SaveLoadHelper.DirectLoad(Program.Settings.StartupFile);
         }
 
