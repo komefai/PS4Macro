@@ -68,16 +68,9 @@ public class Script : ScriptBase
 }
 ```
 
-## To-Do List
+#### List of Scripts
 
-- ~~Save/Load~~
-- ~~Keyboard Shortcuts~~
-- ~~Status Indicators~~
-- ~~Scripting~~
-- Scripting API Docs
-- Playback Timeline UI
-- Use without DualShock controller
-- ...
+- TBD
 
 ## Troubleshoot
 
@@ -92,6 +85,17 @@ public class Script : ScriptBase
 ```
 Update-Package –reinstall PS4RemotePlayInterceptor
 ```
+
+## To-Do List
+
+- ~~Save/Load~~
+- ~~Keyboard Shortcuts~~
+- ~~Status Indicators~~
+- ~~Scripting~~
+- Scripting API Docs
+- Playback Timeline UI
+- Use without DualShock controller
+- ...
 
 ## Resources
 
