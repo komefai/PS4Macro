@@ -34,7 +34,7 @@ This example settings will enable AutoInject and load MyMacro.xml at startup.
 
 ## Scripting
 
-C# scripting support has been introduced in version 0.3.0 and later. This allows us to create custom behaviors beyond repeating macros with an easy-to-use API. The API also includes wrapped convenience functions such as pressing buttons, timing, and taking a screenshot from PS4 Remote Play. See the [scripting tutorial](https://youtu.be/daCb97rbimA) to get started.
+C# scripting support has been introduced in version 0.3.0 and later. This allows us to create custom behaviors beyond repeating macros with an easy-to-use API. The API also includes wrapped convenience functions such as pressing buttons, timing, and taking a screenshot from PS4 Remote Play. See the [scripting video tutorial](https://youtu.be/daCb97rbimA) to get started or see the full documentation in [the wiki](https://github.com/komefai/PS4Macro/wiki).
 
 The script have to include a reference to `PS4MacroAPI.dll` to interface with PS4Macro. At the moment the scripts has to be compiled into a DLL file to be able to open with PS4 Macro.
 
