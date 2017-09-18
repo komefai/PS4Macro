@@ -91,9 +91,12 @@ namespace PS4Macro.Forms
                 }
                 else
                 {
-                    // Throw exception if watchdog is disabled
+                    // Handle exception if watchdog is disabled
                     if (!Program.Settings.EnableWatchdog)
-                        throw;
+                    {
+                        MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType().ToString(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Environment.Exit(-1);
+                    }
                 }
             }
 
