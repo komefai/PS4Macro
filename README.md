@@ -74,7 +74,7 @@ public class Script : ScriptBase
 
 #### List of Scripts
 
-- TBD
+- [Marvel Heroes Omega](https://github.com/komefai/PS4Macro.MarvelHeroesOmega)
 
 ## Troubleshoot
 
