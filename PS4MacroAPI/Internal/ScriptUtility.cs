@@ -63,7 +63,8 @@ namespace PS4MacroAPI.Internal
             var panelHandle = childHandles.Find(ptr => {
                 var sb = new StringBuilder(50);
                 WindowControl.GetClassName(ptr, sb, 50);
-                return sb.ToString() == "WindowsForms10.Window.8.app.0.141b42a_r9_ad1";
+                var str = sb.ToString();
+                return str == "WindowsForms10.Window.8.app.0.141b42a_r9_ad1" || str == "WindowsForms10.Window.8.app.0.141b42a_r10_ad1";
             });
 
             return panelHandle;
