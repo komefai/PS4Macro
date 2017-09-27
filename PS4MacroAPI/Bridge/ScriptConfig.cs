@@ -70,6 +70,11 @@ namespace PS4MacroAPI
         public bool ShowStackTrace { get; set; }
 
         /// <summary>
+        /// Show error message box
+        /// </summary>
+        public bool ShowError { get; set; }
+
+        /// <summary>
         /// Enable capture screenshots
         /// </summary>
         public bool EnableCapture { get; set; }
@@ -99,6 +104,7 @@ namespace PS4MacroAPI
             TargetSize = new Size(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
             ThrowExceptions = true;
             ShowStackTrace = true;
+            ShowError = true;
             EnableCapture = true;
             ShowFormOnStart = true;
             AutoFormLocation = true;

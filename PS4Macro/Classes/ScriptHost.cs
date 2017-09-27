@@ -156,29 +156,38 @@ namespace PS4Macro.Classes
 
         public BackgroundWorker Start()
         {
-            // Ignore if already running
-            if (IsRunning)
-                return null;
-
-            // Call internal initialize method
-            Script.Initialize();
-
-            // Show form on start
-            if (Script.Config.ShowFormOnStart)
-                ShowForm(HostForm);
-
-            // Create worker
-            Worker = new BackgroundWorker
+            try
             {
-                WorkerReportsProgress = true,
-                WorkerSupportsCancellation = true
-            };
-            Worker.DoWork += MainLoop;
-            Worker.RunWorkerAsync();
+                // Ignore if already running
+                if (IsRunning)
+                    return null;
 
-            IsRunning = true;
+                // Call internal initialize method
+                Script.Initialize();
 
-            return Worker;
+                // Show form on start
+                if (Script.Config.ShowFormOnStart)
+                    ShowForm(HostForm);
+
+                // Create worker
+                Worker = new BackgroundWorker
+                {
+                    WorkerReportsProgress = true,
+                    WorkerSupportsCancellation = true
+                };
+                Worker.DoWork += MainLoop;
+                Worker.RunWorkerAsync();
+
+                IsRunning = true;
+
+                return Worker;
+            }
+            catch(Exception ex)
+            {
+                HandleExceptions(ex);
+            }
+
+            return null;
         }
 
         public void Play()
@@ -252,14 +261,19 @@ namespace PS4Macro.Classes
         private void MainLoop(object sender, DoWorkEventArgs e)
         {
             // Start custom code in script
-            Script.Start();
+            try
+            {
+                Script.Start();
+            }
+            catch (Exception ex)
+            {
+                HandleExceptions(ex);
+            }
 
             while (!Worker.CancellationPending)
             {
                 try
                 {
-                    //Console.WriteLine("Tick");
-
                     // Continue if script is null
                     if (Script == null)
                         continue;
@@ -284,21 +298,7 @@ namespace PS4Macro.Classes
                 }
                 catch (Exception ex)
                 {
-                    #if DEBUG
-                    Console.WriteLine("MAIN LOOP ERROR: " + ex.Message);
-                    #endif
-
-                    // Stack trace
-                    if (Script.Config.ShowStackTrace)
-                    {
-                        System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-                    }
-                    // Throw exception
-                    if (Script.Config.ThrowExceptions)
-                    {
-                        Stop();
-                        throw;
-                    }
+                    HandleExceptions(ex);
                 }
             }
         }
@@ -326,6 +326,31 @@ namespace PS4Macro.Classes
                 int x = parent.Location.X + parent.Width / 2 - scriptForm.Width / 2;
                 int y = parent.Location.Y + parent.Height / 2 - scriptForm.Height / 2;
                 scriptForm.Location = new Point(x + 200, y);
+            }
+        }
+
+        private void HandleExceptions(Exception ex)
+        {
+            // Stop
+            Stop();
+
+            // Stack trace
+            if (Script.Config.ShowStackTrace)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
+
+            // Show error
+            if (Script.Config.ShowError)
+            {
+                MessageBox.Show(ex.Message, "Script Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // Throw exception
+            if (Script.Config.ThrowExceptions)
+            {
+                throw ex;
             }
         }
     }
