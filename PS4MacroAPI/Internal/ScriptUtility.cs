@@ -34,8 +34,15 @@ using System.Text;
 
 namespace PS4MacroAPI.Internal
 {
+    /// <summary>
+    /// Utility class for scripts
+    /// </summary>
     public class ScriptUtility
     {
+        /// <summary>
+        /// Find PS4 Macro process
+        /// </summary>
+        /// <returns></returns>
         public static Process FindProcess()
         {
             Process[] processes = Process.GetProcessesByName("PS4Macro");
@@ -46,6 +53,10 @@ namespace PS4MacroAPI.Internal
             return null;
         }
 
+        /// <summary>
+        /// Find PS4 Remote Play process
+        /// </summary>
+        /// <returns></returns>
         public static Process FindRemotePlayProcess()
         {
             Process[] processes = Process.GetProcessesByName("RemotePlay");
@@ -56,20 +67,51 @@ namespace PS4MacroAPI.Internal
             return null;
         }
 
+        /// <summary>
+        /// Find the streaming panel of PS4 Remote Play
+        /// </summary>
+        /// <param name="remotePlayProcess"></param>
+        /// <returns></returns>
         public static IntPtr FindStreamingPanel(Process remotePlayProcess)
         {
             // Find panel in process
             var childHandles = WindowControl.GetAllChildHandles(remotePlayProcess.MainWindowHandle);
-            var panelHandle = childHandles.Find(ptr => {
+            var panelHandle = childHandles.Find(ptr =>
+            {
                 var sb = new StringBuilder(50);
                 WindowControl.GetClassName(ptr, sb, 50);
                 var str = sb.ToString();
                 return str == "WindowsForms10.Window.8.app.0.141b42a_r9_ad1" || str == "WindowsForms10.Window.8.app.0.141b42a_r10_ad1";
             });
 
+            // Try to find the best one possible instead
+            if (panelHandle == IntPtr.Zero)
+            {
+                IntPtr biggestPanel = IntPtr.Zero;
+                Rect biggestSize = new Rect();
+                foreach (var ptr in childHandles)
+                {
+                    Rect rect = new Rect();
+                    WindowControl.GetWindowRect(ptr, ref rect);
+
+                    if (rect.Bottom - rect.Top >= biggestSize.Bottom - biggestSize.Top)
+                    {
+                        biggestPanel = ptr;
+                        biggestSize = rect;
+                    }
+                }
+
+                panelHandle = biggestPanel;
+            }
+
             return panelHandle;
         }
 
+        /// <summary>
+        /// Load scripts from path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static List<ScriptBase> LoadScripts(string path)
         {
             string[] dllFileNames = null;
@@ -125,6 +167,11 @@ namespace PS4MacroAPI.Internal
             return scripts;
         }
 
+        /// <summary>
+        /// Load a script from path
+        /// </summary>
+        /// <param name="dllFile"></param>
+        /// <returns></returns>
         public static ScriptBase LoadScript(string dllFile)
         {
             AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
@@ -155,6 +202,10 @@ namespace PS4MacroAPI.Internal
             return null;
         }
 
+        /// <summary>
+        /// Create a window control temporarily
+        /// </summary>
+        /// <returns></returns>
         private static WindowControl CreateTempWindowControl()
         {
             var process = FindRemotePlayProcess();
@@ -162,18 +213,31 @@ namespace PS4MacroAPI.Internal
             return new WindowControl(process.MainWindowHandle, panel);
         }
 
+        /// <summary>
+        /// One shot method for CaptureFrame
+        /// </summary>
+        /// <returns></returns>
         public static Bitmap CaptureFrame()
         {
             var windowControl = CreateTempWindowControl();
             return windowControl.CaptureFrame();
         }
 
+        /// <summary>
+        /// One shot method for GetWindowSize
+        /// </summary>
+        /// <returns></returns>
         public static Size GetWindowSize()
         {
             var windowControl = CreateTempWindowControl();
             return windowControl.GetWindowSize();
         }
 
+        /// <summary>
+        /// One shot method for ResizeWindow
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="fixedSize"></param>
         public static void ResizeWindow(Size size, bool fixedSize = false)
         {
             var windowControl = CreateTempWindowControl();

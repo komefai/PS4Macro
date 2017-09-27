@@ -27,26 +27,85 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace PS4MacroAPI
 {
+    /// <summary>
+    /// Interface for ScriptHost class
+    /// </summary>
     public interface IScriptHost
     {
+        /// <summary>
+        /// The host form
+        /// </summary>
+        Form HostForm { get; }
+
+        /// <summary>
+        /// Is the host running
+        /// </summary>
         bool IsRunning { get; }
 
+        /// <summary>
+        /// Is the host paused
+        /// </summary>
         bool IsPaused { get; }
 
+        /// <summary>
+        /// The background worker
+        /// </summary>
         BackgroundWorker Worker { get; }
 
 
+        /* Relay Methods */
+
+        /// <summary>
+        /// Wait and block execution for a certian amount of time
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <param name="checkInterval"></param>
         void Sleep(int timeout, int checkInterval = 100);
 
+        /// <summary>
+        /// Suspend update for a certain amount of time
+        /// </summary>
+        /// <param name="delay"></param>
         void Suspend(int delay);
 
+        /// <summary>
+        /// Play a macro
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <param name="suspendDelay"></param>
         void PlayMacro(List<DualShockState> sequence, int suspendDelay = 0);
 
+        /// <summary>
+        /// Play a macro from path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="suspendDelay"></param>
         void PlayMacro(string path, int suspendDelay = 0);
 
+        /// <summary>
+        /// Stop the macro
+        /// </summary>
         void StopMacro();
+
+        /* Emergency Methods */
+
+        /// <summary>
+        /// Play the script
+        /// </summary>
+        void Play();
+
+        /// <summary>
+        /// Pause the script
+        /// </summary>
+        void Pause();
+
+        /// <summary>
+        /// Stop the script
+        /// </summary>
+        void Stop();
     }
 }

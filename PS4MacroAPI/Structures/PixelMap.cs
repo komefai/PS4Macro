@@ -29,11 +29,29 @@ using System.Text;
 
 namespace PS4MacroAPI
 {
+    /// <summary>
+    /// Pixel template for matching
+    /// </summary>
     public struct PixelMap
     {
+        /// <summary>
+        /// Gets or sets the ID of this <see cref="PixelMap"/>
+        /// </summary>
         public string ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the x-coordinate of this <see cref="PixelMap"/>
+        /// </summary>
         public int X { get; set; }
+
+        /// <summary>
+        /// Gets or sets the y-coordinate of this <see cref="PixelMap"/>
+        /// </summary>
         public int Y { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color this <see cref="PixelMap"/>
+        /// </summary>
         public int Color { get; set; }
     }
 }

@@ -46,6 +46,7 @@ namespace PS4Macro.Classes
         }
         #endregion
 
+        public Form HostForm { get; private set; }
         public ScriptBase Script { get; private set; }
         public MacroPlayer MacroPlayer { get; private set; }
 
@@ -83,8 +84,9 @@ namespace PS4Macro.Classes
 
 
         /* Constructor */
-        public ScriptHost(ScriptBase script)
+        public ScriptHost(Form hostForm, ScriptBase script)
         {
+            HostForm = hostForm;
             Script = script;
             Script.Host = this;
             MacroPlayer = new MacroPlayer();
@@ -161,6 +163,10 @@ namespace PS4Macro.Classes
             // Call internal initialize method
             Script.Initialize();
 
+            // Show form on start
+            if (Script.Config.ShowFormOnStart)
+                ShowForm(HostForm);
+
             // Create worker
             Worker = new BackgroundWorker
             {
@@ -177,6 +183,7 @@ namespace PS4Macro.Classes
 
         public void Play()
         {
+            // Start worker
             Start();
 
             if (MacroPlayer.IsPaused)
@@ -191,10 +198,16 @@ namespace PS4Macro.Classes
         {
             IsPaused = true;
 
+            // Clear methods
+            Script.ClearButtons();
+
             if (MacroPlayer.IsPlaying)
             {
                 MacroPlayer.Pause();
             }
+
+            // For cleanup
+            Script.OnPaused();
         }
 
         public void Stop()
@@ -204,10 +217,17 @@ namespace PS4Macro.Classes
                 Worker.CancelAsync();
             }
 
+            // Clear methods
+            Script.ClearButtons();
             MacroPlayer.Stop();
+
+            // Clear states
             SuspendCounter = 0;
             IsRunning = false;
             IsPaused = false;
+
+            // For cleanup
+            Script.OnStopped();
         }
 
         public void OnReceiveData(ref PS4RemotePlayInterceptor.DualShockState state)
@@ -268,8 +288,15 @@ namespace PS4Macro.Classes
                     Console.WriteLine("MAIN LOOP ERROR: " + ex.Message);
                     #endif
 
+                    // Stack trace
+                    if (Script.Config.ShowStackTrace)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                    }
+                    // Throw exception
                     if (Script.Config.ThrowExceptions)
                     {
+                        Stop();
                         throw;
                     }
                 }
@@ -284,10 +311,22 @@ namespace PS4Macro.Classes
             if (scriptForm == null)
                 return;
 
+            // Bring to front if already visible
+            if (scriptForm.Visible)
+            {
+                scriptForm.BringToFront();
+                return;
+            }
+
             // Show form
             scriptForm.Show(parent);
             // Center form to parent
-            scriptForm.Location = new Point(parent.Location.X + parent.Width / 2 - scriptForm.Width / 2, parent.Location.Y + parent.Height / 2 - scriptForm.Height / 2);
+            if (Script.Config.AutoFormLocation)
+            {
+                int x = parent.Location.X + parent.Width / 2 - scriptForm.Width / 2;
+                int y = parent.Location.Y + parent.Height / 2 - scriptForm.Height / 2;
+                scriptForm.Location = new Point(x + 200, y);
+            }
         }
     }
 }

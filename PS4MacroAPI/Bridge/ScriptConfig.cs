@@ -30,23 +30,78 @@ using System.Text;
 
 namespace PS4MacroAPI
 {
+    /// <summary>
+    /// Config for scripts
+    /// </summary>
     public class ScriptConfig
     {
+        /// <summary>
+        /// Default width for TargetSize
+        /// </summary>
         public const int DEFAULT_SCREEN_WIDTH = 1024;
+        /// <summary>
+        /// Default height for TargetSize
+        /// </summary>
         public const int DEFAULT_SCREEN_HEIGHT = 768;
 
+        /// <summary>
+        /// Name of the script
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Delay between updates
+        /// </summary>
         public int LoopDelay { get; set; }
+
+        /// <summary>
+        /// Target size for PS4 Remote Play
+        /// </summary>
         public Size TargetSize { get; set; }
+
+        /// <summary>
+        /// Should throw exceptions
+        /// </summary>
         public bool ThrowExceptions { get; set; }
+
+        /// <summary>
+        /// Show stack trace when exception is thrown
+        /// </summary>
+        public bool ShowStackTrace { get; set; }
+
+        /// <summary>
+        /// Enable capture screenshots
+        /// </summary>
+        public bool EnableCapture { get; set; }
+
+        /// <summary>
+        /// Show form when script is started
+        /// </summary>
+        public bool ShowFormOnStart { get; set; }
+
+        /// <summary>
+        /// Automatically move form when shown
+        /// </summary>
+        public bool AutoFormLocation { get; set; }
+
+        /// <summary>
+        /// List of scenes for scenes API
+        /// </summary>
         public List<Scene> Scenes { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ScriptConfig"/>
+        /// </summary>
         public ScriptConfig()
         {
             Name = "Untitled Script";
             LoopDelay = 500;
             TargetSize = new Size(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
             ThrowExceptions = true;
+            ShowStackTrace = true;
+            EnableCapture = true;
+            ShowFormOnStart = true;
+            AutoFormLocation = true;
             Scenes = null;
         }
     }

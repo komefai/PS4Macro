@@ -30,13 +30,39 @@ using System.Text;
 
 namespace PS4MacroAPI
 {
+    /// <summary>
+    /// Retangle template for matching
+    /// </summary>
     public struct RectMap
     {
+        /// <summary>
+        /// Gets or sets the ID of this <see cref="RectMap"/>
+        /// </summary>
         public string ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the x-coordinate of this <see cref="RectMap"/>
+        /// </summary>
         public int X { get; set; }
+
+        /// <summary>
+        /// Gets or sets the y-coordinate of this <see cref="RectMap"/>
+        /// </summary>
         public int Y { get; set; }
+
+        /// <summary>
+        /// Gets or sets the width of this <see cref="RectMap"/>
+        /// </summary>
         public int Width { get; set; }
+
+        /// <summary>
+        /// Gets or sets the height of this <see cref="RectMap"/>
+        /// </summary>
         public int Height { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hash of this <see cref="RectMap"/>
+        /// </summary>
         public ulong Hash { get; set; }
     }
 }

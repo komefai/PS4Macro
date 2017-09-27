@@ -147,7 +147,7 @@ namespace PS4Macro.Forms
             var script = PS4MacroAPI.Internal.ScriptUtility.LoadScript(path);
             m_SelectedScript = script;
 
-            m_ScriptHost = new ScriptHost(m_SelectedScript);
+            m_ScriptHost = new ScriptHost(this, m_SelectedScript);
             m_ScriptHost.PropertyChanged += ScriptHost_PropertyChanged;
 
             SetControlMode(ControlMode.Script);

@@ -161,8 +161,8 @@ namespace PS4MacroAPI.Internal
         /// Returns a percentage-based similarity value between the image content of the two given
         /// files. The higher the percentage, the closer the image contents are to being identical.
         /// </summary>
-        /// <param name="image1">The first image file.</param>
-        /// <param name="image2">The second image file.</param>
+        /// <param name="path1">The first image file.</param>
+        /// <param name="path2">The second image file.</param>
         /// <returns>The similarity percentage.</returns>
         public static double Similarity(String path1, String path2)
         {

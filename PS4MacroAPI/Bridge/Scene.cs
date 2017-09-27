@@ -29,14 +29,34 @@ using System.Text;
 
 namespace PS4MacroAPI
 {
+    /// <summary>
+    /// Base class for all scenes
+    /// </summary>
     public abstract class Scene
     {
+        /// <summary>
+        /// Name of the scene
+        /// </summary>
         abstract public string Name { get; }
 
+        /// <summary>
+        /// Test a condition to match this scene
+        /// </summary>
+        /// <param name="script"></param>
+        /// <returns>Returns true if matched</returns>
         abstract public bool Match(ScriptBase script);
+
+        /// <summary>
+        /// Called when the scene is matched
+        /// </summary>
+        /// <param name="script"></param>
         abstract public void OnMatched(ScriptBase script);
 
-        // Sort by search priority (frequent scenes first)
+        /// <summary>
+        /// Sort by search priority (frequent scenes first)
+        /// </summary>
+        /// <param name="script"></param>
+        /// <returns>The matched scene</returns>
         public static Scene Search(ScriptBase script)
         {
             if (script.Config == null || script.Config.Scenes == null)
@@ -51,6 +71,12 @@ namespace PS4MacroAPI
             return null;
         }
 
+        /// <summary>
+        /// Create a unique ID for a scene
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="name"></param>
+        /// <returns>The ID string</returns>
         public static string CreateID(Scene instance, string name)
         {
             return $"{instance.Name}_{name}";
