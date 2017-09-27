@@ -31,6 +31,8 @@ using System.Text;
 
 namespace PS4Macro.Classes
 {
+    public delegate void MacroLapEnterHandler(object sender);
+
     public class MacroPlayer : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
@@ -111,6 +113,10 @@ namespace PS4Macro.Classes
                 }
             }
         }
+        #endregion
+
+        #region Events
+        public event MacroLapEnterHandler LapEnter;
         #endregion
 
         /* Constructor */
@@ -194,7 +200,12 @@ namespace PS4Macro.Classes
 
                 // Reset tick if out of bounds
                 if (CurrentTick >= Sequence.Count)
+                {
                     CurrentTick = 0;
+
+                    // Raise LapEnter event
+                    LapEnter?.Invoke(this);
+                }
             }
         }
     }

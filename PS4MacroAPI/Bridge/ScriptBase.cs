@@ -124,6 +124,12 @@ namespace PS4MacroAPI
         public virtual void OnPaused() { }
 
         /// <summary>
+        /// Called when macro enters a new lap
+        /// </summary>
+        /// <param name="sender"></param>
+        public virtual void OnMacroLapEnter(object sender) { }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="ScriptBase"/>
         /// </summary>
         public ScriptBase()
