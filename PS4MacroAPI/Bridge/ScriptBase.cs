@@ -215,7 +215,7 @@ namespace PS4MacroAPI
             // Expose old frame
             CurrentFrame?.Dispose();
             // Capture and cache
-            CurrentFrame = WindowControl.CaptureFrame();
+            CurrentFrame = WindowControl.CaptureFrame(Config.CaptureFromBackground);
             return CurrentFrame;
         }
 

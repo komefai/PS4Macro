@@ -80,6 +80,11 @@ namespace PS4MacroAPI
         public bool EnableCapture { get; set; }
 
         /// <summary>
+        /// Enable capture from background
+        /// </summary>
+        public bool CaptureFromBackground { get; set; }
+
+        /// <summary>
         /// Show form when script is started
         /// </summary>
         public bool ShowFormOnStart { get; set; }
@@ -106,6 +111,7 @@ namespace PS4MacroAPI
             ShowStackTrace = true;
             ShowError = true;
             EnableCapture = true;
+            CaptureFromBackground = true;
             ShowFormOnStart = true;
             AutoFormLocation = true;
             Scenes = null;
