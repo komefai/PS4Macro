@@ -216,11 +216,12 @@ namespace PS4MacroAPI.Internal
         /// <summary>
         /// One shot method for CaptureFrame
         /// </summary>
+        /// <param name="backgroundMode"></param>
         /// <returns></returns>
-        public static Bitmap CaptureFrame()
+        public static Bitmap CaptureFrame(bool backgroundMode = true)
         {
             var windowControl = CreateTempWindowControl();
-            return windowControl.CaptureFrame();
+            return windowControl.CaptureFrame(backgroundMode);
         }
 
         /// <summary>

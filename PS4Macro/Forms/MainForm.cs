@@ -388,7 +388,8 @@ namespace PS4Macro.Forms
         #region Tools
         private void screenshotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frame = PS4MacroAPI.Internal.ScriptUtility.CaptureFrame();
+            var backgroundMode = !(ModifierKeys == Keys.Shift);
+            var frame = PS4MacroAPI.Internal.ScriptUtility.CaptureFrame(backgroundMode);
             var folder = "screenshots";
 
             // Create folder if not exist
