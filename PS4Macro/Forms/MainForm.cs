@@ -69,6 +69,10 @@ namespace PS4Macro.Forms
             m_SaveLoadHelper = new SaveLoadHelper(this, m_MacroPlayer);
             m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
+            // Set controller emulation based on settings
+            Interceptor.EmulateController = Program.Settings.EmulateController;
+            emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
+
             // Enable watchdog based on settings
             if (!Program.Settings.AutoInject)
             {
@@ -94,7 +98,7 @@ namespace PS4Macro.Forms
                     // Handle exception if watchdog is disabled
                     if (!Program.Settings.AutoInject)
                     {
-                        MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType().ToString(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Environment.Exit(-1);
                     }
                 }
@@ -401,7 +405,7 @@ namespace PS4Macro.Forms
             }
             else
             {
-                MessageBox.Show("---- CAPTURE FAILED!");
+                MessageBox.Show("Unable to capture screenshot!");
             }
         }
 

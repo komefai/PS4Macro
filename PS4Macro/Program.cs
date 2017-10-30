@@ -24,8 +24,6 @@
 
 using PS4Macro.Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -42,6 +40,13 @@ namespace PS4Macro
         [STAThread]
         static void Main()
         {
+            // Display console for debugging if enabled
+            if (Settings.ShowConsole)
+            {
+                ConsoleHelper.AllocConsole();
+                ConsoleHelper.SetOut();
+            }
+
             // Add the event handler for handling UI thread exceptions to the event.
             Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
 

@@ -40,8 +40,8 @@
       <HintPath>..\packages\EasyHook.2.7.6270\lib\net40\EasyHook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PS4RemotePlayInterceptor, Version=0.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PS4RemotePlayInterceptor.0.4.1\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
+    <Reference Include="PS4RemotePlayInterceptor, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PS4RemotePlayInterceptor.0.5.0\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ConsoleHelper.cs" />
     <Compile Include="Classes\ScriptHost.cs" />
     <Compile Include="Classes\ScriptHostUtility.cs" />
     <Compile Include="Classes\Settings.cs" />
@@ -142,6 +143,7 @@
     </Content>
     <Content Include="Resources\icon.ico" />
     <Content Include="Resources\icon_img.png" />
+    <Content Include="Resources\icon_joystick.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PS4MacroAPI\PS4MacroAPI.csproj">

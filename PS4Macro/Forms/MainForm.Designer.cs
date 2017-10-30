@@ -60,6 +60,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
+            this.emulatedToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +118,7 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.emulatedToolStripStatusLabel,
             this.fileNameToolStripStatusLabel,
             this.separatorToolStripStatusLabel,
             this.currentTickToolStripStatusLabel});
@@ -135,7 +137,7 @@
             // separatorToolStripStatusLabel
             // 
             this.separatorToolStripStatusLabel.Name = "separatorToolStripStatusLabel";
-            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(217, 17);
+            this.separatorToolStripStatusLabel.Size = new System.Drawing.Size(170, 17);
             this.separatorToolStripStatusLabel.Spring = true;
             // 
             // currentTickToolStripStatusLabel
@@ -326,6 +328,12 @@
             this.scriptButton.UseVisualStyleBackColor = true;
             this.scriptButton.Click += new System.EventHandler(this.scriptButton_Click);
             // 
+            // emulatedToolStripStatusLabel
+            // 
+            this.emulatedToolStripStatusLabel.Image = global::PS4Macro.Properties.Resources.icon_joystick;
+            this.emulatedToolStripStatusLabel.Name = "emulatedToolStripStatusLabel";
+            this.emulatedToolStripStatusLabel.Size = new System.Drawing.Size(16, 17);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,6 +398,7 @@
         private System.Windows.Forms.ToolStripMenuItem screenshotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageHashToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeRemotePlayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel emulatedToolStripStatusLabel;
     }
 }
 
