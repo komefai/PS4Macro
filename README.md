@@ -1,16 +1,16 @@
 ﻿# PS4 Macro
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](http://paypal.me/Komefai)
+
 Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterceptor](https://github.com/komefai/PS4RemotePlayInterceptor).
 
 #### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_3_1.png)
+![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_4_0.png)
 
 ## Usage
 
 **Download latest version [here](https://github.com/komefai/PS4Macro/releases)!**
-
-⚠️ You must have DualShock 4 controller plugged in via USB with PS4 Remote Play running. 
 
 To record, click on record button (Ctrl+R) to arm recording then press play to start recording controls. To stop recording, click on record button (Ctrl+R) to unarm. The macro will then play the controls in a loop.
 
@@ -20,14 +20,21 @@ See [this video](https://youtu.be/txI9AOEAk58) for basic usage / making of.
 
 You can create `settings.xml` and place it with the executable to override default settings.
 
-##### Example settings.xml
+| Setting | Description | Default
+| --- | --- | --- |
+| AutoInject | Automatically poll and injects into PS4 Remote Play | false |
+| EmulateController | Run with controller emulation (use without a controller) | false |
+| ShowConsole | Open debugging console on launch | false |
+| StartupFile | File to load on launch (can be xml or dll) | null |
 
-This example settings will enable AutoInject and load MyMacro.xml at startup.
+##### Example settings.xml
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Settings>
   <AutoInject>true</AutoInject>
+  <EmulateController>true</EmulateController>
+  <ShowConsole>true</ShowConsole>
   <StartupFile>MyMacro.xml</StartupFile>
 </Settings>
 ```
