@@ -22,10 +22,10 @@ You can create `settings.xml` and place it with the executable to override defau
 
 | Setting | Description | Default
 | --- | --- | --- |
-| AutoInject | Automatically poll and injects into PS4 Remote Play | false |
+| AutoInject | Automatically poll for PS4 Remote Play and inject whenever possible | false |
 | EmulateController | Run with controller emulation (use without a controller) | false |
 | ShowConsole | Open debugging console on launch | false |
-| StartupFile | File to load on launch (can be xml or dll) | null |
+| StartupFile | Absolute or relative path to file to load on launch (can be xml or dll) | null |
 
 ##### Example settings.xml
 
@@ -103,9 +103,10 @@ Update-Package –reinstall PS4RemotePlayInterceptor
 - ~~Keyboard Shortcuts~~
 - ~~Status Indicators~~
 - ~~Scripting~~
-- Scripting API Docs
+- ~~Use without DualShock controller~~
+- Improve Scripting API Docs
 - Playback Timeline UI
-- Use without DualShock controller
+- Macro editor tool
 - ...
 
 ## Resources
