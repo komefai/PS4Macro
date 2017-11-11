@@ -81,7 +81,8 @@ public class Script : ScriptBase
 
 #### List of Scripts
 
-- [Marvel Heroes Omega](https://github.com/komefai/PS4Macro.MarvelHeroesOmega)
+- [Keyboard Remapping Utility](https://github.com/komefai/PS4Macro.Remote)
+- [Marvel Heroes Omega Bot](https://github.com/komefai/PS4Macro.MarvelHeroesOmega)
 
 ## Troubleshoot
 
