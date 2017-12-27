@@ -13,7 +13,7 @@ Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterce
 
 **Download latest version [here](https://github.com/komefai/PS4Macro/releases)!**
 
-To record, click on record button (Ctrl+R) to arm recording then press play to start recording controls. To stop recording, click on record button (Ctrl+R) to unarm. The macro will then play the controls in a loop.
+To record, click on `RECORD` button (Ctrl+R) to arm recording then press `PLAY` to start recording controls. The red number on the bottom right indicates the number of frames recorded. You can stop recording by clicking on `RECORD` button (Ctrl+R) again. The macro will then play the controls in a loop.
 
 See [this video](https://youtu.be/txI9AOEAk58) for basic usage / making of.
 
