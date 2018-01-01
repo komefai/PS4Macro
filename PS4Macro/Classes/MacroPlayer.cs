@@ -44,6 +44,20 @@ namespace PS4Macro.Classes
         #endregion
 
         #region Properties
+        private bool m_Loop = true;
+        public bool Loop
+        {
+            get { return m_Loop; }
+            set
+            {
+                if (value != m_Loop)
+                {
+                    m_Loop = value;
+                    NotifyPropertyChanged("Loop");
+                }
+            }
+        }
+
         private bool m_IsPlaying = false;
         public bool IsPlaying
         {
@@ -122,6 +136,7 @@ namespace PS4Macro.Classes
         /* Constructor */
         public MacroPlayer()
         {
+            Loop = true;
             IsPlaying = false;
             IsPaused = false;
             IsRecording = false;
@@ -205,6 +220,12 @@ namespace PS4Macro.Classes
 
                     // Raise LapEnter event
                     LapEnter?.Invoke(this);
+
+                    // Stop if looping is disabled
+                    if (!Loop && !IsRecording)
+                    {
+                        Stop();
+                    }
                 }
             }
         }

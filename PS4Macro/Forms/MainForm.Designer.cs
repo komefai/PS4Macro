@@ -61,6 +61,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
+            this.loopCheckBox = new System.Windows.Forms.CheckBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.loopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remapperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -234,7 +238,9 @@
             this.playToolStripMenuItem,
             this.pauseToolStripMenuItem,
             this.stopToolStripMenuItem,
-            this.recordToolStripMenuItem});
+            this.recordToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.loopToolStripMenuItem});
             this.playbackToolStripMenuItem.Name = "playbackToolStripMenuItem";
             this.playbackToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.playbackToolStripMenuItem.Text = "Playback";
@@ -273,7 +279,8 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.screenshotToolStripMenuItem,
             this.imageHashToolToolStripMenuItem,
-            this.resizeRemotePlayToolStripMenuItem});
+            this.resizeRemotePlayToolStripMenuItem,
+            this.remapperToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -312,7 +319,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -334,11 +341,47 @@
             this.scriptButton.UseVisualStyleBackColor = true;
             this.scriptButton.Click += new System.EventHandler(this.scriptButton_Click);
             // 
+            // loopCheckBox
+            // 
+            this.loopCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.loopCheckBox.BackgroundImage = global::PS4Macro.Properties.Resources.icon_repeat;
+            this.loopCheckBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.loopCheckBox.Checked = true;
+            this.loopCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.loopCheckBox.Location = new System.Drawing.Point(164, 33);
+            this.loopCheckBox.Name = "loopCheckBox";
+            this.loopCheckBox.Size = new System.Drawing.Size(26, 23);
+            this.loopCheckBox.TabIndex = 9;
+            this.loopCheckBox.UseVisualStyleBackColor = true;
+            this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
+            // loopToolStripMenuItem
+            // 
+            this.loopToolStripMenuItem.Checked = true;
+            this.loopToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.loopToolStripMenuItem.Name = "loopToolStripMenuItem";
+            this.loopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loopToolStripMenuItem.Text = "Loop";
+            this.loopToolStripMenuItem.Click += new System.EventHandler(this.loopToolStripMenuItem_Click);
+            // 
+            // remapperToolStripMenuItem
+            // 
+            this.remapperToolStripMenuItem.Name = "remapperToolStripMenuItem";
+            this.remapperToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.remapperToolStripMenuItem.Text = "Remapper";
+            this.remapperToolStripMenuItem.Click += new System.EventHandler(this.remapperToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(314, 89);
+            this.Controls.Add(this.loopCheckBox);
             this.Controls.Add(this.scriptButton);
             this.Controls.Add(this.statusHighlightLabel);
             this.Controls.Add(this.statusStrip);
@@ -399,6 +442,10 @@
         private System.Windows.Forms.ToolStripMenuItem imageHashToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeRemotePlayToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel emulatedToolStripStatusLabel;
+        private System.Windows.Forms.CheckBox loopCheckBox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem loopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem remapperToolStripMenuItem;
     }
 }
 

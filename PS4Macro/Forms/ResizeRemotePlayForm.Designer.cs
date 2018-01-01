@@ -99,7 +99,7 @@
             this.Controls.Add(this.resizeButton);
             this.Controls.Add(this.heightLabel);
             this.Controls.Add(this.widthLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ResizeRemotePlayForm";
