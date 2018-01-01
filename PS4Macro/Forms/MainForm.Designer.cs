@@ -53,18 +53,20 @@
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.loopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageHashToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeRemotePlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remapperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.loopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.remapperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trimMacroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -160,6 +162,7 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.playbackToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -274,6 +277,20 @@
             this.recordToolStripMenuItem.Text = "Record";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
+            // loopToolStripMenuItem
+            // 
+            this.loopToolStripMenuItem.Checked = true;
+            this.loopToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.loopToolStripMenuItem.Name = "loopToolStripMenuItem";
+            this.loopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loopToolStripMenuItem.Text = "Loop";
+            this.loopToolStripMenuItem.Click += new System.EventHandler(this.loopToolStripMenuItem_Click);
+            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -307,6 +324,13 @@
             this.resizeRemotePlayToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.resizeRemotePlayToolStripMenuItem.Text = "Resize Remote Play";
             this.resizeRemotePlayToolStripMenuItem.Click += new System.EventHandler(this.resizeRemotePlayToolStripMenuItem_Click);
+            // 
+            // remapperToolStripMenuItem
+            // 
+            this.remapperToolStripMenuItem.Name = "remapperToolStripMenuItem";
+            this.remapperToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.remapperToolStripMenuItem.Text = "Remapper";
+            this.remapperToolStripMenuItem.Click += new System.EventHandler(this.remapperToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -355,26 +379,20 @@
             this.loopCheckBox.UseVisualStyleBackColor = true;
             this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
             // 
-            // toolStripSeparator3
+            // editToolStripMenuItem
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.trimMacroToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
             // 
-            // loopToolStripMenuItem
+            // trimMacroToolStripMenuItem
             // 
-            this.loopToolStripMenuItem.Checked = true;
-            this.loopToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.loopToolStripMenuItem.Name = "loopToolStripMenuItem";
-            this.loopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loopToolStripMenuItem.Text = "Loop";
-            this.loopToolStripMenuItem.Click += new System.EventHandler(this.loopToolStripMenuItem_Click);
-            // 
-            // remapperToolStripMenuItem
-            // 
-            this.remapperToolStripMenuItem.Name = "remapperToolStripMenuItem";
-            this.remapperToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.remapperToolStripMenuItem.Text = "Remapper";
-            this.remapperToolStripMenuItem.Click += new System.EventHandler(this.remapperToolStripMenuItem_Click);
+            this.trimMacroToolStripMenuItem.Name = "trimMacroToolStripMenuItem";
+            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trimMacroToolStripMenuItem.Text = "Trim Macro";
+            this.trimMacroToolStripMenuItem.Click += new System.EventHandler(this.trimMacroToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -446,6 +464,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem loopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem remapperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trimMacroToolStripMenuItem;
     }
 }
 

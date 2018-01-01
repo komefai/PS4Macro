@@ -89,6 +89,8 @@ namespace PS4Macro.Forms
             Interceptor.EmulateController = Program.Settings.EmulateController;
             emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
 
+            return;
+
             // Enable watchdog based on settings
             if (!Program.Settings.AutoInject)
             {
@@ -435,6 +437,19 @@ namespace PS4Macro.Forms
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+        #endregion
+
+        #region Edit
+        private void trimMacroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_MacroPlayer.Stop();
+
+            var oldSequenceLength = m_MacroPlayer.Sequence.Count;
+            m_MacroPlayer.Sequence = MacroUtility.TrimMacro(m_MacroPlayer.Sequence);
+
+            var difference = oldSequenceLength - m_MacroPlayer.Sequence.Count;
+            MessageBox.Show($"{difference} frames removed", "Trim Macro", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
