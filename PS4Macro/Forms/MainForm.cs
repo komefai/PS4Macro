@@ -89,8 +89,6 @@ namespace PS4Macro.Forms
             Interceptor.EmulateController = Program.Settings.EmulateController;
             emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
 
-            return;
-
             // Enable watchdog based on settings
             if (!Program.Settings.AutoInject)
             {
