@@ -22,6 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using Mono.Options;
 using PS4Macro.Classes;
 using System;
 using System.Threading;
@@ -40,6 +41,31 @@ namespace PS4Macro
         [STAThread]
         static void Main()
         {
+            // Get command line arguments
+            string[] args = Environment.GetCommandLineArgs();
+
+            // Parse command line arguments
+            try
+            {
+                var p = new OptionSet()
+                    .Add("AutoInject:", "Automatically poll for PS4 Remote Play and inject whenever possible", v => m_Settings.AutoInject = v == null ? true : Convert.ToBoolean(v))
+                    .Add("EmulateController:", "Run with controller emulation (use without a controller)", v => m_Settings.EmulateController = v == null ? true : Convert.ToBoolean(v))
+                    .Add("ShowConsole:", "Open debugging console on launch", v => m_Settings.ShowConsole = v == null ? true : Convert.ToBoolean(v))
+                    .Add("StartupFile=", "Absolute or relative path to file to load on launch (can be xml or dll)", v => m_Settings.StartupFile = v);
+
+                p.Add("h|?|help", "Displays this help message", v => {
+                    p.WriteOptionDescriptions(Console.Out);
+                    Environment.Exit(0);
+                });
+
+                var extras = p.Parse(args);
+            }
+            catch (OptionException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Try `PS4Macro --help` for usage.");
+            }
+
             // Display console for debugging if enabled
             if (Settings.ShowConsole)
             {
