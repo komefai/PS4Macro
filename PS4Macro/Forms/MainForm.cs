@@ -89,8 +89,6 @@ namespace PS4Macro.Forms
             Interceptor.EmulateController = Program.Settings.EmulateController;
             emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
 
-            return;
-
             // Enable watchdog based on settings
             if (!Program.Settings.AutoInject)
             {
@@ -148,6 +146,13 @@ namespace PS4Macro.Forms
 
             if (m_ControlMode == ControlMode.Macro)
             {
+                // Stop script and remove
+                if (m_ScriptHost != null && m_ScriptHost.IsRunning)
+                {
+                    m_ScriptHost.Stop();
+                    m_ScriptHost = null;
+                }
+
                 // Setup callback to interceptor
                 Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
 
@@ -188,6 +193,9 @@ namespace PS4Macro.Forms
                 // Stop macro player
                 if (m_MacroPlayer.IsRecording) m_MacroPlayer.Record();
                 m_MacroPlayer.Stop();
+
+                // Stop script
+                if (m_ScriptHost != null && m_ScriptHost.IsRunning) m_ScriptHost.Stop();
 
                 // Setup callback to interceptor
                 Interceptor.Callback = new InterceptionDelegate(m_Remapper.OnReceiveData);
