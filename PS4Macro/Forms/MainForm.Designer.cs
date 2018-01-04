@@ -33,7 +33,6 @@
             this.pauseButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.recordButton = new System.Windows.Forms.Button();
-            this.clearButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.emulatedToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.fileNameToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -48,6 +47,8 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trimMacroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +66,7 @@
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trimMacroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearMacroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -110,16 +110,6 @@
             this.recordButton.Text = "⏺";
             this.recordButton.UseVisualStyleBackColor = true;
             this.recordButton.Click += new System.EventHandler(this.recordButton_Click);
-            // 
-            // clearButton
-            // 
-            this.clearButton.Location = new System.Drawing.Point(246, 33);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(56, 23);
-            this.clearButton.TabIndex = 4;
-            this.clearButton.Text = "Clear";
-            this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // statusStrip
             // 
@@ -235,6 +225,22 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearMacroToolStripMenuItem,
+            this.trimMacroToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // trimMacroToolStripMenuItem
+            // 
+            this.trimMacroToolStripMenuItem.Name = "trimMacroToolStripMenuItem";
+            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trimMacroToolStripMenuItem.Text = "Trim Macro";
+            this.trimMacroToolStripMenuItem.Click += new System.EventHandler(this.trimMacroToolStripMenuItem_Click);
+            // 
             // playbackToolStripMenuItem
             // 
             this.playbackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -343,7 +349,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -357,9 +363,9 @@
             // 
             // scriptButton
             // 
-            this.scriptButton.Location = new System.Drawing.Point(196, 33);
+            this.scriptButton.Location = new System.Drawing.Point(246, 33);
             this.scriptButton.Name = "scriptButton";
-            this.scriptButton.Size = new System.Drawing.Size(44, 23);
+            this.scriptButton.Size = new System.Drawing.Size(56, 23);
             this.scriptButton.TabIndex = 8;
             this.scriptButton.Text = "Script";
             this.scriptButton.UseVisualStyleBackColor = true;
@@ -372,27 +378,19 @@
             this.loopCheckBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.loopCheckBox.Checked = true;
             this.loopCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.loopCheckBox.Location = new System.Drawing.Point(164, 33);
+            this.loopCheckBox.Location = new System.Drawing.Point(214, 33);
             this.loopCheckBox.Name = "loopCheckBox";
             this.loopCheckBox.Size = new System.Drawing.Size(26, 23);
             this.loopCheckBox.TabIndex = 9;
             this.loopCheckBox.UseVisualStyleBackColor = true;
             this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
             // 
-            // editToolStripMenuItem
+            // clearMacroToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.trimMacroToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // trimMacroToolStripMenuItem
-            // 
-            this.trimMacroToolStripMenuItem.Name = "trimMacroToolStripMenuItem";
-            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.trimMacroToolStripMenuItem.Text = "Trim Macro";
-            this.trimMacroToolStripMenuItem.Click += new System.EventHandler(this.trimMacroToolStripMenuItem_Click);
+            this.clearMacroToolStripMenuItem.Name = "clearMacroToolStripMenuItem";
+            this.clearMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearMacroToolStripMenuItem.Text = "Clear Macro";
+            this.clearMacroToolStripMenuItem.Click += new System.EventHandler(this.clearMacroToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -404,7 +402,6 @@
             this.Controls.Add(this.statusHighlightLabel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
-            this.Controls.Add(this.clearButton);
             this.Controls.Add(this.recordButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pauseButton);
@@ -432,7 +429,6 @@
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button recordButton;
-        private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel fileNameToolStripStatusLabel;
         private System.Windows.Forms.MenuStrip menuStrip;
@@ -466,6 +462,7 @@
         private System.Windows.Forms.ToolStripMenuItem remapperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trimMacroToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearMacroToolStripMenuItem;
     }
 }
 

@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using PS4RemotePlayInterceptor;
+using System.IO;
 
 namespace PS4Macro.Classes.Remapping
 {
@@ -86,7 +87,7 @@ namespace PS4Macro.Classes.Remapping
                 new MappingAction("R3", Keys.M, "R3", true),
 
                 new MappingAction("Share", Keys.LControlKey, "Share", true),
-                new MappingAction("Options", Keys.Alt, "Options", true),
+                new MappingAction("Options", Keys.Z, "Options", true),
                 new MappingAction("PS", Keys.LShiftKey, "PS", true),
 
                 new MappingAction("Touch Button", Keys.T, "TouchButton", true)
@@ -94,11 +95,11 @@ namespace PS4Macro.Classes.Remapping
 
             MacrosDataBinding = new List<MacroAction>();
 
-            //// Load bindings if file exist
-            //if (System.IO.File.Exists(GetBindingsFilePath()))
-            //{
-            //    LoadBindings();
-            //}
+            // Load bindings if file exist
+            if (File.Exists(GetBindingsFilePath()))
+            {
+                LoadBindings();
+            }
 
             CreateActions();
         }
@@ -176,8 +177,7 @@ namespace PS4Macro.Classes.Remapping
 
         private string GetBindingsFilePath()
         {
-            //return Helper.GetScriptFolder() + @"\" + BINDINGS_FILE;
-            throw new NotImplementedException();
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\" + "bindings.xml"; 
         }
 
         public void SaveBindings()

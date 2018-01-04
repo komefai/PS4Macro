@@ -89,6 +89,8 @@ namespace PS4Macro.Forms
             Interceptor.EmulateController = Program.Settings.EmulateController;
             emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
 
+            return;
+
             // Enable watchdog based on settings
             if (!Program.Settings.AutoInject)
             {
@@ -150,9 +152,15 @@ namespace PS4Macro.Forms
                 Interceptor.Callback = new InterceptionDelegate(m_MacroPlayer.OnReceiveData);
 
                 recordButton.Enabled = true;
+                recordToolStripMenuItem.Enabled = true;
                 loopCheckBox.Enabled = true;
-                clearButton.Enabled = true;
+                loopCheckBox.Checked = m_MacroPlayer.Loop;
+                loopToolStripMenuItem.Enabled = true;
                 scriptButton.Enabled = false;
+                saveToolStripMenuItem.Enabled = false;
+                saveAsToolStripMenuItem.Enabled = false;
+                clearMacroToolStripMenuItem.Enabled = true;
+                trimMacroToolStripMenuItem.Enabled = true;
             }
             else if (m_ControlMode == ControlMode.Script)
             {
@@ -164,9 +172,15 @@ namespace PS4Macro.Forms
                 Interceptor.Callback = new InterceptionDelegate(m_ScriptHost.OnReceiveData);
 
                 recordButton.Enabled = false;
+                recordToolStripMenuItem.Enabled = false;
                 loopCheckBox.Enabled = false;
-                clearButton.Enabled = false;
+                loopCheckBox.Checked = false;
+                loopToolStripMenuItem.Enabled = false;
                 scriptButton.Enabled = true;
+                saveToolStripMenuItem.Enabled = false;
+                saveAsToolStripMenuItem.Enabled = false;
+                clearMacroToolStripMenuItem.Enabled = false;
+                trimMacroToolStripMenuItem.Enabled = false;
                 currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
             }
             else if (m_ControlMode == ControlMode.Remapper)
@@ -178,11 +192,17 @@ namespace PS4Macro.Forms
                 // Setup callback to interceptor
                 Interceptor.Callback = new InterceptionDelegate(m_Remapper.OnReceiveData);
 
-                recordButton.Enabled = false;
-                loopCheckBox.Enabled = false;
-                clearButton.Enabled = false;
-                scriptButton.Enabled = false;
-                currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
+                //recordButton.Enabled = false;
+                //recordToolStripMenuItem.Enabled = false;
+                //loopCheckBox.Enabled = false;
+                //loopCheckBox.Checked = false;
+                //loopToolStripMenuItem.Enabled = false;
+                //scriptButton.Enabled = false;
+                //saveToolStripMenuItem.Enabled = false;
+                //saveAsToolStripMenuItem.Enabled = false;
+                //clearMacroToolStripMenuItem.Enabled = false;
+                //trimMacroToolStripMenuItem.Enabled = false;
+                //currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
             }
         }
 
@@ -381,14 +401,6 @@ namespace PS4Macro.Forms
             }
         }
 
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            if (m_ControlMode == ControlMode.Macro)
-            {
-                m_MacroPlayer.Clear();
-            }
-        }
-
         private void loopCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (m_ControlMode == ControlMode.Macro)
@@ -439,6 +451,14 @@ namespace PS4Macro.Forms
         #endregion
 
         #region Edit
+        private void clearMacroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.Clear();
+            }
+        }
+
         private void trimMacroToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_MacroPlayer.Stop();
