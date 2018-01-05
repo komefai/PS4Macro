@@ -1,6 +1,6 @@
 ﻿// PS4MacroAPI (File: Internal/WindowControl.cs)
 //
-// Copyright (c) 2017 Komefai
+// Copyright (c) 2018 Komefai
 //
 // Visit http://komefai.com for more information
 //
