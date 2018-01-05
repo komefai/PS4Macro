@@ -161,6 +161,7 @@ namespace PS4Macro.Forms
                 loopCheckBox.Enabled = true;
                 loopCheckBox.Checked = m_MacroPlayer.Loop;
                 loopToolStripMenuItem.Enabled = true;
+                recordOnTouchToolStripMenuItem.Enabled = true;
                 scriptButton.Enabled = false;
                 saveToolStripMenuItem.Enabled = false;
                 saveAsToolStripMenuItem.Enabled = false;
@@ -181,6 +182,7 @@ namespace PS4Macro.Forms
                 loopCheckBox.Enabled = false;
                 loopCheckBox.Checked = false;
                 loopToolStripMenuItem.Enabled = false;
+                recordOnTouchToolStripMenuItem.Enabled = false;
                 scriptButton.Enabled = true;
                 saveToolStripMenuItem.Enabled = false;
                 saveAsToolStripMenuItem.Enabled = false;
@@ -205,6 +207,7 @@ namespace PS4Macro.Forms
                 //loopCheckBox.Enabled = false;
                 //loopCheckBox.Checked = false;
                 //loopToolStripMenuItem.Enabled = false;
+                //recordOnTouchToolStripMenuItem.Enabled = false;
                 //scriptButton.Enabled = false;
                 //saveToolStripMenuItem.Enabled = false;
                 //saveAsToolStripMenuItem.Enabled = false;
@@ -309,6 +312,12 @@ namespace PS4Macro.Forms
                     {
                         loopCheckBox.Checked = m_MacroPlayer.Loop;
                         loopToolStripMenuItem.Checked = m_MacroPlayer.Loop;
+                        break;
+                    }
+
+                case "RecordShortcut":
+                    {
+                        recordOnTouchToolStripMenuItem.Checked = m_MacroPlayer.RecordShortcut;
                         break;
                     }
             }
@@ -517,6 +526,14 @@ namespace PS4Macro.Forms
             if (m_ControlMode == ControlMode.Macro)
             {
                 m_MacroPlayer.Loop = !loopToolStripMenuItem.Checked;
+            }
+        }
+
+        private void recordOnTouchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_ControlMode == ControlMode.Macro)
+            {
+                m_MacroPlayer.RecordShortcut = !recordOnTouchToolStripMenuItem.Checked;
             }
         }
         #endregion

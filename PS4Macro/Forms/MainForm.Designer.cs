@@ -67,6 +67,7 @@
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
             this.clearMacroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recordOnTouchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -249,7 +250,8 @@
             this.stopToolStripMenuItem,
             this.recordToolStripMenuItem,
             this.toolStripSeparator3,
-            this.loopToolStripMenuItem});
+            this.loopToolStripMenuItem,
+            this.recordOnTouchToolStripMenuItem});
             this.playbackToolStripMenuItem.Name = "playbackToolStripMenuItem";
             this.playbackToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.playbackToolStripMenuItem.Text = "Playback";
@@ -257,21 +259,21 @@
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.playToolStripMenuItem.Text = "Play";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -279,21 +281,21 @@
             // 
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
             this.recordToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.recordToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.recordToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.recordToolStripMenuItem.Text = "Record";
             this.recordToolStripMenuItem.Click += new System.EventHandler(this.recordToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(163, 6);
             // 
             // loopToolStripMenuItem
             // 
             this.loopToolStripMenuItem.Checked = true;
             this.loopToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.loopToolStripMenuItem.Name = "loopToolStripMenuItem";
-            this.loopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loopToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.loopToolStripMenuItem.Text = "Loop";
             this.loopToolStripMenuItem.Click += new System.EventHandler(this.loopToolStripMenuItem_Click);
             // 
@@ -392,6 +394,15 @@
             this.clearMacroToolStripMenuItem.Text = "Clear Macro";
             this.clearMacroToolStripMenuItem.Click += new System.EventHandler(this.clearMacroToolStripMenuItem_Click);
             // 
+            // recordOnTouchToolStripMenuItem
+            // 
+            this.recordOnTouchToolStripMenuItem.Checked = true;
+            this.recordOnTouchToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.recordOnTouchToolStripMenuItem.Name = "recordOnTouchToolStripMenuItem";
+            this.recordOnTouchToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.recordOnTouchToolStripMenuItem.Text = "Record On Touch";
+            this.recordOnTouchToolStripMenuItem.Click += new System.EventHandler(this.recordOnTouchToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +474,7 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trimMacroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearMacroToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recordOnTouchToolStripMenuItem;
     }
 }
 

@@ -58,6 +58,20 @@ namespace PS4Macro.Classes
             }
         }
 
+        private bool m_RecordShortcut = true;
+        public bool RecordShortcut
+        {
+            get { return m_RecordShortcut; }
+            set
+            {
+                if (value != m_RecordShortcut)
+                {
+                    m_RecordShortcut = value;
+                    NotifyPropertyChanged("RecordShortcut");
+                }
+            }
+        }
+
         private bool m_IsPlaying = false;
         public bool IsPlaying
         {
@@ -133,10 +147,13 @@ namespace PS4Macro.Classes
         public event MacroLapEnterHandler LapEnter;
         #endregion
 
+        private bool m_RecordShortcutDown = false;
+
         /* Constructor */
         public MacroPlayer()
         {
             Loop = true;
+            RecordShortcut = true;
             IsPlaying = false;
             IsPaused = false;
             IsRecording = false;
@@ -187,6 +204,38 @@ namespace PS4Macro.Classes
 
         public void OnReceiveData(ref DualShockState state)
         {
+            // Record shortcut trigger
+            if (RecordShortcut)
+            {
+                // Down
+                if (state.TouchButton)
+                {
+                    if (!m_RecordShortcutDown)
+                    {
+                        m_RecordShortcutDown = true;
+                    }
+                }
+                // Up
+                else
+                {
+                    if (m_RecordShortcutDown)
+                    {
+                        m_RecordShortcutDown = false;
+
+                        // Auto play
+                        if (!IsPlaying || IsPaused)
+                            Play();
+
+                        // Record
+                        Record();
+                    }
+                }
+
+                // Override real value
+                state.TouchButton = false;
+            }
+
+            // Playback
             if (IsPlaying && !IsPaused)
             {
                 // Recording
