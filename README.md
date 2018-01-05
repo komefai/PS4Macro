@@ -5,17 +5,23 @@
 
 Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterceptor](https://github.com/komefai/PS4RemotePlayInterceptor).
 
+🔔 **Download latest version [here](https://github.com/komefai/PS4Macro/releases)!**
+
 #### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_4_0.png)
+![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_5_0.png)
 
 ## Usage
 
-**Download latest version [here](https://github.com/komefai/PS4Macro/releases)!**
+##### Easy Way (shortcut)
+
+Press the touch button on your controller (touchpad) to start recording and press it again to stop.
+
+> NOTE: If you're using the touch button in the macro then disable it by going to Playback->Record On Touch
+
+##### Manual Way
 
 To record, click on `RECORD` button (Ctrl+R) to arm recording then press `PLAY` to start recording controls. The red text on the bottom right indicates the number of frames recorded. You can stop recording by clicking on `RECORD` button (Ctrl+R) again. The macro will then play the controls in a loop.
-
-See [this video](https://youtu.be/txI9AOEAk58) for basic usage / making of.
 
 ## Settings
 
@@ -39,6 +45,14 @@ You can create `settings.xml` and place it with the executable to override defau
   <StartupFile>MyMacro.xml</StartupFile>
 </Settings>
 ```
+
+## Command Line Arguments
+
+As of version 0.5.0, you can pass command line arguments to PS4Macro.exe and override the values in settings.xml. This allows you to create multiple shortcuts to PS4Macro.exe and have each of them override the settings when switching between games.
+
+##### Example
+
+`PS4Macro.exe --AutoInject --EmulateController --ShowConsole=false --StartupFile="C:\macro.xml"`
 
 ## Scripting
 
@@ -113,7 +127,7 @@ Update-Package –reinstall PS4RemotePlayInterceptor
 
 ## Resources
 
-- [Tutorial Video](https://youtu.be/txI9AOEAk58)
+- [Making Of Video](https://youtu.be/txI9AOEAk58)
 - [Scripting Tutorial Video](https://youtu.be/daCb97rbimA)
 - [Prototype Demo Video](https://youtu.be/QjTZsPR-BcI)
 
@@ -122,3 +136,4 @@ Update-Package –reinstall PS4RemotePlayInterceptor
 - [EasyHook](https://easyhook.github.io/)
 - [Jays2Kings/DS4Windows](https://github.com/Jays2Kings/DS4Windows)
 - [jforshee/ImageHashing](https://github.com/jforshee/ImageHashing)
+- [Mono.Options](https://www.nuget.org/packages/Mono.Options/)
