@@ -163,8 +163,8 @@ namespace PS4Macro.Forms
                 loopToolStripMenuItem.Enabled = true;
                 recordOnTouchToolStripMenuItem.Enabled = true;
                 scriptButton.Enabled = false;
-                saveToolStripMenuItem.Enabled = false;
-                saveAsToolStripMenuItem.Enabled = false;
+                saveToolStripMenuItem.Enabled = true;
+                saveAsToolStripMenuItem.Enabled = true;
                 clearMacroToolStripMenuItem.Enabled = true;
                 trimMacroToolStripMenuItem.Enabled = true;
             }
