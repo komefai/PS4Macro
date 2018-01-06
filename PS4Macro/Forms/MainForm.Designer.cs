@@ -238,14 +238,14 @@
             // clearMacroToolStripMenuItem
             // 
             this.clearMacroToolStripMenuItem.Name = "clearMacroToolStripMenuItem";
-            this.clearMacroToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.clearMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearMacroToolStripMenuItem.Text = "Clear Macro";
             this.clearMacroToolStripMenuItem.Click += new System.EventHandler(this.clearMacroToolStripMenuItem_Click);
             // 
             // trimMacroToolStripMenuItem
             // 
             this.trimMacroToolStripMenuItem.Name = "trimMacroToolStripMenuItem";
-            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.trimMacroToolStripMenuItem.Text = "Trim Macro";
             this.trimMacroToolStripMenuItem.Click += new System.EventHandler(this.trimMacroToolStripMenuItem_Click);
             // 
@@ -423,7 +423,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PS4 Macro - v0.5.0 (BETA)";
+            this.Text = "PS4 Macro - v0.5.1 (BETA)";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
