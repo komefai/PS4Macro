@@ -39,11 +39,10 @@ namespace PS4Macro.Classes
 
         public static List<DualShockState> TrimMacro(List<DualShockState> sequence)
         {
-            var newSequence = sequence.Select(item => item.Clone()).ToList();
+            var newSequence = sequence.Select(item => item == null ? null : item.Clone()).ToList();
 
             // Edit sequence
-            TrimSequence(newSequence, false); // Trim start
-            TrimSequence(newSequence, true); // Trim end
+            TrimMacroInPlace(newSequence);
 
             return newSequence;
         }
@@ -62,7 +61,7 @@ namespace PS4Macro.Classes
                 int offset = 5;
                 for (var i = 0; i < sequence.Count; i++)
                 {
-                    var isDefaultState = IsDefaultState(sequence.ElementAt(i));
+                    var isDefaultState = DualShockState.IsDefaultState(sequence.ElementAt(i));
                     if (!isDefaultState)
                     {
                         if (i == 0) return;
@@ -76,7 +75,7 @@ namespace PS4Macro.Classes
                 int offset = 10;
                 for (var i = sequence.Count - 1; i >= 0; i--)
                 {
-                    var isDefaultState = IsDefaultState(sequence.ElementAt(i));
+                    var isDefaultState = DualShockState.IsDefaultState(sequence.ElementAt(i));
                     if (!isDefaultState)
                     {
                         if (i == sequence.Count - 1) return;
@@ -86,35 +85,6 @@ namespace PS4Macro.Classes
                     }
                 }
             }
-        }
-
-        private static bool IsDefaultState(DualShockState state)
-        {
-            return (state.LX == _defaultState.LX ||
-                        (state.LX >= AnalogDeadZoneMin && state.LX <= AnalogDeadZoneMax)) &&
-                    (state.LY == _defaultState.LY ||
-                        (state.LY >= AnalogDeadZoneMin && state.LY <= AnalogDeadZoneMax)) &&
-                    (state.RX == _defaultState.RX ||
-                        (state.RX >= AnalogDeadZoneMin && state.RX <= AnalogDeadZoneMax)) &&
-                    (state.RY == _defaultState.RY ||
-                        (state.RY >= AnalogDeadZoneMin && state.RY <= AnalogDeadZoneMax)) &&
-                    state.L2 == _defaultState.L2 &&
-                    state.R2 == _defaultState.R2 &&
-                    state.Triangle == _defaultState.Triangle &&
-                    state.Circle == _defaultState.Circle &&
-                    state.Cross == _defaultState.Cross &&
-                    state.Square == _defaultState.Square &&
-                    state.DPad_Up == _defaultState.DPad_Up &&
-                    state.DPad_Down == _defaultState.DPad_Down &&
-                    state.DPad_Left == _defaultState.DPad_Left &&
-                    state.DPad_Right == _defaultState.DPad_Right &&
-                    state.L1 == _defaultState.L1 &&
-                    state.R1 == _defaultState.R1 &&
-                    state.Share == _defaultState.Share &&
-                    state.Options == _defaultState.Options &&
-                    state.L3 == _defaultState.L3 &&
-                    state.R3 == _defaultState.R3 &&
-                    state.PS == _defaultState.PS;
         }
     }
 }
