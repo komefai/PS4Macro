@@ -54,6 +54,12 @@ As of version 0.5.0, you can pass command line arguments to PS4Macro.exe and ove
 
 `PS4Macro.exe --AutoInject --EmulateController --ShowConsole=false --StartupFile="C:\macro.xml"`
 
+## Remapper
+
+Remapper allows you to use your keyboard to control PS4 games with customizable key bindings. To use Remapper, go to Tools->Remapper and focus on PS4 Remote Play to control the game. Simply close the window to return to marco or script mode.
+
+![Remapper](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Remapper.png)
+
 ## Scripting
 
 C# scripting support has been introduced in version 0.3.0 and later. This allows us to create custom behaviors beyond repeating macros with an easy-to-use API. The API also includes wrapped convenience functions such as pressing buttons, timing, and taking a screenshot from PS4 Remote Play. 
