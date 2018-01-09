@@ -32,11 +32,6 @@ namespace PS4Macro.Classes
 {
     public class MacroUtility
     {
-        private static DualShockState _defaultState = new DualShockState();
-        private const byte AnalogDeadZoneMin = 0x78;
-        private const byte AnalogDeadZoneCenter = 0x80;
-        private const byte AnalogDeadZoneMax = 0x88;
-
         public static List<DualShockState> TrimMacro(List<DualShockState> sequence)
         {
             var newSequence = sequence.Select(item => item == null ? null : item.Clone()).ToList();
@@ -65,14 +60,16 @@ namespace PS4Macro.Classes
                     if (!isDefaultState)
                     {
                         if (i == 0) return;
-                        sequence.RemoveRange(0, i - offset);
+                        var offsetVal = i - offset;
+                        if (offsetVal == 0) return;
+                        sequence.RemoveRange(0, offsetVal);
                         return;
                     }
                 }
             }
             else
             {
-                int offset = 10;
+                int offset = 5;
                 for (var i = sequence.Count - 1; i >= 0; i--)
                 {
                     var isDefaultState = DualShockState.IsDefaultState(sequence.ElementAt(i));
@@ -80,7 +77,9 @@ namespace PS4Macro.Classes
                     {
                         if (i == sequence.Count - 1) return;
                         var count = i + offset;
-                        sequence.RemoveRange(count, sequence.Count - count);
+                        var offsetVal = sequence.Count - count;
+                        if (count + offsetVal > sequence.Count) return;
+                        sequence.RemoveRange(count, offsetVal);
                         return;
                     }
                 }
