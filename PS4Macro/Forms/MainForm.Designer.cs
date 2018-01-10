@@ -68,6 +68,7 @@
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
+            this.macroCompressorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -238,14 +239,14 @@
             // clearMacroToolStripMenuItem
             // 
             this.clearMacroToolStripMenuItem.Name = "clearMacroToolStripMenuItem";
-            this.clearMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearMacroToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.clearMacroToolStripMenuItem.Text = "Clear Macro";
             this.clearMacroToolStripMenuItem.Click += new System.EventHandler(this.clearMacroToolStripMenuItem_Click);
             // 
             // trimMacroToolStripMenuItem
             // 
             this.trimMacroToolStripMenuItem.Name = "trimMacroToolStripMenuItem";
-            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trimMacroToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.trimMacroToolStripMenuItem.Text = "Trim Macro";
             this.trimMacroToolStripMenuItem.Click += new System.EventHandler(this.trimMacroToolStripMenuItem_Click);
             // 
@@ -321,6 +322,7 @@
             this.screenshotToolStripMenuItem,
             this.imageHashToolToolStripMenuItem,
             this.resizeRemotePlayToolStripMenuItem,
+            this.macroCompressorToolStripMenuItem,
             this.remapperToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -403,6 +405,13 @@
             this.loopCheckBox.UseVisualStyleBackColor = true;
             this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
             // 
+            // macroCompressorToolStripMenuItem
+            // 
+            this.macroCompressorToolStripMenuItem.Name = "macroCompressorToolStripMenuItem";
+            this.macroCompressorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.macroCompressorToolStripMenuItem.Text = "Macro Compressor";
+            this.macroCompressorToolStripMenuItem.Click += new System.EventHandler(this.macroCompressorToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,6 +484,7 @@
         private System.Windows.Forms.ToolStripMenuItem trimMacroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearMacroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recordOnTouchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem macroCompressorToolStripMenuItem;
     }
 }
 

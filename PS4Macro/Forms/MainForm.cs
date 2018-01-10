@@ -560,12 +560,17 @@ namespace PS4Macro.Forms
 
         private void imageHashToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ImageHashForm().Show();
+            new ImageHashForm().Show(this);
         }
 
         private void resizeRemotePlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ResizeRemotePlayForm().ShowDialog(this);
+        }
+
+        private void macroCompressorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new MacroCompressorForm().ShowDialog(this);
         }
 
         private void remapperToolStripMenuItem_Click(object sender, EventArgs e)

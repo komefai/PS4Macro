@@ -39,10 +39,10 @@ namespace PS4Macro.Forms
 {
     public partial class ImageHashForm : Form
     {
-        protected bool validData;
-        string path;
-        protected Image image;
-        protected Thread getImageThread;
+        private string CurrentPath { get; set; }
+        protected bool IsDataValid { get; set; }
+        protected Image Image { get; set; }
+        protected Thread GetDataThread { get; set; }
 
         public ImageHashForm()
         {
@@ -109,20 +109,20 @@ namespace PS4Macro.Forms
 
         private void ImageHashForm_DragEnter(object sender, DragEventArgs e)
         {
-            string filename;
-            validData = GetFilename(out filename, e);
-            if (validData)
+            string inputPath;
+            IsDataValid = GetFilename(out inputPath, e);
+            if (IsDataValid)
             {
-                path = filename;
-                getImageThread = new Thread(new ThreadStart(() =>
+                CurrentPath = inputPath;
+                GetDataThread = new Thread(new ThreadStart(() =>
                 {
-                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    using (FileStream stream = new FileStream(CurrentPath, FileMode.Open, FileAccess.Read))
                     {
-                        image = Image.FromStream(stream);
+                        Image = Image.FromStream(stream);
                     }
                 }));
 
-                getImageThread.Start();
+                GetDataThread.Start();
                 e.Effect = DragDropEffects.Copy;
             }
             else
@@ -131,9 +131,9 @@ namespace PS4Macro.Forms
 
         private void ImageHashForm_DragDrop(object sender, DragEventArgs e)
         {
-            if (validData)
+            if (IsDataValid)
             {
-                while (getImageThread.IsAlive)
+                while (GetDataThread.IsAlive)
                 {
                     Application.DoEvents();
                     Thread.Sleep(0);
@@ -146,8 +146,8 @@ namespace PS4Macro.Forms
                 else
                     pb = imageBPictureBox;
 
-                pb.Image = image;
-                OnImageChanged(image, pb);
+                pb.Image = Image;
+                OnImageChanged(Image, pb);
             }
         }
     }

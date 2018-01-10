@@ -37,8 +37,8 @@ namespace PS4Macro.Classes
     public class SaveLoadHelper : INotifyPropertyChanged
     {
         public const string DEFAULT_FILE_NAME = "untitled.xml";
-        private const string SAVE_FILTER = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
-        private const string LOAD_FILTER = "Supported Files (*.xml, *.dll)|*.xml;*.dll|All files (*.*)|*.*";
+        public const string XML_FILTER = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
+        public const string LOAD_FILTER = "Supported Files (*.xml, *.dll)|*.xml;*.dll|All files (*.*)|*.*";
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -154,7 +154,7 @@ namespace PS4Macro.Classes
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.InitialDirectory = Assembly.GetExecutingAssembly().Location;
-            saveFileDialog.Filter = SAVE_FILTER;
+            saveFileDialog.Filter = XML_FILTER;
             saveFileDialog.FilterIndex = 0;
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.FileName = fileName == null ? Path.GetFileName(CurrentFile) : fileName;
