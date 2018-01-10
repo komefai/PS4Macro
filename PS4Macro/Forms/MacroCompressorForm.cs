@@ -164,7 +164,7 @@ namespace PS4Macro.Forms
                     catch
                     {
                         IsDataValid = false;
-                        Path = null;
+                        CurrentPath = null;
                     }
                 }));
 
