@@ -276,6 +276,12 @@ namespace PS4Macro.Classes
                         Stop();
                     }
                 }
+
+                // Emulation delay compensation
+                if (Program.Settings.EmulateController)
+                {
+                    System.Threading.Thread.Sleep(1);
+                }
             }
         }
     }
