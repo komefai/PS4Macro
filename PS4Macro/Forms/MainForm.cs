@@ -91,19 +91,19 @@ namespace PS4Macro.Forms
 
         private void InitInterceptor()
         {
+            // Set controller emulation based on settings
+            Interceptor.EmulateController = Program.Settings.EmulateController;
+            emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
+
+            // Enable watchdog based on settings
+            if (!Program.Settings.AutoInject)
+            {
+                Interceptor.InjectionMode = InjectionMode.Compatibility;
+            }
+
             // Inject if not bypassed
             if (!Program.Settings.BypassInjection)
             {
-                // Set controller emulation based on settings
-                Interceptor.EmulateController = Program.Settings.EmulateController;
-                emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
-
-                // Enable watchdog based on settings
-                if (!Program.Settings.AutoInject)
-                {
-                    Interceptor.InjectionMode = InjectionMode.Compatibility;
-                }
-
                 // Attempt to inject into PS4 Remote Play
                 try
                 {

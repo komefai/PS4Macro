@@ -32,7 +32,7 @@ namespace PS4Macro
 {
     static class Program
     {
-        private static Settings m_Settings = Settings.LoadOrCreate();
+        private static Settings m_Settings = Settings.LoadDefaultOrCreate();
         public static Settings Settings => m_Settings;
 
         /// <summary>
@@ -52,8 +52,9 @@ namespace PS4Macro
                     .Add("BypassInjection:", "Bypass the injection for debugging purposes", v => m_Settings.BypassInjection = v == null ? true : Convert.ToBoolean(v))
                     .Add("EmulateController:", "Run with controller emulation (use without a controller)", v => m_Settings.EmulateController = v == null ? true : Convert.ToBoolean(v))
                     .Add("ShowConsole:", "Open debugging console on launch", v => m_Settings.ShowConsole = v == null ? true : Convert.ToBoolean(v))
-                    .Add("StartupFile=", "Absolute or relative path to file to load on launch (can be xml or dll)", v => m_Settings.StartupFile = v);
+                    .Add("StartupFile=", "Absolute or relative path to the file to load on launch (can be xml or dll)", v => m_Settings.StartupFile = v);
 
+                p.Add("Settings=", "Absolute or relative path to the settings file (will take priority)", v => m_Settings = Settings.Load(v));
                 p.Add("h|?|help", "Displays this help message", v => {
                     p.WriteOptionDescriptions(Console.Out);
                     Environment.Exit(0);

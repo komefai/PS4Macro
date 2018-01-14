@@ -50,13 +50,23 @@ namespace PS4Macro.Classes
             StartupFile = null;
         }
 
-        public static Settings LoadOrCreate()
+        public static Settings LoadDefaultOrCreate()
+        {
+            var loaded = Load(FILE_PATH);
+
+            if (loaded == null)
+                return new Settings();
+
+            return loaded;
+        }
+
+        public static Settings Load(string path)
         {
             try
             {
-                if (File.Exists(FILE_PATH))
+                if (File.Exists(path))
                 {
-                    return Deserialize(FILE_PATH);
+                    return Deserialize(path);
                 }
             }
             catch (Exception ex)
@@ -64,9 +74,8 @@ namespace PS4Macro.Classes
                 Console.WriteLine("Settings Error: {0}", ex.Message);
             }
 
-            return new Settings();
+            return null;
         }
-
         public static void Serialize(string path, Settings settings)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
