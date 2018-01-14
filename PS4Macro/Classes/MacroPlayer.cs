@@ -44,7 +44,7 @@ namespace PS4Macro.Classes
         #endregion
 
         #region Properties
-        private bool m_Loop = true;
+        private bool m_Loop = false;
         public bool Loop
         {
             get { return m_Loop; }
@@ -58,7 +58,7 @@ namespace PS4Macro.Classes
             }
         }
 
-        private bool m_RecordShortcut = true;
+        private bool m_RecordShortcut = false;
         public bool RecordShortcut
         {
             get { return m_RecordShortcut; }
@@ -152,8 +152,8 @@ namespace PS4Macro.Classes
         /* Constructor */
         public MacroPlayer()
         {
-            Loop = true;
-            RecordShortcut = true;
+            Loop = false;
+            RecordShortcut = false;
             IsPlaying = false;
             IsPaused = false;
             IsRecording = false;
@@ -233,6 +233,8 @@ namespace PS4Macro.Classes
 
                 // Override real value
                 state.TouchButton = false;
+                state.Touch1 = null;
+                state.Touch2 = null;
             }
 
             // Playback

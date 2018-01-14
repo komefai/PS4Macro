@@ -91,8 +91,6 @@ namespace PS4Macro.Classes
             Script.Host = this;
 
             MacroPlayer = new MacroPlayer();
-            MacroPlayer.Loop = false;
-            MacroPlayer.RecordShortcut = false;
             MacroPlayer.LapEnter += (sender) =>
             {
                 Script.OnMacroLapEnter(sender);

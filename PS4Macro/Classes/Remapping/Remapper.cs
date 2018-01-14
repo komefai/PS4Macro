@@ -54,7 +54,6 @@ namespace PS4Macro.Classes.Remapping
             KeysDict = new Dictionary<Keys, BaseAction>();
 
             MacroPlayer = new MacroPlayer();
-            MacroPlayer.Loop = false;
 
             MappingsDataBinding = new List<MappingAction>()
             {
@@ -220,7 +219,7 @@ namespace PS4Macro.Classes.Remapping
 
             foreach (var key in keys)
             {
-                if (key < 0) continue;
+                if (key == Keys.None) continue;
 
                 try
                 {

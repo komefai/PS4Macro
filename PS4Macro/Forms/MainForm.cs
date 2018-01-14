@@ -73,6 +73,8 @@ namespace PS4Macro.Forms
 
             // Create macro player
             m_MacroPlayer = new MacroPlayer();
+            m_MacroPlayer.Loop = true;
+            m_MacroPlayer.RecordShortcut = true;
             m_MacroPlayer.PropertyChanged += MacroPlayer_PropertyChanged;
 
             // Create remapper
