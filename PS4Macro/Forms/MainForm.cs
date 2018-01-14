@@ -493,8 +493,13 @@ namespace PS4Macro.Forms
             var oldSequenceLength = m_MacroPlayer.Sequence.Count;
             m_MacroPlayer.Sequence = MacroUtility.TrimMacro(m_MacroPlayer.Sequence);
 
+            // Show results
             var difference = oldSequenceLength - m_MacroPlayer.Sequence.Count;
-            MessageBox.Show($"{difference} frames removed", "Trim Macro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                $"{difference} frames removed" + "\n\n" + 
+                $"Before: {oldSequenceLength} frames" + "\n" +
+                $"After: {m_MacroPlayer.Sequence.Count} frames", "Trim Macro", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 

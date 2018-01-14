@@ -44,6 +44,7 @@ namespace PS4Macro.Forms
         protected bool IsDataValid { get; set; }
         protected List<DualShockState> Sequence { get; set; }
         protected Thread GetDataThread { get; set; }
+        protected long FileSize { get; set; }
 
         public MacroCompressorForm()
         {
@@ -109,6 +110,9 @@ namespace PS4Macro.Forms
                     XmlSerializer deserializer = new XmlSerializer(typeof(List<DualShockState>));
                     object obj = deserializer.Deserialize(reader);
                     Sequence = obj as List<DualShockState>;
+
+                    // Get file size
+                    FileSize = new FileInfo(CurrentPath).Length;
                 }
             }
         }
@@ -124,6 +128,56 @@ namespace PS4Macro.Forms
         private void UpdateExportButton()
         {
             exportButton.Enabled = !string.IsNullOrWhiteSpace(CurrentPath) && propertiesCheckedListBox.CheckedItems.Count > 0;
+        }
+
+        // http://www.somacon.com/p576.php
+        // Returns the human-readable file size for an arbitrary, 64-bit file size
+        // The default format is "0.### XB", e.g. "4.2 KB" or "1.434 GB"
+        private string GetBytesReadable(long i)
+        {
+            // Get absolute value
+            long absolute_i = (i < 0 ? -i : i);
+            // Determine the suffix and readable value
+            string suffix;
+            double readable;
+            if (absolute_i >= 0x1000000000000000) // Exabyte
+            {
+                suffix = "EB";
+                readable = (i >> 50);
+            }
+            else if (absolute_i >= 0x4000000000000) // Petabyte
+            {
+                suffix = "PB";
+                readable = (i >> 40);
+            }
+            else if (absolute_i >= 0x10000000000) // Terabyte
+            {
+                suffix = "TB";
+                readable = (i >> 30);
+            }
+            else if (absolute_i >= 0x40000000) // Gigabyte
+            {
+                suffix = "GB";
+                readable = (i >> 20);
+            }
+            else if (absolute_i >= 0x100000) // Megabyte
+            {
+                suffix = "MB";
+                readable = (i >> 10);
+            }
+            else if (absolute_i >= 0x400) // Kilobyte
+            {
+                suffix = "KB";
+                readable = i;
+            }
+            else
+            {
+                return i.ToString("0 B"); // Byte
+            }
+            // Divide by 1024 to get fractional value
+            readable = (readable / 1024);
+            // Return formatted number with suffix
+            return readable.ToString("0.### ") + suffix;
         }
 
         private bool GetFilename(out string filename, DragEventArgs e)
@@ -237,6 +291,15 @@ namespace PS4Macro.Forms
 
                 // Compress macro
                 DualShockState.SerializeCompressed(saveFileDialog.FileName, Sequence, excludeProperties);
+
+                // Show results
+                long newFileSize = new FileInfo(saveFileDialog.FileName).Length;
+                long sizeDifference = FileSize - newFileSize;
+                MessageBox.Show(
+                    $"File size reduced by {GetBytesReadable(sizeDifference)}" + "\n\n" + 
+                    $"Before: {GetBytesReadable(FileSize)}" + "\n" + 
+                    $"After: {GetBytesReadable(newFileSize)}", "Compress Macro", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
