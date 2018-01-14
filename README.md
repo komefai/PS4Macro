@@ -104,6 +104,7 @@ public class Script : ScriptBase
 
 - [Keyboard Remapping Utility](https://github.com/komefai/PS4Macro.Remote)
 - [Marvel Heroes Omega Bot](https://github.com/komefai/PS4Macro.MarvelHeroesOmega)
+- [PES2018 Bot (Simulator Mode)](https://github.com/leguims/PS4Macro.PES2018Lite) by [leguims](https://github.com/leguims)
 
 ## Troubleshoot
 
