@@ -69,7 +69,7 @@ namespace PS4Macro.Forms
 
             // Setup global keyboard hook
             m_GlobalKeyboardHook = new GlobalKeyboardHook();
-            m_GlobalKeyboardHook.KeyboardPressed += OnKeyPressed;
+            if (!Program.Settings.BypassInjection) m_GlobalKeyboardHook.KeyboardPressed += OnKeyPressed;
 
             // Create macro player
             m_MacroPlayer = new MacroPlayer();
@@ -85,58 +85,68 @@ namespace PS4Macro.Forms
             m_SaveLoadHelper = new SaveLoadHelper(this, m_MacroPlayer);
             m_SaveLoadHelper.PropertyChanged += SaveLoadHelper_PropertyChanged;
 
-            // Set controller emulation based on settings
-            Interceptor.EmulateController = Program.Settings.EmulateController;
-            emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
+            // Initialize interceptor
+            InitInterceptor();
+        }
 
-            // Enable watchdog based on settings
-            if (!Program.Settings.AutoInject)
+        private void InitInterceptor()
+        {
+            // Inject if not bypassed
+            if (!Program.Settings.BypassInjection)
             {
-                Interceptor.InjectionMode = InjectionMode.Compatibility;
-            }
+                // Set controller emulation based on settings
+                Interceptor.EmulateController = Program.Settings.EmulateController;
+                emulatedToolStripStatusLabel.Visible = Program.Settings.EmulateController;
 
-            // Attempt to inject into PS4 Remote Play
-            try
-            {
-                int pid = Interceptor.Inject();
-                m_RemotePlayProcess = Process.GetProcessById(pid);
-                m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
-            }
-            // Injection failed
-            catch (InterceptorException ex)
-            {
-                // Only handle when PS4 Remote Play is in used by another injection
-                if (ex.InnerException != null && ex.InnerException.Message.Equals("STATUS_INTERNAL_ERROR: Unknown error in injected C++ completion routine. (Code: 15)"))
+                // Enable watchdog based on settings
+                if (!Program.Settings.AutoInject)
                 {
-                    MessageBox.Show("The process has been injected by another executable. Restart PS4 Remote Play and try again.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Environment.Exit(-1);
+                    Interceptor.InjectionMode = InjectionMode.Compatibility;
                 }
-                else
+
+                // Attempt to inject into PS4 Remote Play
+                try
                 {
-                    // Handle exception if watchdog is disabled
-                    if (!Program.Settings.AutoInject)
+                    int pid = Interceptor.Inject();
+                    m_RemotePlayProcess = Process.GetProcessById(pid);
+                    m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
+                }
+                // Injection failed
+                catch (InterceptorException ex)
+                {
+                    // Only handle when PS4 Remote Play is in used by another injection
+                    if (ex.InnerException != null && ex.InnerException.Message.Equals("STATUS_INTERNAL_ERROR: Unknown error in injected C++ completion routine. (Code: 15)"))
                     {
-                        MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("The process has been injected by another executable. Restart PS4 Remote Play and try again.", "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Environment.Exit(-1);
                     }
+                    else
+                    {
+                        // Handle exception if watchdog is disabled
+                        if (!Program.Settings.AutoInject)
+                        {
+                            MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType(), ex.Message), "Injection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Environment.Exit(-1);
+                        }
+                    }
                 }
-            }
 
-            // Start watchdog to automatically inject when possible
-            if (Program.Settings.AutoInject)
-            {
-                Interceptor.Watchdog.Start();
-
-                // Watchdog callbacks
-                Interceptor.Watchdog.OnInjectionSuccess = () =>
+                // Start watchdog to automatically inject when possible
+                if (Program.Settings.AutoInject)
                 {
-                    m_RemotePlayProcess = Interceptor.FindRemotePlayProcess();
-                    m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
-                };
-                Interceptor.Watchdog.OnInjectionFailure = () =>
-                {
+                    Interceptor.Watchdog.Start();
 
-                };
+                    // Watchdog callbacks
+                    Interceptor.Watchdog.OnInjectionSuccess = () =>
+                    {
+                        m_RemotePlayProcess = Interceptor.FindRemotePlayProcess();
+                        m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
+                    };
+                    Interceptor.Watchdog.OnInjectionFailure = () =>
+                    {
+
+                    };
+                }
             }
         }
 

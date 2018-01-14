@@ -36,6 +36,7 @@ namespace PS4Macro.Classes
         public const string FILE_PATH = "settings.xml";
 
         public bool AutoInject { get; set; }
+        public bool BypassInjection { get; set; }
         public bool EmulateController { get; set; }
         public bool ShowConsole { get; set; }
         public string StartupFile { get; set; }
@@ -43,6 +44,7 @@ namespace PS4Macro.Classes
         public Settings()
         {
             AutoInject = false;
+            BypassInjection = false;
             EmulateController = false;
             ShowConsole = false;
             StartupFile = null;

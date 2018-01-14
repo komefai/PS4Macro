@@ -49,6 +49,7 @@ namespace PS4Macro
             {
                 var p = new OptionSet()
                     .Add("AutoInject:", "Automatically poll for PS4 Remote Play and inject whenever possible", v => m_Settings.AutoInject = v == null ? true : Convert.ToBoolean(v))
+                    .Add("BypassInjection:", "Bypass the injection for debugging purposes", v => m_Settings.BypassInjection = v == null ? true : Convert.ToBoolean(v))
                     .Add("EmulateController:", "Run with controller emulation (use without a controller)", v => m_Settings.EmulateController = v == null ? true : Convert.ToBoolean(v))
                     .Add("ShowConsole:", "Open debugging console on launch", v => m_Settings.ShowConsole = v == null ? true : Convert.ToBoolean(v))
                     .Add("StartupFile=", "Absolute or relative path to file to load on launch (can be xml or dll)", v => m_Settings.StartupFile = v);
