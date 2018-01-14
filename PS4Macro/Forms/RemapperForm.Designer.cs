@@ -78,7 +78,9 @@
             this.macrosDataGridView.Size = new System.Drawing.Size(327, 128);
             this.macrosDataGridView.TabIndex = 0;
             this.macrosDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.macrosDataGridView_CellContentClick);
+            this.macrosDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.macrosDataGridView_CellValidating);
             this.macrosDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.macrosDataGridView_CellValueChanged);
+            this.macrosDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.macrosDataGridView_DataError);
             // 
             // Browse
             // 
@@ -130,7 +132,9 @@
             this.mappingsDataGridView.Size = new System.Drawing.Size(327, 179);
             this.mappingsDataGridView.TabIndex = 0;
             this.mappingsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mappingsDataGridView_CellContentClick);
+            this.mappingsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.mappingsDataGridView_CellValidating);
             this.mappingsDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mappingsDataGridView_CellValueChanged);
+            this.mappingsDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.mappingsDataGridView_DataError);
             // 
             // Button
             // 

@@ -66,6 +66,155 @@ namespace PS4Macro.Forms
             macrosDataGridView.DataSource = m_MacrosBindingList;
         }
 
+        private bool IsDuplicatedKey(DataGridView dataGridView, DataGridViewCell editingCell, Keys key, ref string duplicatedValue)
+        {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (editingCell == cell)
+                        continue;
+
+                    if (!dataGridView.Columns[cell.ColumnIndex].HeaderText.Equals("Key"))
+                        continue;
+
+                    if (cell.Value == null)
+                        continue;
+
+                    Keys cellKey = (Keys)cell.Value;
+                    if (cellKey != Keys.None && cellKey == key)
+                    {
+                        if (dataGridView == mappingsDataGridView)
+                        {
+                            duplicatedValue = row.Cells["Button"].Value.ToString();
+                            return true;
+                        }
+                        else if (dataGridView == macrosDataGridView)
+                        {
+                            duplicatedValue = row.Cells["_Name"].Value.ToString();
+                            return true;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsDuplicatedKey(DataGridViewCell editingCell, Keys key, ref string duplicatedValue)
+        {
+            return IsDuplicatedKey(mappingsDataGridView, editingCell, key, ref duplicatedValue) || 
+                IsDuplicatedKey(macrosDataGridView, editingCell, key, ref duplicatedValue);
+        }
+
+        private bool PredictCorrectKey(string input, ref Keys result)
+        {
+            Keys parsedKey;
+            
+            // Need correction
+            if (!Enum.TryParse(input, out parsedKey))
+            {
+                // Predict upper case
+                if (Enum.TryParse(input.ToUpper(), out parsedKey))
+                {
+                    result = parsedKey;
+                    return true;
+                }
+            }
+            // No need to correct
+            else
+            {
+                result = parsedKey;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void OnCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!m_FormLoaded) return;
+            m_Remapper.CreateActions();
+        }
+
+        private void OnCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            var dataGridView = sender as DataGridView;
+            var column = dataGridView.Columns[e.ColumnIndex];
+
+            // Ignore if not editing
+            if (!dataGridView.IsCurrentCellInEditMode)
+                return;
+
+            // Filter for Key column
+            if (column.HeaderText.Equals("Key"))
+            {
+                var row = dataGridView.Rows[e.RowIndex];
+                var cell = row.Cells[e.ColumnIndex];
+                var value = e.FormattedValue.ToString();
+
+                // Try to correct the key
+                Keys parsedKey = Keys.None;
+                if (PredictCorrectKey(value, ref parsedKey))
+                {
+                    // Check if duplicated
+                    string duplicatedValue = null;
+                    if (IsDuplicatedKey(cell, parsedKey, ref duplicatedValue))
+                    {
+                        MessageBox.Show($"Key \"{value}\" already mapped to \"{duplicatedValue}\"", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        e.Cancel = true;
+                    }
+                }
+
+            }
+        }
+
+        private void OnDataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            var dataGridView = sender as DataGridView;
+            var column = dataGridView.Columns[e.ColumnIndex];
+
+            // Filter for Key column
+            if (column.HeaderText.Equals("Key"))
+            {
+                var row = dataGridView.Rows[e.RowIndex];
+                var cell = row.Cells[e.ColumnIndex];
+                var value = dataGridView.EditingControl.Text;
+
+                Action doneEditing = () =>
+                {
+                    // Restore normal behavior
+                    dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                    dataGridView.EndEdit();
+
+                    if (e.RowIndex < dataGridView.Rows.Count)
+                        dataGridView.CurrentCell = dataGridView.Rows[e.RowIndex + 1].Cells[e.ColumnIndex];
+                };
+
+                // Default empty value to None
+                if (string.IsNullOrEmpty(value))
+                {
+                    dataGridView.EditingControl.Text = Keys.None.ToString();
+                    doneEditing();
+                }
+                else
+                {
+                    // Try to correct the key
+                    Keys parsedKey = Keys.None;
+                    if (PredictCorrectKey(value, ref parsedKey))
+                    {
+                        dataGridView.EditingControl.Text = parsedKey.ToString();
+                        doneEditing();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Key \"{value}\" does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
         private void RemapperForm_Load(object sender, EventArgs e)
         {
             // Bind data to UI
@@ -83,23 +232,41 @@ namespace PS4Macro.Forms
 
         private void mappingsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (!m_FormLoaded) return;
-            m_Remapper.CreateActions();
+            OnCellValueChanged(sender, e);
         }
 
         private void macrosDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (!m_FormLoaded) return;
-            m_Remapper.CreateActions();
+            OnCellValueChanged(sender, e);
+        }
+
+        private void mappingsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            OnCellValidating(sender, e);
+        }
+
+        private void macrosDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            OnCellValidating(sender, e);
+        }
+
+        private void mappingsDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            OnDataError(sender, e);
+        }
+
+        private void macrosDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            OnDataError(sender, e);
         }
 
         private void mappingsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var dataGridView = sender as DataGridView;
-            if (dataGridView.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-            {
+            //var dataGridView = sender as DataGridView;
+            //if (dataGridView.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            //{
 
-            }
+            //}
         }
 
         private void macrosDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

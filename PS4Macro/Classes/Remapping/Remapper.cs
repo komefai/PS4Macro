@@ -174,6 +174,11 @@ namespace PS4Macro.Classes.Remapping
             return PressedKeys.Count > 0;
         }
 
+        public bool IsKeyInUse(Keys key)
+        {
+            return KeysDict.ContainsKey(key);
+        }
+
         private string GetBindingsFilePath()
         {
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\" + "bindings.xml"; 
@@ -199,15 +204,27 @@ namespace PS4Macro.Classes.Remapping
         {
             var dict = new Dictionary<Keys, BaseAction>();
 
-            foreach (var item in MappingsDataBinding)
+            Action<BaseAction> addItem = item =>
+            {
+                try
+                {
+                    dict.Add(item.Key, item);
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
+
+            foreach (BaseAction item in MappingsDataBinding)
             {
                 if (item.Key == Keys.None) continue;
-                dict.Add(item.Key, item);
+                addItem(item);
             }
-            foreach (var item in MacrosDataBinding)
+            foreach (BaseAction item in MacrosDataBinding)
             {
                 if (item.Key == Keys.None) continue;
-                dict.Add(item.Key, item);
+                addItem(item);
             }
 
             KeysDict = dict;
