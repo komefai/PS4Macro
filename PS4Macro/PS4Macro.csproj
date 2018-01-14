@@ -44,8 +44,8 @@
       <HintPath>..\packages\Mono.Options.5.3.0.1\lib\net4-client\Mono.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PS4RemotePlayInterceptor, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PS4RemotePlayInterceptor.0.5.1\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
+    <Reference Include="PS4RemotePlayInterceptor, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PS4RemotePlayInterceptor.0.5.2\lib\net40\PS4RemotePlayInterceptor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

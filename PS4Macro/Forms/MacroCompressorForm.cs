@@ -236,7 +236,7 @@ namespace PS4Macro.Forms
                 }
 
                 // Compress macro
-                //DualShockState.SerializeCompressed(saveFileDialog.FileName, sequence, excludeProperties);
+                DualShockState.SerializeCompressed(saveFileDialog.FileName, Sequence, excludeProperties);
             }
         }
 
