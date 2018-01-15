@@ -54,7 +54,7 @@ namespace PS4Macro
                     .Add("ShowConsole:", "Open debugging console on launch", v => m_Settings.ShowConsole = v == null ? true : Convert.ToBoolean(v))
                     .Add("StartupFile=", "Absolute or relative path to the file to load on launch (can be xml or dll)", v => m_Settings.StartupFile = v);
 
-                p.Add("Settings=", "Absolute or relative path to the settings file (will take priority)", v => m_Settings = Settings.Load(v));
+                p.Add("SettingsFile=", "Absolute or relative path to the settings file (will take priority)", v => m_Settings = Settings.Load(v));
                 p.Add("h|?|help", "Displays this help message", v => {
                     p.WriteOptionDescriptions(Console.Out);
                     Environment.Exit(0);
