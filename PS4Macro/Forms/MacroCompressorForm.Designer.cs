@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
-            this.fileNameLabel = new System.Windows.Forms.Label();
             this.framesCountLabel = new System.Windows.Forms.Label();
+            this.fileNameLabel = new System.Windows.Forms.Label();
             this.exportButton = new System.Windows.Forms.Button();
             this.filterGroupBox = new System.Windows.Forms.GroupBox();
             this.deselectAllButton = new System.Windows.Forms.Button();
@@ -50,6 +50,17 @@
             this.inputGroupBox.TabIndex = 3;
             this.inputGroupBox.TabStop = false;
             // 
+            // framesCountLabel
+            // 
+            this.framesCountLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.framesCountLabel.Location = new System.Drawing.Point(6, 28);
+            this.framesCountLabel.Name = "framesCountLabel";
+            this.framesCountLabel.Size = new System.Drawing.Size(179, 15);
+            this.framesCountLabel.TabIndex = 1;
+            this.framesCountLabel.Text = "...";
+            this.framesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.framesCountLabel.Click += new System.EventHandler(this.fileNameLabel_Click);
+            // 
             // fileNameLabel
             // 
             this.fileNameLabel.Location = new System.Drawing.Point(6, 11);
@@ -60,23 +71,12 @@
             this.fileNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.fileNameLabel.Click += new System.EventHandler(this.fileNameLabel_Click);
             // 
-            // framesCountLabel
-            // 
-            this.framesCountLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.framesCountLabel.Location = new System.Drawing.Point(6, 29);
-            this.framesCountLabel.Name = "framesCountLabel";
-            this.framesCountLabel.Size = new System.Drawing.Size(179, 14);
-            this.framesCountLabel.TabIndex = 1;
-            this.framesCountLabel.Text = "-";
-            this.framesCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.framesCountLabel.Click += new System.EventHandler(this.fileNameLabel_Click);
-            // 
             // exportButton
             // 
             this.exportButton.Enabled = false;
-            this.exportButton.Location = new System.Drawing.Point(12, 286);
+            this.exportButton.Location = new System.Drawing.Point(12, 306);
             this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(191, 23);
+            this.exportButton.Size = new System.Drawing.Size(191, 28);
             this.exportButton.TabIndex = 4;
             this.exportButton.Text = "Export Macro";
             this.exportButton.UseVisualStyleBackColor = true;
@@ -87,12 +87,12 @@
             this.filterGroupBox.Controls.Add(this.deselectAllButton);
             this.filterGroupBox.Controls.Add(this.selectAllButton);
             this.filterGroupBox.Controls.Add(this.propertiesCheckedListBox);
-            this.filterGroupBox.Location = new System.Drawing.Point(12, 59);
+            this.filterGroupBox.Location = new System.Drawing.Point(12, 58);
             this.filterGroupBox.Name = "filterGroupBox";
-            this.filterGroupBox.Size = new System.Drawing.Size(191, 222);
+            this.filterGroupBox.Size = new System.Drawing.Size(191, 242);
             this.filterGroupBox.TabIndex = 5;
             this.filterGroupBox.TabStop = false;
-            this.filterGroupBox.Text = "Filter";
+            this.filterGroupBox.Text = "Include Filter";
             // 
             // deselectAllButton
             // 
@@ -141,9 +141,9 @@
             "R1",
             "L3",
             "PS",
+            "TouchButton",
             "Touch1",
             "Touch2",
-            "TouchButton",
             "TouchPacketCounter",
             "FrameCounter",
             "Battery",
@@ -154,9 +154,9 @@
             "GyroX",
             "GyroY",
             "GyroZ"});
-            this.propertiesCheckedListBox.Location = new System.Drawing.Point(6, 47);
+            this.propertiesCheckedListBox.Location = new System.Drawing.Point(6, 48);
             this.propertiesCheckedListBox.Name = "propertiesCheckedListBox";
-            this.propertiesCheckedListBox.Size = new System.Drawing.Size(179, 169);
+            this.propertiesCheckedListBox.Size = new System.Drawing.Size(179, 184);
             this.propertiesCheckedListBox.TabIndex = 3;
             this.propertiesCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.propertiesCheckedListBox_ItemCheck);
             // 
@@ -165,7 +165,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(215, 321);
+            this.ClientSize = new System.Drawing.Size(215, 341);
             this.Controls.Add(this.filterGroupBox);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.inputGroupBox);

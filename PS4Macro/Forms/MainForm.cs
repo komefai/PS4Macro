@@ -31,6 +31,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -563,11 +564,14 @@ namespace PS4Macro.Forms
             var folder = "screenshots";
 
             // Create folder if not exist
-            System.IO.Directory.CreateDirectory(folder);
+            Directory.CreateDirectory(folder);
 
             if (frame != null)
             {
-                frame.Save(folder + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png");
+                var fileName = folder + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
+                frame.Save(fileName);
+
+                Console.WriteLine($"{DateTime.Now.ToString()} - Screenshot saved to {Path.GetFullPath(fileName)}");
             }
             else
             {
