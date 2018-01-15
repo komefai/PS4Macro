@@ -124,11 +124,19 @@ public class Script : ScriptBase
 - [Marvel Heroes Omega Bot](https://github.com/komefai/PS4Macro.MarvelHeroesOmega)
 - [PES2018 Bot (Simulator Mode)](https://github.com/leguims/PS4Macro.PES2018Lite) by [leguims](https://github.com/leguims)
 
+---
+
 ## Troubleshoot
 
 ##### Macro not playing/recording
 
 => Disable AutoInject in settings.xml since some machines does not support AutoInject.
+
+##### EmulateController does not work
+
+=> Make sure you unplug every DualShock 4 controllers from your computer. Start PS4 Remote Play, follow by PS4 Macro and wait for this screen. If you see the text `Press the OPTIONS button on the controller to start.` then it means that the emulated controller is working correctly. You can then press the Start button.
+
+![Emulate Controller Troubleshoot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/EmulateControllerTroubleshoot.png)
 
 ##### Visual Studio Build Error
 
