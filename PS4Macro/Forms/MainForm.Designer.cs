@@ -62,13 +62,13 @@
             this.screenshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageHashToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeRemotePlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.macroCompressorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.remapperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
-            this.macroCompressorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -351,6 +351,13 @@
             this.resizeRemotePlayToolStripMenuItem.Text = "Resize Remote Play";
             this.resizeRemotePlayToolStripMenuItem.Click += new System.EventHandler(this.resizeRemotePlayToolStripMenuItem_Click);
             // 
+            // macroCompressorToolStripMenuItem
+            // 
+            this.macroCompressorToolStripMenuItem.Name = "macroCompressorToolStripMenuItem";
+            this.macroCompressorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.macroCompressorToolStripMenuItem.Text = "Macro Compressor";
+            this.macroCompressorToolStripMenuItem.Click += new System.EventHandler(this.macroCompressorToolStripMenuItem_Click);
+            // 
             // remapperToolStripMenuItem
             // 
             this.remapperToolStripMenuItem.Name = "remapperToolStripMenuItem";
@@ -405,13 +412,6 @@
             this.loopCheckBox.UseVisualStyleBackColor = true;
             this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
             // 
-            // macroCompressorToolStripMenuItem
-            // 
-            this.macroCompressorToolStripMenuItem.Name = "macroCompressorToolStripMenuItem";
-            this.macroCompressorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.macroCompressorToolStripMenuItem.Text = "Macro Compressor";
-            this.macroCompressorToolStripMenuItem.Click += new System.EventHandler(this.macroCompressorToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,7 +432,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PS4 Macro - v0.5.1 (BETA)";
+            this.Text = "PS4 Macro - v0.5.2 (BETA)";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();

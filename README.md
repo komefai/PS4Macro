@@ -9,7 +9,7 @@ Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterce
 
 #### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_5_1.png)
+![Screenshot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/Screenshot_0_5_2.png)
 
 ## Usage
 
@@ -30,6 +30,7 @@ You can create `settings.xml` and place it with the executable to override defau
 | Setting | Description | Default
 | --- | --- | --- |
 | AutoInject | Automatically poll for PS4 Remote Play and inject whenever possible | false |
+| BypassInjection | Bypass the injection for debugging purposes | false |
 | EmulateController | Run with controller emulation (use without a controller) | false |
 | ShowConsole | Open debugging console on launch | false |
 | StartupFile | Absolute or relative path to the file to load on launch (can be xml or dll) | null |
@@ -40,6 +41,7 @@ You can create `settings.xml` and place it with the executable to override defau
 <?xml version="1.0" encoding="utf-8"?>
 <Settings>
   <AutoInject>true</AutoInject>
+  <BypassInjection>false</BypassInjection>
   <EmulateController>true</EmulateController>
   <ShowConsole>true</ShowConsole>
   <StartupFile>MyMacro.xml</StartupFile>
@@ -50,9 +52,25 @@ You can create `settings.xml` and place it with the executable to override defau
 
 As of version 0.5.0, you can pass command line arguments to PS4Macro.exe and override the values in settings.xml. This allows you to create multiple shortcuts to PS4Macro.exe and have each of them override the settings when switching between games.
 
-##### Example
+#### Arguments
 
-`PS4Macro.exe --AutoInject --EmulateController --ShowConsole=false --StartupFile="C:\macro.xml"`
+| Argument | Description | Default
+| --- | --- | --- |
+| SettingsFile | Absolute or relative path to the settings file (will take priority) | null |
+
+#### Examples
+
+##### Override settings using arguments
+
+```bash
+C:\> PS4Macro.exe --AutoInject --EmulateController --ShowConsole=false --StartupFile="C:\macro.xml"
+```
+
+##### Override default settings file (highest priority)
+
+```bash
+C:\> PS4Macro.exe --SettingsFile="C:\custom-settings.xml"
+```
 
 ## Remapper
 
@@ -122,14 +140,10 @@ Update-Package –reinstall PS4RemotePlayInterceptor
 
 ## To-Do List
 
-- ~~Save/Load~~
-- ~~Keyboard Shortcuts~~
-- ~~Status Indicators~~
-- ~~Scripting~~
-- ~~Use without DualShock controller~~
-- Improve Scripting API Docs
-- Playback Timeline UI
+- Improve scripting API docs
+- Playback timeline UI
 - Macro editor tool
+- Mouse support for Remapper
 - ...
 
 ## Resources
