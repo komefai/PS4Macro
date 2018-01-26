@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 using PS4Macro.Classes;
+using PS4Macro.Classes.GlobalHooks;
 using PS4Macro.Classes.Remapping;
 using PS4RemotePlayInterceptor;
 using System;
@@ -50,6 +51,7 @@ namespace PS4Macro.Forms
         private const string CURRENT_TICK_DEFAULT_TEXT = "-";
 
         private GlobalKeyboardHook m_GlobalKeyboardHook;
+        private GlobalMouseHook m_GlobalMouseHook;
 
         private MacroPlayer m_MacroPlayer;
         private Remapper m_Remapper;
@@ -70,7 +72,11 @@ namespace PS4Macro.Forms
 
             // Setup global keyboard hook
             m_GlobalKeyboardHook = new GlobalKeyboardHook();
-            if (!Program.Settings.BypassInjection) m_GlobalKeyboardHook.KeyboardPressed += OnKeyPressed;
+            m_GlobalKeyboardHook.KeyboardPressed += OnKeyPressed;
+
+            // Setup global mouse hook
+            m_GlobalMouseHook = new GlobalMouseHook();
+            m_GlobalMouseHook.MouseEvent += OnMouseEvent;
 
             // Create macro player
             m_MacroPlayer = new MacroPlayer();
@@ -255,6 +261,13 @@ namespace PS4Macro.Forms
             }
         }
 
+        private void OnMouseEvent(object sender, GlobalMouseHookEventArgs e)
+        {
+            if (m_ControlMode == ControlMode.Remapper)
+            {
+                m_Remapper.OnMouseEvent(sender, e);
+            }
+        }
 
 
         private void MainForm_Load(object sender, EventArgs e)

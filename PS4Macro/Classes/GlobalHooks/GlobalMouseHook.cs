@@ -1,35 +1,37 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 
 // https://stackoverflow.com/a/34384189
-namespace PS4Macro.Classes
+namespace PS4Macro.Classes.GlobalHooks
 {
-    public class GlobalKeyboardHookEventArgs : HandledEventArgs
+    public class GlobalMouseHookEventArgs : HandledEventArgs
     {
-        public GlobalKeyboardHook.KeyboardState KeyboardState { get; private set; }
-        public GlobalKeyboardHook.LowLevelKeyboardInputEvent KeyboardData { get; private set; }
+        public GlobalMouseHook.MouseState MouseState { get; private set; }
+        public GlobalMouseHook.LowLevelMouseInputEvent MouseData { get; private set; }
 
-        public GlobalKeyboardHookEventArgs(
-            GlobalKeyboardHook.LowLevelKeyboardInputEvent keyboardData,
-            GlobalKeyboardHook.KeyboardState keyboardState)
+        public GlobalMouseHookEventArgs(
+            GlobalMouseHook.LowLevelMouseInputEvent mouseData,
+            GlobalMouseHook.MouseState mouseState)
         {
-            KeyboardData = keyboardData;
-            KeyboardState = keyboardState;
+            MouseData = mouseData;
+            MouseState = mouseState;
         }
     }
 
     //Based on https://gist.github.com/Stasonix
-    public class GlobalKeyboardHook : IDisposable
+    public class GlobalMouseHook : IDisposable
     {
-        public event EventHandler<GlobalKeyboardHookEventArgs> KeyboardPressed;
+        public event EventHandler<GlobalMouseHookEventArgs> MouseEvent;
 
-        public GlobalKeyboardHook()
+        public GlobalMouseHook()
         {
             _windowsHookHandle = IntPtr.Zero;
             _user32LibraryHandle = IntPtr.Zero;
-            _hookProc = LowLevelKeyboardProc; // we must keep alive _hookProc, because GC is not aware about SetWindowsHookEx behaviour.
+            _hookProc = LowLevelMouseProc; // we must keep alive _hookProc, because GC is not aware about SetWindowsHookEx behaviour.
 
             _user32LibraryHandle = LoadLibrary("User32");
             if (_user32LibraryHandle == IntPtr.Zero)
@@ -40,11 +42,11 @@ namespace PS4Macro.Classes
 
 
 
-            _windowsHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _hookProc, _user32LibraryHandle, 0);
+            _windowsHookHandle = SetWindowsHookEx(WH_MOUSE_LL, _hookProc, _user32LibraryHandle, 0);
             if (_windowsHookHandle == IntPtr.Zero)
             {
                 int errorCode = Marshal.GetLastWin32Error();
-                throw new Win32Exception(errorCode, $"Failed to adjust keyboard hooks for '{Process.GetCurrentProcess().ProcessName}'. Error {errorCode}: {new Win32Exception(Marshal.GetLastWin32Error()).Message}.");
+                throw new Win32Exception(errorCode, $"Failed to adjust mouse hooks for '{Process.GetCurrentProcess().ProcessName}'. Error {errorCode}: {new Win32Exception(Marshal.GetLastWin32Error()).Message}.");
             }
         }
 
@@ -58,12 +60,12 @@ namespace PS4Macro.Classes
                     if (!UnhookWindowsHookEx(_windowsHookHandle))
                     {
                         int errorCode = Marshal.GetLastWin32Error();
-                        throw new Win32Exception(errorCode, $"Failed to remove keyboard hooks for '{Process.GetCurrentProcess().ProcessName}'. Error {errorCode}: {new Win32Exception(Marshal.GetLastWin32Error()).Message}.");
+                        throw new Win32Exception(errorCode, $"Failed to remove mouse hooks for '{Process.GetCurrentProcess().ProcessName}'. Error {errorCode}: {new Win32Exception(Marshal.GetLastWin32Error()).Message}.");
                     }
                     _windowsHookHandle = IntPtr.Zero;
 
                     // ReSharper disable once DelegateSubtraction
-                    _hookProc -= LowLevelKeyboardProc;
+                    _hookProc -= LowLevelMouseProc;
                 }
             }
 
@@ -78,7 +80,7 @@ namespace PS4Macro.Classes
             }
         }
 
-        ~GlobalKeyboardHook()
+        ~GlobalMouseHook()
         {
             Dispose(false);
         }
@@ -135,17 +137,17 @@ namespace PS4Macro.Classes
         static extern IntPtr CallNextHookEx(IntPtr hHook, int code, IntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct LowLevelKeyboardInputEvent
+        public struct LowLevelMouseInputEvent
         {
             /// <summary>
-            /// A virtual-key code. The code must be a value in the range 1 to 254.
+            /// Coordinates of the mouse
             /// </summary>
-            public int VirtualCode;
+            public POINT Point;
 
             /// <summary>
-            /// A hardware scan code for the key. 
+            /// Mouse code
             /// </summary>
-            public int HardwareScanCode;
+            public int MouseCode;
 
             /// <summary>
             /// The extended-key flag, event-injected Flags, context code, and transition-state flag. This member is specified as follows. An application can use the following values to test the keystroke Flags. Testing LLKHF_INJECTED (bit 4) will tell you whether the event was injected. If it was, then testing LLKHF_LOWER_IL_INJECTED (bit 1) will tell you whether or not the event was injected from a process running at lower integrity level.
@@ -163,45 +165,46 @@ namespace PS4Macro.Classes
             public IntPtr AdditionalInformation;
         }
 
-        public const int WH_KEYBOARD_LL = 13;
-        //const int HC_ACTION = 0;
+        private const int WH_MOUSE_LL = 14;
 
-        public enum KeyboardState
+        public enum MouseState
         {
-            KeyDown = 0x0100,
-            KeyUp = 0x0101,
-            SysKeyDown = 0x0104,
-            SysKeyUp = 0x0105
+            LeftButtonDown = 0x0201,
+            LeftButtonUp = 0x0202,
+            Move = 0x0200,
+            Wheel = 0x020A,
+            RightButtonDown = 0x0204,
+            RightButtonUp = 0x0205,
+            MiddleButtonDown = 0x0207,
+            MiddleButtonUp = 0x0208
         }
 
-        public const int VkSnapshot = 0x2c;
-        //const int VkLwin = 0x5b;
-        //const int VkRwin = 0x5c;
-        //const int VkTab = 0x09;
-        //const int VkEscape = 0x18;
-        //const int VkControl = 0x11;
-        const int KfAltdown = 0x2000;
-        public const int LlkhfAltdown = (KfAltdown >> 8);
-
-        public IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam)
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
         {
-            bool fEatKeyStroke = false;
+            public int X;
+            public int Y;
+        }
+
+        public IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            bool fEatMouseStroke = false;
 
             var wparamTyped = wParam.ToInt32();
-            if (Enum.IsDefined(typeof(KeyboardState), wparamTyped))
+            if (Enum.IsDefined(typeof(MouseState), wparamTyped) && nCode >= 0)
             {
-                object o = Marshal.PtrToStructure(lParam, typeof(LowLevelKeyboardInputEvent));
-                LowLevelKeyboardInputEvent p = (LowLevelKeyboardInputEvent)o;
+                object o = Marshal.PtrToStructure(lParam, typeof(LowLevelMouseInputEvent));
+                LowLevelMouseInputEvent p = (LowLevelMouseInputEvent)o;
 
-                var eventArguments = new GlobalKeyboardHookEventArgs(p, (KeyboardState)wparamTyped);
+                var eventArguments = new GlobalMouseHookEventArgs(p, (MouseState)wparamTyped);
 
-                EventHandler<GlobalKeyboardHookEventArgs> handler = KeyboardPressed;
+                EventHandler<GlobalMouseHookEventArgs> handler = MouseEvent;
                 handler?.Invoke(this, eventArguments);
 
-                fEatKeyStroke = eventArguments.Handled;
+                fEatMouseStroke = eventArguments.Handled;
             }
 
-            return fEatKeyStroke ? (IntPtr)1 : CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
+            return fEatMouseStroke ? (IntPtr)1 : CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
         }
     }
 }

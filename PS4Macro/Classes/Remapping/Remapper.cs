@@ -30,7 +30,9 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using PS4RemotePlayInterceptor;
+using PS4Macro.Classes.GlobalHooks;
 using System.IO;
+using System.Drawing;
 
 namespace PS4Macro.Classes.Remapping
 {
@@ -42,6 +44,21 @@ namespace PS4Macro.Classes.Remapping
         public Dictionary<Keys, BaseAction> KeysDict { get; private set; }
         public DualShockState CurrentState { get; private set; }
 
+        public MouseStroke CurrentMouseStroke { get; private set; }
+        public System.Timers.Timer MouseReleaseTimer { get; private set; }
+        public bool IsCursorShowing { get; private set; }
+        public int CursorOverflowX { get; private set; }
+        public int CursorOverflowY { get; private set; }
+        public bool LeftMouseDown { get; private set; }
+        public bool RightMouseDown { get; private set; }
+        public double MouseSpeedX { get; private set; }
+        public double MouseSpeedY { get; private set; }
+
+        // TODO: Expose value to UI
+        public double MouseDecayRate { get; private set; }
+        public double MouseDeadzone{ get; private set; }
+        public int MouseReleaseDelay { get; private set; }
+
         public MacroPlayer MacroPlayer { get; private set; }
         public bool UsingMacroPlayer { get; private set; }
 
@@ -52,6 +69,10 @@ namespace PS4Macro.Classes.Remapping
         {
             PressedKeys = new Dictionary<Keys, bool>();
             KeysDict = new Dictionary<Keys, BaseAction>();
+
+            IsCursorShowing = true;
+            MouseDecayRate = 10;
+            MouseReleaseDelay = 50;
 
             MacroPlayer = new MacroPlayer();
 
@@ -105,36 +126,115 @@ namespace PS4Macro.Classes.Remapping
 
         public void OnReceiveData(ref DualShockState state)
         {
+            // Macro
             if (UsingMacroPlayer)
             {
                 MacroPlayer.OnReceiveData(ref state);
             }
+            // Mapping
             else
             {
                 if (CurrentState != null)
                     state = CurrentState;
+
+                if (!CheckFocusedWindow())
+                    return;
+
+                // TODO: Expose value to UI
+                // Left mouse clicked
+                if (LeftMouseDown)
+                {
+                    RemapperUtility.SetValue(state, "R2", 255);
+                }
+                else
+                {
+                    RemapperUtility.SetValue(state, "R2", 0);
+                }
+
+                // TODO: Expose value to UI
+                // Right mouse clicked
+                if (RightMouseDown)
+                {
+                    RemapperUtility.SetValue(state, "L2", 255);
+                }
+                else
+                {
+                    RemapperUtility.SetValue(state, "L2", 0);
+                }
+
+                // Mouse moved
+                if (CurrentMouseStroke.DidMoved)
+                {
+                    MouseSpeedX = CurrentMouseStroke.VelocityX;
+                    MouseSpeedY = CurrentMouseStroke.VelocityY;
+                    CurrentMouseStroke.DidMoved = false;
+
+                    // Stop release timer
+                    if (MouseReleaseTimer != null)
+                    {
+                        MouseReleaseTimer.Stop();
+                        MouseReleaseTimer = null;
+                    }
+                }
+                // Mouse idle
+                else
+                {
+                    // Start decay
+                    MouseSpeedX /= MouseDecayRate;
+                    MouseSpeedY /= MouseDecayRate;
+
+                    // Stop joystick if within deadzone
+                    if (Math.Abs(MouseSpeedX) < MouseDeadzone || Math.Abs(MouseSpeedY) < MouseDeadzone)
+                    {
+                        // Reset mouse speed
+                        MouseSpeedX = 0;
+                        MouseSpeedY = 0;
+
+                        // Start release timer
+                        if (MouseReleaseTimer == null)
+                        {
+                            MouseReleaseTimer = new System.Timers.Timer(MouseReleaseDelay);
+                            MouseReleaseTimer.Start();
+                            MouseReleaseTimer.Elapsed += (s, e) =>
+                            {
+                                // Recenter cursor
+                                RemapperUtility.SetCursorPosition(500, 500);
+
+                                // Reset cursor overflow
+                                CursorOverflowX = 0;
+                                CursorOverflowY = 0;
+
+                                // Stop release timer
+                                MouseReleaseTimer.Stop();
+                                MouseReleaseTimer = null;
+                            };
+
+                        }
+                    }
+                }
+
+                const double min = 0;
+                const double max = 255;
+
+                // Scale speed to joystick
+                double rx = 128 + (MouseSpeedX * 127);
+                double ry = 128 + (MouseSpeedY * 127);
+                state.RX = (byte)((rx < min) ? min : (rx > max) ? max : rx);
+                state.RY = (byte)((ry < min) ? min : (ry > max) ? max : ry);
             }
         }
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
+        private bool CheckFocusedWindow()
+        {
+            return RemapperUtility.IsProcessInForeground(RemotePlayProcess);
+        }
 
         public void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx
 
-            if (RemotePlayProcess == null)
+            if (!CheckFocusedWindow())
                 return;
-
-            // Check for focused window
-            var activeWindow = GetForegroundWindow();
-            if (activeWindow != IntPtr.Zero)
-            {
-                if (activeWindow != RemotePlayProcess.MainWindowHandle)
-                {
-                    return;
-                }
-            }
 
             int vk = e.KeyboardData.VirtualCode;
             Keys key = (Keys)vk;
@@ -169,6 +269,123 @@ namespace PS4Macro.Classes.Remapping
             }
         }
 
+        public void OnMouseEvent(object sender, GlobalMouseHookEventArgs e)
+        {
+            bool focusedWindow = CheckFocusedWindow();
+
+            // Focused
+            if (focusedWindow)
+            {
+                // Hide cursor
+                if (IsCursorShowing)
+                {
+                    RemapperUtility.ShowSystemCursor(false);
+                    RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, false);
+                    IsCursorShowing = false;
+                }
+            }
+            // Not focused
+            else
+            {
+                // Show cursor
+                if (!IsCursorShowing)
+                {
+                    RemapperUtility.ShowSystemCursor(true);
+                    RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, true);
+                    IsCursorShowing = true;
+                }
+
+                // Ignore the rest if not focused
+                return;
+            }
+
+            // Left mouse
+            if (e.MouseState == GlobalMouseHook.MouseState.LeftButtonDown)
+            {
+                LeftMouseDown = true;
+                e.Handled = focusedWindow;
+            }
+            else if (e.MouseState == GlobalMouseHook.MouseState.LeftButtonUp)
+            {
+                LeftMouseDown = false;
+                e.Handled = focusedWindow;
+            }
+            // Right mouse
+            else if (e.MouseState == GlobalMouseHook.MouseState.RightButtonDown)
+            {
+                RightMouseDown = true;
+                e.Handled = focusedWindow;
+            }
+            else if (e.MouseState == GlobalMouseHook.MouseState.RightButtonUp)
+            {
+                RightMouseDown = false;
+                e.Handled = focusedWindow;
+            }
+            // Mouse move
+            else if (e.MouseState == GlobalMouseHook.MouseState.Move)
+            {
+                #region Store mouse stroke
+                var newStroke = new MouseStroke()
+                {
+                    Timestamp = DateTime.Now,
+                    RawData = e,
+                    DidMoved = true,
+                    X = e.MouseData.Point.X + CursorOverflowX,
+                    Y = e.MouseData.Point.Y + CursorOverflowY
+                };
+
+                if (CurrentMouseStroke != null)
+                {
+                    double deltaTime = (newStroke.Timestamp - CurrentMouseStroke.Timestamp).TotalSeconds;
+                    newStroke.VelocityX = (newStroke.X - CurrentMouseStroke.X) / deltaTime;
+                    newStroke.VelocityY = (newStroke.Y - CurrentMouseStroke.Y) / deltaTime;
+                }
+
+                CurrentMouseStroke = newStroke;
+                #endregion
+
+                #region Adjust cursor position
+                var x = e.MouseData.Point.X;
+                var y = e.MouseData.Point.Y;
+
+                var didSetPosition = false;
+                var workingArea = Screen.PrimaryScreen.WorkingArea;
+
+                if (x >= workingArea.Width)
+                {
+                    CursorOverflowX += workingArea.Width;
+                    x = 0;
+                    didSetPosition = true;
+                }
+                else if (x <= 0)
+                {
+                    CursorOverflowX -= workingArea.Width;
+                    x = workingArea.Width;
+                    didSetPosition = true;
+                }
+
+                if (y >= workingArea.Height)
+                {
+                    CursorOverflowY += workingArea.Height;
+                    y = 0;
+                    didSetPosition = true;
+                }
+                else if (y <= 0)
+                {
+                    CursorOverflowY -= workingArea.Height;
+                    y = workingArea.Height;
+                    didSetPosition = true;
+                }
+
+                if (didSetPosition)
+                {
+                    RemapperUtility.SetCursorPosition(x, y);
+                    e.Handled = true;
+                }
+                #endregion
+            }
+        }
+
         public bool IsKeyDown()
         {
             return PressedKeys.Count > 0;
@@ -181,7 +398,7 @@ namespace PS4Macro.Classes.Remapping
 
         private string GetBindingsFilePath()
         {
-            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\" + "bindings.xml"; 
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\" + "bindings.xml";
         }
 
         public void SaveBindings()
@@ -284,7 +501,7 @@ namespace PS4Macro.Classes.Remapping
             bool didSetProperty = false;
             try
             {
-                SetValue(state, action.Property, action.Value);
+                RemapperUtility.SetValue(state, action.Property, action.Value);
                 didSetProperty = true;
             }
             catch (Exception ex) { Debug.WriteLine(ex.StackTrace); }
@@ -310,35 +527,6 @@ namespace PS4Macro.Classes.Remapping
             MacroPlayer.Stop();
             MacroPlayer.LoadFile(action.Path);
             MacroPlayer.Play();
-        }
-
-        // https://stackoverflow.com/questions/13270183/type-conversion-issue-when-setting-property-through-reflection
-        private static void SetValue(object inputObject, string propertyName, object propertyVal)
-        {
-            //find out the type
-            Type type = inputObject.GetType();
-
-            //get the property information based on the type
-            System.Reflection.PropertyInfo propertyInfo = type.GetProperty(propertyName);
-
-            //find the property type
-            Type propertyType = propertyInfo.PropertyType;
-
-            //Convert.ChangeType does not handle conversion to nullable types
-            //if the property type is nullable, we need to get the underlying type of the property
-            var targetType = IsNullableType(propertyInfo.PropertyType) ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
-
-            //Returns an System.Object with the specified System.Type and whose value is
-            //equivalent to the specified object.
-            propertyVal = Convert.ChangeType(propertyVal, targetType);
-
-            //Set the value of the property
-            propertyInfo.SetValue(inputObject, propertyVal, null);
-
-        }
-        private static bool IsNullableType(Type type)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
         }
     }
 }

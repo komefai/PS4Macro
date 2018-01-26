@@ -62,13 +62,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ConsoleHelper.cs" />
-    <Compile Include="Classes\GlobalKeyboardHook.cs" />
+    <Compile Include="Classes\GlobalHooks\GlobalKeyboardHook.cs" />
+    <Compile Include="Classes\GlobalHooks\GlobalMouseHook.cs" />
     <Compile Include="Classes\MacroUtility.cs" />
     <Compile Include="Classes\Remapping\BaseAction.cs" />
     <Compile Include="Classes\Remapping\BindingsContainer.cs" />
+    <Compile Include="Classes\Remapping\MouseStroke.cs" />
     <Compile Include="Classes\Remapping\Remapper.cs" />
     <Compile Include="Classes\Remapping\MacroAction.cs" />
     <Compile Include="Classes\Remapping\MappingAction.cs" />
+    <Compile Include="Classes\Remapping\RemapperUtility.cs" />
     <Compile Include="Classes\ScriptHost.cs" />
     <Compile Include="Classes\ScriptHostUtility.cs" />
     <Compile Include="Classes\Settings.cs" />
