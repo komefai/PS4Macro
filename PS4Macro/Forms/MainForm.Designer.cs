@@ -432,7 +432,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PS4 Macro - v0.5.2 (BETA)";
+            this.Text = "[DEBUG] PS4 Macro - v0.5.2 (BETA)";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
