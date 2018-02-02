@@ -1,4 +1,4 @@
-﻿// PPS4Macro(File: Classes/Remapping/BaseAction.cs)
+﻿// PS4Macro(File: Classes/Remapping/BaseAction.cs)
 //
 // Copyright (c) 2018 Komefai
 //

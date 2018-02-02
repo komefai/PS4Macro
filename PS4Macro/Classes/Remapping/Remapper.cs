@@ -1,4 +1,4 @@
-﻿// PPS4Macro(File: Classes/Remapping/Remapper.cs)
+﻿// PS4Macro(File: Classes/Remapping/Remapper.cs)
 //
 // Copyright (c) 2018 Komefai
 //
@@ -33,11 +33,22 @@ using PS4RemotePlayInterceptor;
 using PS4Macro.Classes.GlobalHooks;
 using System.IO;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace PS4Macro.Classes.Remapping
 {
+    public enum AnalogStick
+    {
+        Left,
+        Right
+    }
+
     public class Remapper
     {
+        // Delegates
+        public delegate void OnMouseAxisChangedDelegate(byte x, byte y);
+        public OnMouseAxisChangedDelegate OnMouseAxisChanged { get; set; }
+
         public Process RemotePlayProcess { get; set; }
 
         public Dictionary<Keys, bool> PressedKeys { get; private set; }
@@ -54,10 +65,14 @@ namespace PS4Macro.Classes.Remapping
         public double MouseSpeedX { get; private set; }
         public double MouseSpeedY { get; private set; }
 
-        // TODO: Expose value to UI
-        public double MouseDecayRate { get; private set; }
-        public double MouseDeadzone{ get; private set; }
-        public int MouseReleaseDelay { get; private set; }
+        public bool EnableMouseInput { get; set; }
+        public double MouseSensitivity { get; set; }
+        public double MouseDecayRate { get; set; }
+        public double MouseReleaseDelay { get; set; }
+        public double MouseDeadzone { get; set; }
+        public AnalogStick MouseMovementAnalog { get; set; }
+        public int LeftMouseMapping { get; set; }
+        public int RightMouseMapping { get; set; }
 
         public MacroPlayer MacroPlayer { get; private set; }
         public bool UsingMacroPlayer { get; private set; }
@@ -71,8 +86,15 @@ namespace PS4Macro.Classes.Remapping
             KeysDict = new Dictionary<Keys, BaseAction>();
 
             IsCursorShowing = true;
+
+            EnableMouseInput = false;
+            MouseSensitivity = 1;
             MouseDecayRate = 10;
             MouseReleaseDelay = 50;
+            MouseDeadzone = 0.1;
+            MouseMovementAnalog = AnalogStick.Right;
+            LeftMouseMapping = 11; // R2
+            RightMouseMapping = 10; // L2
 
             MacroPlayer = new MacroPlayer();
 
@@ -134,93 +156,123 @@ namespace PS4Macro.Classes.Remapping
             // Mapping
             else
             {
-                if (CurrentState != null)
-                    state = CurrentState;
-
                 if (!CheckFocusedWindow())
                     return;
 
-                // TODO: Expose value to UI
-                // Left mouse clicked
-                if (LeftMouseDown)
+                // Create the default state to modify
+                if (CurrentState == null)
                 {
-                    RemapperUtility.SetValue(state, "R2", 255);
-                }
-                else
-                {
-                    RemapperUtility.SetValue(state, "R2", 0);
+                    CurrentState = new DualShockState() { Battery = 255 };
                 }
 
-                // TODO: Expose value to UI
-                // Right mouse clicked
-                if (RightMouseDown)
+                // Mouse Input
+                if (EnableMouseInput)
                 {
-                    RemapperUtility.SetValue(state, "L2", 255);
-                }
-                else
-                {
-                    RemapperUtility.SetValue(state, "L2", 0);
-                }
+                    var checkState = new DualShockState();
 
-                // Mouse moved
-                if (CurrentMouseStroke.DidMoved)
-                {
-                    MouseSpeedX = CurrentMouseStroke.VelocityX;
-                    MouseSpeedY = CurrentMouseStroke.VelocityY;
-                    CurrentMouseStroke.DidMoved = false;
-
-                    // Stop release timer
-                    if (MouseReleaseTimer != null)
+                    // Left mouse
+                    var leftMap = MappingsDataBinding.ElementAtOrDefault(LeftMouseMapping);
+                    if (leftMap != null)
                     {
-                        MouseReleaseTimer.Stop();
-                        MouseReleaseTimer = null;
-                    }
-                }
-                // Mouse idle
-                else
-                {
-                    // Start decay
-                    MouseSpeedX /= MouseDecayRate;
-                    MouseSpeedY /= MouseDecayRate;
-
-                    // Stop joystick if within deadzone
-                    if (Math.Abs(MouseSpeedX) < MouseDeadzone || Math.Abs(MouseSpeedY) < MouseDeadzone)
-                    {
-                        // Reset mouse speed
-                        MouseSpeedX = 0;
-                        MouseSpeedY = 0;
-
-                        // Start release timer
-                        if (MouseReleaseTimer == null)
+                        if (LeftMouseDown)
                         {
-                            MouseReleaseTimer = new System.Timers.Timer(MouseReleaseDelay);
-                            MouseReleaseTimer.Start();
-                            MouseReleaseTimer.Elapsed += (s, e) =>
-                            {
-                                // Recenter cursor
-                                RemapperUtility.SetCursorPosition(500, 500);
-
-                                // Reset cursor overflow
-                                CursorOverflowX = 0;
-                                CursorOverflowY = 0;
-
-                                // Stop release timer
-                                MouseReleaseTimer.Stop();
-                                MouseReleaseTimer = null;
-                            };
-
+                            RemapperUtility.SetValue(CurrentState, leftMap.Property, leftMap.Value);
+                        }
+                        else
+                        {
+                            var defaultValue = RemapperUtility.GetValue(checkState, leftMap.Property);
+                            RemapperUtility.SetValue(CurrentState, leftMap.Property, defaultValue);
                         }
                     }
+
+
+                    // Right mouse
+                    var rightMap = MappingsDataBinding.ElementAtOrDefault(RightMouseMapping);
+                    if (rightMap != null)
+                    {
+                        if (RightMouseDown)
+                        {
+                            RemapperUtility.SetValue(CurrentState, rightMap.Property, rightMap.Value);
+                        }
+                        else
+                        {
+                            var defaultValue = RemapperUtility.GetValue(checkState, rightMap.Property);
+                            RemapperUtility.SetValue(CurrentState, rightMap.Property, defaultValue);
+                        }
+                    }
+
+                    // Mouse moved
+                    if (CurrentMouseStroke.DidMoved)
+                    {
+                        MouseSpeedX = CurrentMouseStroke.VelocityX * MouseSensitivity;
+                        MouseSpeedY = CurrentMouseStroke.VelocityY * MouseSensitivity;
+                        CurrentMouseStroke.DidMoved = false;
+
+                        // Stop release timer
+                        if (MouseReleaseTimer != null)
+                        {
+                            MouseReleaseTimer.Stop();
+                            MouseReleaseTimer = null;
+                        }
+                    }
+                    // Mouse idle
+                    else
+                    {
+                        // Start decay
+                        MouseSpeedX /= MouseDecayRate;
+                        MouseSpeedY /= MouseDecayRate;
+
+                        // Stop joystick if within deadzone
+                        if (Math.Abs(MouseSpeedX) < MouseDeadzone || Math.Abs(MouseSpeedY) < MouseDeadzone)
+                        {
+                            // Reset mouse speed
+                            MouseSpeedX = 0;
+                            MouseSpeedY = 0;
+
+                            // Start release timer
+                            if (MouseReleaseTimer == null)
+                            {
+                                MouseReleaseTimer = new System.Timers.Timer(MouseReleaseDelay);
+                                MouseReleaseTimer.Start();
+                                MouseReleaseTimer.Elapsed += (s, e) =>
+                                {
+                                    // Recenter cursor
+                                    RemapperUtility.SetCursorPosition(500, 500);
+
+                                    // Reset cursor overflow
+                                    CursorOverflowX = 0;
+                                    CursorOverflowY = 0;
+
+                                    // Stop release timer
+                                    MouseReleaseTimer.Stop();
+                                    MouseReleaseTimer = null;
+                                };
+
+                            }
+                        }
+                    }
+
+                    const double min = 0;
+                    const double max = 255;
+                    string analogProperty = MouseMovementAnalog == AnalogStick.Left ? "L" : "R";
+
+                    // Scale speed to joystick
+                    double rx = 128 + (MouseSpeedX * 127);
+                    double ry = 128 + (MouseSpeedY * 127);
+
+                    byte scaledX = (byte)((rx < min) ? min : (rx > max) ? max : rx);
+                    byte scaledY = (byte)((ry < min) ? min : (ry > max) ? max : ry);
+
+                    // Set the analog values
+                    RemapperUtility.SetValue(CurrentState, analogProperty + "X", scaledX);
+                    RemapperUtility.SetValue(CurrentState, analogProperty + "Y", scaledY);
+
+                    // Invoke callback
+                    OnMouseAxisChanged?.Invoke(scaledX, scaledY);
                 }
 
-                const double min = 0;
-                const double max = 255;
-
-                // Scale speed to joystick
-                double rx = 128 + (MouseSpeedX * 127);
-                double ry = 128 + (MouseSpeedY * 127);
-                state.RX = (byte)((rx < min) ? min : (rx > max) ? max : rx);
-                state.RY = (byte)((ry < min) ? min : (ry > max) ? max : ry);
+                // Assign the state
+                state = CurrentState;
             }
         }
 
@@ -276,12 +328,13 @@ namespace PS4Macro.Classes.Remapping
             // Focused
             if (focusedWindow)
             {
-                // Hide cursor
-                if (IsCursorShowing)
+                if (EnableMouseInput)
                 {
-                    RemapperUtility.ShowSystemCursor(false);
-                    RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, false);
-                    IsCursorShowing = false;
+                    // Hide cursor
+                    if (IsCursorShowing)
+                    {
+                        ShowCursorAndToolbar(false);
+                    }
                 }
             }
             // Not focused
@@ -290,14 +343,16 @@ namespace PS4Macro.Classes.Remapping
                 // Show cursor
                 if (!IsCursorShowing)
                 {
-                    RemapperUtility.ShowSystemCursor(true);
-                    RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, true);
-                    IsCursorShowing = true;
+                    ShowCursorAndToolbar(true);
                 }
 
                 // Ignore the rest if not focused
                 return;
             }
+
+            // Ignore if disabled
+            if (!EnableMouseInput)
+                return;
 
             // Left mouse
             if (e.MouseState == GlobalMouseHook.MouseState.LeftButtonDown)
@@ -383,6 +438,22 @@ namespace PS4Macro.Classes.Remapping
                     e.Handled = true;
                 }
                 #endregion
+            }
+        }
+
+        private void ShowCursorAndToolbar(bool value)
+        {
+            if (value)
+            {
+                RemapperUtility.ShowSystemCursor(true);
+                RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, true);
+                IsCursorShowing = true;
+            }
+            else
+            {
+                RemapperUtility.ShowSystemCursor(false);
+                RemapperUtility.ShowStreamingToolBar(RemotePlayProcess, false);
+                IsCursorShowing = false;
             }
         }
 

@@ -75,6 +75,9 @@
     <Compile Include="Classes\ScriptHost.cs" />
     <Compile Include="Classes\ScriptHostUtility.cs" />
     <Compile Include="Classes\Settings.cs" />
+    <Compile Include="Controls\AxisDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

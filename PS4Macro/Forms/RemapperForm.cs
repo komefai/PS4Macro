@@ -36,7 +36,7 @@ namespace PS4Macro.Forms
 {
     public partial class RemapperForm : Form
     {
-        public Remapper m_Remapper;
+        public Remapper Remapper { get; set; }
 
         private bool m_FormLoaded;
 
@@ -47,14 +47,14 @@ namespace PS4Macro.Forms
         {
             InitializeComponent();
 
-            m_Remapper = remapper;
+            Remapper = remapper;
         }
 
         private void BindMappingsDataGrid()
         {
             mappingsDataGridView.AutoGenerateColumns = false;
 
-            m_MappingsBindingList = new BindingList<MappingAction>(m_Remapper.MappingsDataBinding);
+            m_MappingsBindingList = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
             mappingsDataGridView.DataSource = m_MappingsBindingList;
         }
 
@@ -62,8 +62,20 @@ namespace PS4Macro.Forms
         {
             macrosDataGridView.AutoGenerateColumns = false;
 
-            m_MacrosBindingList = new BindingList<MacroAction>(m_Remapper.MacrosDataBinding);
+            m_MacrosBindingList = new BindingList<MacroAction>(Remapper.MacrosDataBinding);
             macrosDataGridView.DataSource = m_MacrosBindingList;
+        }
+
+        private void BindLeftMouseComboBox()
+        {
+            leftMouseComboBox.DataSource = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
+            leftMouseComboBox.DisplayMember = "Name";
+        }
+
+        private void BindRightMouseComboBox()
+        {
+            rightMouseComboBox.DataSource = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
+            rightMouseComboBox.DisplayMember = "Name";
         }
 
         private bool IsDuplicatedKey(DataGridView dataGridView, DataGridViewCell editingCell, Keys key, ref string duplicatedValue)
@@ -132,10 +144,19 @@ namespace PS4Macro.Forms
             return false;
         }
 
+        public void SetAxisDisplay(PointF point)
+        {
+            BeginInvoke(new Action(() =>
+            {
+                axisDisplay.Value = point;
+                axisDisplay.Invalidate();
+            }));
+        }
+
         private void OnCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (!m_FormLoaded) return;
-            m_Remapper.CreateActions();
+            Remapper.CreateActions();
         }
 
         private void OnCellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -215,19 +236,50 @@ namespace PS4Macro.Forms
             }
         }
 
+        private void OnMouseAxisChanged(byte x, byte y)
+        {
+            float fx = (2 * (x / 255f)) - 1;
+            float fy = (2 * (y / 255f)) - 1;
+            SetAxisDisplay(new PointF(fx, -fy));
+        }
+
         private void RemapperForm_Load(object sender, EventArgs e)
         {
             // Bind data to UI
             BindMappingsDataGrid();
             BindMacrosDataGrid();
 
+            // Bind mouse buttons
+            BindLeftMouseComboBox();
+            BindRightMouseComboBox();
+
+            // Load mouse input settings
+            enableMouseCheckBox.Checked = Remapper.EnableMouseInput;
+            sensitivityNumericUpDown.Value = (decimal)Remapper.MouseSensitivity;
+            decayRateNumericUpDown.Value = (decimal)Remapper.MouseDecayRate;
+            releaseDelayNumericUpDown.Value = (decimal)Remapper.MouseReleaseDelay;
+            sensitivityNumericUpDown.Value = (decimal)Remapper.MouseSensitivity;
+            deadzoneNumericUpDown.Value = (decimal)Remapper.MouseDeadzone;
+            leftStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Left;
+            rightStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Right;
+            leftMouseComboBox.SelectedIndex = Remapper.LeftMouseMapping;
+            rightMouseComboBox.SelectedIndex = Remapper.RightMouseMapping;
+
+            // Setup mouse delegate
+            Remapper.OnMouseAxisChanged += OnMouseAxisChanged;
+
             // Mark form as loaded
             m_FormLoaded = true;
         }
 
+        private void RemapperForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Remapper.OnMouseAxisChanged -= OnMouseAxisChanged;
+        }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
-            m_Remapper.SaveBindings();
+            Remapper.SaveBindings();
         }
 
         private void mappingsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -289,12 +341,12 @@ namespace PS4Macro.Forms
                     string path = openFileDialog.FileName;
                     string fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
 
-                    if (rowIndex >= m_Remapper.MacrosDataBinding.Count)
+                    if (rowIndex >= Remapper.MacrosDataBinding.Count)
                     {
-                        m_Remapper.MacrosDataBinding.Add(new MacroAction());
+                        Remapper.MacrosDataBinding.Add(new MacroAction());
                     }
 
-                    var item = m_Remapper.MacrosDataBinding[rowIndex];
+                    var item = Remapper.MacrosDataBinding[rowIndex];
                     item.Name = fileName;
                     //item.Key = Keys.None;
                     item.Path = path;
@@ -303,6 +355,57 @@ namespace PS4Macro.Forms
                     m_MacrosBindingList.ResetBindings();
                 }
             }
+        }
+
+        /*
+        /* MOUSE INPUT SETTINGS
+        */
+
+        private void enableMouseCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Remapper.EnableMouseInput = enableMouseCheckBox.Checked;
+        }
+
+        private void sensitivityNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseSensitivity = (double)sensitivityNumericUpDown.Value;
+        }
+
+        private void decayRateNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseDecayRate = (double)decayRateNumericUpDown.Value;
+        }
+
+        private void releaseDelayNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseReleaseDelay = (int)releaseDelayNumericUpDown.Value;
+        }
+
+        private void deadzoneNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseDeadzone = (double)deadzoneNumericUpDown.Value;
+        }
+
+        private void leftStickRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseMovementAnalog = AnalogStick.Left;
+        }
+
+        private void rightStickRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseMovementAnalog = AnalogStick.Right;
+        }
+
+        private void leftMouseComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_FormLoaded) return;
+            Remapper.LeftMouseMapping = leftMouseComboBox.SelectedIndex;
+        }
+
+        private void rightMouseComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_FormLoaded) return;
+            Remapper.RightMouseMapping = rightMouseComboBox.SelectedIndex;
         }
     }
 }

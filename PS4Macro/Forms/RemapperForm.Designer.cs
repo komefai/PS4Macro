@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemapperForm));
             this.saveButton = new System.Windows.Forms.Button();
             this.macrosGroupBox = new System.Windows.Forms.GroupBox();
             this.macrosDataGridView = new System.Windows.Forms.DataGridView();
@@ -39,15 +40,40 @@
             this.mappingsDataGridView = new System.Windows.Forms.DataGridView();
             this.Button = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mouseInputGroupBox = new System.Windows.Forms.GroupBox();
+            this.movementJoystickLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rightStickRadioButton = new System.Windows.Forms.RadioButton();
+            this.leftStickRadioButton = new System.Windows.Forms.RadioButton();
+            this.rightMouseComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.leftMouseComboBox = new System.Windows.Forms.ComboBox();
+            this.leftMouseLabel = new System.Windows.Forms.Label();
+            this.enableMouseCheckBox = new System.Windows.Forms.CheckBox();
+            this.deadzoneNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.releaseDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.decayRateNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.sensitivityNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.deadzoneLabel = new System.Windows.Forms.Label();
+            this.releaseDelayLabel = new System.Windows.Forms.Label();
+            this.decayRateLabel = new System.Windows.Forms.Label();
+            this.sensitivityLabel = new System.Windows.Forms.Label();
+            this.axisDisplay = new PS4Macro.Controls.AxisDisplay();
             this.macrosGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.macrosDataGridView)).BeginInit();
             this.mappingsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mappingsDataGridView)).BeginInit();
+            this.mouseInputGroupBox.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.deadzoneNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.releaseDelayNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(256, 10);
+            this.saveButton.Location = new System.Drawing.Point(456, 10);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(96, 23);
             this.saveButton.TabIndex = 5;
@@ -150,11 +176,210 @@
             this.Key.HeaderText = "Key";
             this.Key.Name = "Key";
             // 
+            // mouseInputGroupBox
+            // 
+            this.mouseInputGroupBox.Controls.Add(this.axisDisplay);
+            this.mouseInputGroupBox.Controls.Add(this.movementJoystickLabel);
+            this.mouseInputGroupBox.Controls.Add(this.panel1);
+            this.mouseInputGroupBox.Controls.Add(this.rightMouseComboBox);
+            this.mouseInputGroupBox.Controls.Add(this.label1);
+            this.mouseInputGroupBox.Controls.Add(this.leftMouseComboBox);
+            this.mouseInputGroupBox.Controls.Add(this.leftMouseLabel);
+            this.mouseInputGroupBox.Controls.Add(this.enableMouseCheckBox);
+            this.mouseInputGroupBox.Controls.Add(this.deadzoneNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.releaseDelayNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.decayRateNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.sensitivityNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.deadzoneLabel);
+            this.mouseInputGroupBox.Controls.Add(this.releaseDelayLabel);
+            this.mouseInputGroupBox.Controls.Add(this.decayRateLabel);
+            this.mouseInputGroupBox.Controls.Add(this.sensitivityLabel);
+            this.mouseInputGroupBox.Location = new System.Drawing.Point(358, 34);
+            this.mouseInputGroupBox.Name = "mouseInputGroupBox";
+            this.mouseInputGroupBox.Size = new System.Drawing.Size(194, 363);
+            this.mouseInputGroupBox.TabIndex = 7;
+            this.mouseInputGroupBox.TabStop = false;
+            this.mouseInputGroupBox.Text = "Mouse Input";
+            // 
+            // movementJoystickLabel
+            // 
+            this.movementJoystickLabel.AutoSize = true;
+            this.movementJoystickLabel.Location = new System.Drawing.Point(9, 172);
+            this.movementJoystickLabel.Name = "movementJoystickLabel";
+            this.movementJoystickLabel.Size = new System.Drawing.Size(98, 13);
+            this.movementJoystickLabel.TabIndex = 9;
+            this.movementJoystickLabel.Text = "Movement Joystick";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rightStickRadioButton);
+            this.panel1.Controls.Add(this.leftStickRadioButton);
+            this.panel1.Location = new System.Drawing.Point(9, 188);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(179, 24);
+            this.panel1.TabIndex = 10;
+            // 
+            // rightStickRadioButton
+            // 
+            this.rightStickRadioButton.AutoSize = true;
+            this.rightStickRadioButton.Checked = true;
+            this.rightStickRadioButton.Location = new System.Drawing.Point(99, 3);
+            this.rightStickRadioButton.Name = "rightStickRadioButton";
+            this.rightStickRadioButton.Size = new System.Drawing.Size(77, 17);
+            this.rightStickRadioButton.TabIndex = 1;
+            this.rightStickRadioButton.TabStop = true;
+            this.rightStickRadioButton.Text = "Right Stick";
+            this.rightStickRadioButton.UseVisualStyleBackColor = true;
+            this.rightStickRadioButton.CheckedChanged += new System.EventHandler(this.rightStickRadioButton_CheckedChanged);
+            // 
+            // leftStickRadioButton
+            // 
+            this.leftStickRadioButton.AutoSize = true;
+            this.leftStickRadioButton.Location = new System.Drawing.Point(3, 3);
+            this.leftStickRadioButton.Name = "leftStickRadioButton";
+            this.leftStickRadioButton.Size = new System.Drawing.Size(70, 17);
+            this.leftStickRadioButton.TabIndex = 0;
+            this.leftStickRadioButton.Text = "Left Stick";
+            this.leftStickRadioButton.UseVisualStyleBackColor = true;
+            this.leftStickRadioButton.CheckedChanged += new System.EventHandler(this.leftStickRadioButton_CheckedChanged);
+            // 
+            // rightMouseComboBox
+            // 
+            this.rightMouseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rightMouseComboBox.FormattingEnabled = true;
+            this.rightMouseComboBox.Location = new System.Drawing.Point(81, 331);
+            this.rightMouseComboBox.Name = "rightMouseComboBox";
+            this.rightMouseComboBox.Size = new System.Drawing.Size(104, 21);
+            this.rightMouseComboBox.TabIndex = 14;
+            this.rightMouseComboBox.SelectedIndexChanged += new System.EventHandler(this.rightMouseComboBox_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 335);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Right Click";
+            // 
+            // leftMouseComboBox
+            // 
+            this.leftMouseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.leftMouseComboBox.FormattingEnabled = true;
+            this.leftMouseComboBox.Location = new System.Drawing.Point(81, 305);
+            this.leftMouseComboBox.Name = "leftMouseComboBox";
+            this.leftMouseComboBox.Size = new System.Drawing.Size(104, 21);
+            this.leftMouseComboBox.TabIndex = 12;
+            this.leftMouseComboBox.SelectedIndexChanged += new System.EventHandler(this.leftMouseComboBox_SelectedIndexChanged);
+            // 
+            // leftMouseLabel
+            // 
+            this.leftMouseLabel.AutoSize = true;
+            this.leftMouseLabel.Location = new System.Drawing.Point(9, 309);
+            this.leftMouseLabel.Name = "leftMouseLabel";
+            this.leftMouseLabel.Size = new System.Drawing.Size(51, 13);
+            this.leftMouseLabel.TabIndex = 11;
+            this.leftMouseLabel.Text = "Left Click";
+            // 
+            // enableMouseCheckBox
+            // 
+            this.enableMouseCheckBox.AutoSize = true;
+            this.enableMouseCheckBox.Location = new System.Drawing.Point(12, 27);
+            this.enableMouseCheckBox.Name = "enableMouseCheckBox";
+            this.enableMouseCheckBox.Size = new System.Drawing.Size(94, 17);
+            this.enableMouseCheckBox.TabIndex = 0;
+            this.enableMouseCheckBox.Text = "Enable Mouse";
+            this.enableMouseCheckBox.UseVisualStyleBackColor = true;
+            this.enableMouseCheckBox.CheckedChanged += new System.EventHandler(this.enableMouseCheckBox_CheckedChanged);
+            // 
+            // deadzoneNumericUpDown
+            // 
+            this.deadzoneNumericUpDown.DecimalPlaces = 2;
+            this.deadzoneNumericUpDown.Location = new System.Drawing.Point(136, 136);
+            this.deadzoneNumericUpDown.Name = "deadzoneNumericUpDown";
+            this.deadzoneNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.deadzoneNumericUpDown.TabIndex = 8;
+            this.deadzoneNumericUpDown.ValueChanged += new System.EventHandler(this.deadzoneNumericUpDown_ValueChanged);
+            // 
+            // releaseDelayNumericUpDown
+            // 
+            this.releaseDelayNumericUpDown.Location = new System.Drawing.Point(136, 110);
+            this.releaseDelayNumericUpDown.Name = "releaseDelayNumericUpDown";
+            this.releaseDelayNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.releaseDelayNumericUpDown.TabIndex = 6;
+            this.releaseDelayNumericUpDown.ValueChanged += new System.EventHandler(this.releaseDelayNumericUpDown_ValueChanged);
+            // 
+            // decayRateNumericUpDown
+            // 
+            this.decayRateNumericUpDown.DecimalPlaces = 2;
+            this.decayRateNumericUpDown.Location = new System.Drawing.Point(136, 84);
+            this.decayRateNumericUpDown.Name = "decayRateNumericUpDown";
+            this.decayRateNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.decayRateNumericUpDown.TabIndex = 4;
+            this.decayRateNumericUpDown.ValueChanged += new System.EventHandler(this.decayRateNumericUpDown_ValueChanged);
+            // 
+            // sensitivityNumericUpDown
+            // 
+            this.sensitivityNumericUpDown.DecimalPlaces = 2;
+            this.sensitivityNumericUpDown.Location = new System.Drawing.Point(136, 58);
+            this.sensitivityNumericUpDown.Name = "sensitivityNumericUpDown";
+            this.sensitivityNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.sensitivityNumericUpDown.TabIndex = 2;
+            this.sensitivityNumericUpDown.ValueChanged += new System.EventHandler(this.sensitivityNumericUpDown_ValueChanged);
+            // 
+            // deadzoneLabel
+            // 
+            this.deadzoneLabel.AutoSize = true;
+            this.deadzoneLabel.Location = new System.Drawing.Point(9, 138);
+            this.deadzoneLabel.Name = "deadzoneLabel";
+            this.deadzoneLabel.Size = new System.Drawing.Size(56, 13);
+            this.deadzoneLabel.TabIndex = 7;
+            this.deadzoneLabel.Text = "Deadzone";
+            // 
+            // releaseDelayLabel
+            // 
+            this.releaseDelayLabel.AutoSize = true;
+            this.releaseDelayLabel.Location = new System.Drawing.Point(9, 112);
+            this.releaseDelayLabel.Name = "releaseDelayLabel";
+            this.releaseDelayLabel.Size = new System.Drawing.Size(98, 13);
+            this.releaseDelayLabel.TabIndex = 5;
+            this.releaseDelayLabel.Text = "Release Delay (ms)";
+            // 
+            // decayRateLabel
+            // 
+            this.decayRateLabel.AutoSize = true;
+            this.decayRateLabel.Location = new System.Drawing.Point(9, 86);
+            this.decayRateLabel.Name = "decayRateLabel";
+            this.decayRateLabel.Size = new System.Drawing.Size(64, 13);
+            this.decayRateLabel.TabIndex = 3;
+            this.decayRateLabel.Text = "Decay Rate";
+            // 
+            // sensitivityLabel
+            // 
+            this.sensitivityLabel.AutoSize = true;
+            this.sensitivityLabel.Location = new System.Drawing.Point(9, 60);
+            this.sensitivityLabel.Name = "sensitivityLabel";
+            this.sensitivityLabel.Size = new System.Drawing.Size(54, 13);
+            this.sensitivityLabel.TabIndex = 1;
+            this.sensitivityLabel.Text = "Sensitivity";
+            // 
+            // axisDisplay
+            // 
+            this.axisDisplay.InnerColor = System.Drawing.Color.GhostWhite;
+            this.axisDisplay.InnerSize = 12;
+            this.axisDisplay.Location = new System.Drawing.Point(67, 221);
+            this.axisDisplay.Name = "axisDisplay";
+            this.axisDisplay.OuterColor = System.Drawing.Color.DodgerBlue;
+            this.axisDisplay.Size = new System.Drawing.Size(60, 60);
+            this.axisDisplay.TabIndex = 15;
+            this.axisDisplay.Value = ((System.Drawing.PointF)(resources.GetObject("axisDisplay.Value")));
+            // 
             // RemapperForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 406);
+            this.ClientSize = new System.Drawing.Size(564, 406);
+            this.Controls.Add(this.mouseInputGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.macrosGroupBox);
             this.Controls.Add(this.mappingsGroupBox);
@@ -162,11 +387,20 @@
             this.Name = "RemapperForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Remapper";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RemapperForm_FormClosed);
             this.Load += new System.EventHandler(this.RemapperForm_Load);
             this.macrosGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.macrosDataGridView)).EndInit();
             this.mappingsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mappingsDataGridView)).EndInit();
+            this.mouseInputGroupBox.ResumeLayout(false);
+            this.mouseInputGroupBox.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.deadzoneNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.releaseDelayNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -184,5 +418,24 @@
         private System.Windows.Forms.DataGridView mappingsDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Button;
         private System.Windows.Forms.DataGridViewTextBoxColumn Key;
+        private System.Windows.Forms.GroupBox mouseInputGroupBox;
+        private System.Windows.Forms.Label sensitivityLabel;
+        private System.Windows.Forms.Label releaseDelayLabel;
+        private System.Windows.Forms.Label decayRateLabel;
+        private System.Windows.Forms.Label deadzoneLabel;
+        private System.Windows.Forms.CheckBox enableMouseCheckBox;
+        private System.Windows.Forms.NumericUpDown deadzoneNumericUpDown;
+        private System.Windows.Forms.NumericUpDown releaseDelayNumericUpDown;
+        private System.Windows.Forms.NumericUpDown decayRateNumericUpDown;
+        private System.Windows.Forms.NumericUpDown sensitivityNumericUpDown;
+        private System.Windows.Forms.ComboBox rightMouseComboBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox leftMouseComboBox;
+        private System.Windows.Forms.Label leftMouseLabel;
+        private System.Windows.Forms.Label movementJoystickLabel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rightStickRadioButton;
+        private System.Windows.Forms.RadioButton leftStickRadioButton;
+        private Controls.AxisDisplay axisDisplay;
     }
 }

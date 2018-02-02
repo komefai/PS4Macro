@@ -1,4 +1,4 @@
-﻿// PPS4Macro(File: Classes/Remapping/RemapperUtility.cs)
+﻿// PS4Macro(File: Classes/Remapping/RemapperUtility.cs)
 //
 // Copyright (c) 2018 Komefai
 //
@@ -309,6 +309,12 @@ namespace PS4Macro.Classes.Remapping
         public static bool IsNullableType(Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+        }
+
+        // https://stackoverflow.com/questions/1196991/get-property-value-from-string-using-reflection-in-c-sharp
+        public static object GetValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
     }
 }

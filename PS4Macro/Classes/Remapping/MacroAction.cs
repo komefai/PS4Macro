@@ -1,4 +1,4 @@
-﻿// PPS4Macro(File: Classes/Remapping/MacroAction.cs)
+﻿// PS4Macro(File: Classes/Remapping/MacroAction.cs)
 //
 // Copyright (c) 2018 Komefai
 //
@@ -44,6 +44,11 @@ namespace PS4Macro.Classes.Remapping
             Name = name;
             Key = key;
             Path = path;
+        }
+
+        public MacroAction Clone()
+        {
+            return new MacroAction(Name, Key, Path);
         }
     }
 }

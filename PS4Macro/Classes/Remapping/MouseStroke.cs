@@ -1,4 +1,4 @@
-﻿// PPS4Macro(File: Classes/Remapping/MouseStroke.cs)
+﻿// PS4Macro(File: Classes/Remapping/MouseStroke.cs)
 //
 // Copyright (c) 2018 Komefai
 //
