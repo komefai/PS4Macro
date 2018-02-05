@@ -204,8 +204,8 @@ namespace PS4Macro.Classes.Remapping
                     // Mouse moved
                     if (CurrentMouseStroke.DidMoved)
                     {
-                        MouseSpeedX = CurrentMouseStroke.VelocityX * MouseSensitivity;
-                        MouseSpeedY = CurrentMouseStroke.VelocityY * MouseSensitivity;
+                        MouseSpeedX = (CurrentMouseStroke.VelocityX / 100) * MouseSensitivity;
+                        MouseSpeedY = (CurrentMouseStroke.VelocityY / 100) * MouseSensitivity;
                         CurrentMouseStroke.DidMoved = false;
 
                         // Stop release timer
