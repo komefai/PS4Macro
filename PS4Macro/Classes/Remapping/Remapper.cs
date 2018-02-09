@@ -45,6 +45,10 @@ namespace PS4Macro.Classes.Remapping
 
     public class Remapper
     {
+        private const int MOUSE_CENTER_X = 500;
+        private const int MOUSE_CENTER_Y = 500;
+        private const int MOUSE_RELEASE_TIME = 50;
+
         // Delegates
         public delegate void OnMouseAxisChangedDelegate(byte x, byte y);
         public OnMouseAxisChangedDelegate OnMouseAxisChanged { get; set; }
@@ -68,8 +72,8 @@ namespace PS4Macro.Classes.Remapping
         public bool EnableMouseInput { get; set; }
         public double MouseSensitivity { get; set; }
         public double MouseDecayRate { get; set; }
-        public double MouseReleaseDelay { get; set; }
-        public double MouseDeadzone { get; set; }
+        public double MouseDecayThreshold { get; set; }
+        public double MouseAnalogDeadzone { get; set; }
         public AnalogStick MouseMovementAnalog { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
@@ -90,8 +94,8 @@ namespace PS4Macro.Classes.Remapping
             EnableMouseInput = false;
             MouseSensitivity = 1;
             MouseDecayRate = 10;
-            MouseReleaseDelay = 50;
-            MouseDeadzone = 0.1;
+            MouseDecayThreshold = 0.1;
+            MouseAnalogDeadzone = 14.25;
             MouseMovementAnalog = AnalogStick.Right;
             LeftMouseMapping = 11; // R2
             RightMouseMapping = 10; // L2
@@ -222,22 +226,22 @@ namespace PS4Macro.Classes.Remapping
                         MouseSpeedX /= MouseDecayRate;
                         MouseSpeedY /= MouseDecayRate;
 
-                        // Stop joystick if within deadzone
-                        if (Math.Abs(MouseSpeedX) < MouseDeadzone || Math.Abs(MouseSpeedY) < MouseDeadzone)
+                        // Stop decaying joystick if below threshold
+                        if (Math.Abs(MouseSpeedX) < MouseDecayThreshold || Math.Abs(MouseSpeedY) < MouseDecayThreshold)
                         {
                             // Reset mouse speed
-                            MouseSpeedX = 0;
-                            MouseSpeedY = 0;
+                            if (Math.Abs(MouseSpeedX) < MouseDecayThreshold) MouseSpeedX = 0;
+                            if (Math.Abs(MouseSpeedY) < MouseDecayThreshold) MouseSpeedY = 0;
 
                             // Start release timer
                             if (MouseReleaseTimer == null)
                             {
-                                MouseReleaseTimer = new System.Timers.Timer(MouseReleaseDelay);
+                                MouseReleaseTimer = new System.Timers.Timer(MOUSE_RELEASE_TIME);
                                 MouseReleaseTimer.Start();
                                 MouseReleaseTimer.Elapsed += (s, e) =>
                                 {
                                     // Recenter cursor
-                                    RemapperUtility.SetCursorPosition(500, 500);
+                                    RemapperUtility.SetCursorPosition(MOUSE_CENTER_X, MOUSE_CENTER_Y);
 
                                     // Reset cursor overflow
                                     CursorOverflowX = 0;
@@ -256,10 +260,11 @@ namespace PS4Macro.Classes.Remapping
                     const double max = 255;
                     string analogProperty = MouseMovementAnalog == AnalogStick.Left ? "L" : "R";
 
-                    // Scale speed to joystick
-                    double rx = 128 + (MouseSpeedX * 127);
-                    double ry = 128 + (MouseSpeedY * 127);
-
+                    // Scale speed to analog values
+                    double positiveSpeed = 128 + MouseAnalogDeadzone;
+                    double negativeSpeed = 128 - MouseAnalogDeadzone;
+                    double rx = ((MouseSpeedX > 0) ? positiveSpeed : ((MouseSpeedX < 0) ? negativeSpeed : 128)) + (MouseSpeedX * 127);
+                    double ry = ((MouseSpeedY > 0) ? positiveSpeed : ((MouseSpeedY < 0) ? negativeSpeed : 128)) + (MouseSpeedY * 127);
                     byte scaledX = (byte)((rx < min) ? min : (rx > max) ? max : rx);
                     byte scaledY = (byte)((ry < min) ? min : (ry > max) ? max : ry);
 
@@ -379,14 +384,21 @@ namespace PS4Macro.Classes.Remapping
             // Mouse move
             else if (e.MouseState == GlobalMouseHook.MouseState.Move)
             {
+                var rawX = e.MouseData.Point.X;
+                var rawY = e.MouseData.Point.Y;
+
+                // Ignore if at center
+                if (rawX == MOUSE_CENTER_X && rawY == MOUSE_CENTER_Y)
+                    return;
+
                 #region Store mouse stroke
                 var newStroke = new MouseStroke()
                 {
                     Timestamp = DateTime.Now,
                     RawData = e,
                     DidMoved = true,
-                    X = e.MouseData.Point.X + CursorOverflowX,
-                    Y = e.MouseData.Point.Y + CursorOverflowY
+                    X = rawX + CursorOverflowX,
+                    Y = rawY + CursorOverflowY
                 };
 
                 if (CurrentMouseStroke != null)
@@ -400,41 +412,40 @@ namespace PS4Macro.Classes.Remapping
                 #endregion
 
                 #region Adjust cursor position
-                var x = e.MouseData.Point.X;
-                var y = e.MouseData.Point.Y;
-
+                var tmpX = rawX;
+                var tmpY = rawY;
                 var didSetPosition = false;
                 var workingArea = Screen.PrimaryScreen.WorkingArea;
 
-                if (x >= workingArea.Width)
+                if (tmpX >= workingArea.Width)
                 {
                     CursorOverflowX += workingArea.Width;
-                    x = 0;
+                    tmpX = 0;
                     didSetPosition = true;
                 }
-                else if (x <= 0)
+                else if (tmpX <= 0)
                 {
                     CursorOverflowX -= workingArea.Width;
-                    x = workingArea.Width;
+                    tmpX = workingArea.Width;
                     didSetPosition = true;
                 }
 
-                if (y >= workingArea.Height)
+                if (tmpY >= workingArea.Height)
                 {
                     CursorOverflowY += workingArea.Height;
-                    y = 0;
+                    tmpY = 0;
                     didSetPosition = true;
                 }
-                else if (y <= 0)
+                else if (tmpY <= 0)
                 {
                     CursorOverflowY -= workingArea.Height;
-                    y = workingArea.Height;
+                    tmpY = workingArea.Height;
                     didSetPosition = true;
                 }
 
                 if (didSetPosition)
                 {
-                    RemapperUtility.SetCursorPosition(x, y);
+                    //RemapperUtility.SetCursorPosition(tmpX, tmpY);
                     e.Handled = true;
                 }
                 #endregion

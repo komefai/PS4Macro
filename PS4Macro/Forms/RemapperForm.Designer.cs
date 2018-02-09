@@ -51,11 +51,11 @@
             this.leftMouseLabel = new System.Windows.Forms.Label();
             this.enableMouseCheckBox = new System.Windows.Forms.CheckBox();
             this.deadzoneNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.releaseDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.decayThresholdNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.decayRateNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.sensitivityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.deadzoneLabel = new System.Windows.Forms.Label();
-            this.releaseDelayLabel = new System.Windows.Forms.Label();
+            this.decayThresholdLabel = new System.Windows.Forms.Label();
             this.decayRateLabel = new System.Windows.Forms.Label();
             this.sensitivityLabel = new System.Windows.Forms.Label();
             this.axisDisplay = new PS4Macro.Controls.AxisDisplay();
@@ -66,7 +66,7 @@
             this.mouseInputGroupBox.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deadzoneNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.releaseDelayNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decayThresholdNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -187,11 +187,11 @@
             this.mouseInputGroupBox.Controls.Add(this.leftMouseLabel);
             this.mouseInputGroupBox.Controls.Add(this.enableMouseCheckBox);
             this.mouseInputGroupBox.Controls.Add(this.deadzoneNumericUpDown);
-            this.mouseInputGroupBox.Controls.Add(this.releaseDelayNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.decayThresholdNumericUpDown);
             this.mouseInputGroupBox.Controls.Add(this.decayRateNumericUpDown);
             this.mouseInputGroupBox.Controls.Add(this.sensitivityNumericUpDown);
             this.mouseInputGroupBox.Controls.Add(this.deadzoneLabel);
-            this.mouseInputGroupBox.Controls.Add(this.releaseDelayLabel);
+            this.mouseInputGroupBox.Controls.Add(this.decayThresholdLabel);
             this.mouseInputGroupBox.Controls.Add(this.decayRateLabel);
             this.mouseInputGroupBox.Controls.Add(this.sensitivityLabel);
             this.mouseInputGroupBox.Location = new System.Drawing.Point(358, 34);
@@ -301,27 +301,48 @@
             this.deadzoneNumericUpDown.TabIndex = 8;
             this.deadzoneNumericUpDown.ValueChanged += new System.EventHandler(this.deadzoneNumericUpDown_ValueChanged);
             // 
-            // releaseDelayNumericUpDown
+            // decayThresholdNumericUpDown
             // 
-            this.releaseDelayNumericUpDown.Location = new System.Drawing.Point(136, 110);
-            this.releaseDelayNumericUpDown.Name = "releaseDelayNumericUpDown";
-            this.releaseDelayNumericUpDown.Size = new System.Drawing.Size(52, 20);
-            this.releaseDelayNumericUpDown.TabIndex = 6;
-            this.releaseDelayNumericUpDown.ValueChanged += new System.EventHandler(this.releaseDelayNumericUpDown_ValueChanged);
+            this.decayThresholdNumericUpDown.DecimalPlaces = 2;
+            this.decayThresholdNumericUpDown.Location = new System.Drawing.Point(136, 110);
+            this.decayThresholdNumericUpDown.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.decayThresholdNumericUpDown.Name = "decayThresholdNumericUpDown";
+            this.decayThresholdNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.decayThresholdNumericUpDown.TabIndex = 6;
+            this.decayThresholdNumericUpDown.ValueChanged += new System.EventHandler(this.decayThresholdNumericUpDown_ValueChanged);
             // 
             // decayRateNumericUpDown
             // 
             this.decayRateNumericUpDown.DecimalPlaces = 2;
             this.decayRateNumericUpDown.Location = new System.Drawing.Point(136, 84);
+            this.decayRateNumericUpDown.Minimum = new decimal(new int[] {
+            101,
+            0,
+            0,
+            131072});
             this.decayRateNumericUpDown.Name = "decayRateNumericUpDown";
             this.decayRateNumericUpDown.Size = new System.Drawing.Size(52, 20);
             this.decayRateNumericUpDown.TabIndex = 4;
+            this.decayRateNumericUpDown.Value = new decimal(new int[] {
+            11,
+            0,
+            0,
+            65536});
             this.decayRateNumericUpDown.ValueChanged += new System.EventHandler(this.decayRateNumericUpDown_ValueChanged);
             // 
             // sensitivityNumericUpDown
             // 
             this.sensitivityNumericUpDown.DecimalPlaces = 2;
             this.sensitivityNumericUpDown.Location = new System.Drawing.Point(136, 58);
+            this.sensitivityNumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.sensitivityNumericUpDown.Name = "sensitivityNumericUpDown";
             this.sensitivityNumericUpDown.Size = new System.Drawing.Size(52, 20);
             this.sensitivityNumericUpDown.TabIndex = 2;
@@ -336,14 +357,14 @@
             this.deadzoneLabel.TabIndex = 7;
             this.deadzoneLabel.Text = "Deadzone";
             // 
-            // releaseDelayLabel
+            // decayThresholdLabel
             // 
-            this.releaseDelayLabel.AutoSize = true;
-            this.releaseDelayLabel.Location = new System.Drawing.Point(9, 112);
-            this.releaseDelayLabel.Name = "releaseDelayLabel";
-            this.releaseDelayLabel.Size = new System.Drawing.Size(98, 13);
-            this.releaseDelayLabel.TabIndex = 5;
-            this.releaseDelayLabel.Text = "Release Delay (ms)";
+            this.decayThresholdLabel.AutoSize = true;
+            this.decayThresholdLabel.Location = new System.Drawing.Point(9, 112);
+            this.decayThresholdLabel.Name = "decayThresholdLabel";
+            this.decayThresholdLabel.Size = new System.Drawing.Size(88, 13);
+            this.decayThresholdLabel.TabIndex = 5;
+            this.decayThresholdLabel.Text = "Decay Threshold";
             // 
             // decayRateLabel
             // 
@@ -398,7 +419,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deadzoneNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.releaseDelayNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decayThresholdNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -420,12 +441,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Key;
         private System.Windows.Forms.GroupBox mouseInputGroupBox;
         private System.Windows.Forms.Label sensitivityLabel;
-        private System.Windows.Forms.Label releaseDelayLabel;
+        private System.Windows.Forms.Label decayThresholdLabel;
         private System.Windows.Forms.Label decayRateLabel;
         private System.Windows.Forms.Label deadzoneLabel;
         private System.Windows.Forms.CheckBox enableMouseCheckBox;
         private System.Windows.Forms.NumericUpDown deadzoneNumericUpDown;
-        private System.Windows.Forms.NumericUpDown releaseDelayNumericUpDown;
+        private System.Windows.Forms.NumericUpDown decayThresholdNumericUpDown;
         private System.Windows.Forms.NumericUpDown decayRateNumericUpDown;
         private System.Windows.Forms.NumericUpDown sensitivityNumericUpDown;
         private System.Windows.Forms.ComboBox rightMouseComboBox;

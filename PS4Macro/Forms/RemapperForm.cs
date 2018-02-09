@@ -257,9 +257,8 @@ namespace PS4Macro.Forms
             enableMouseCheckBox.Checked = Remapper.EnableMouseInput;
             sensitivityNumericUpDown.Value = (decimal)Remapper.MouseSensitivity;
             decayRateNumericUpDown.Value = (decimal)Remapper.MouseDecayRate;
-            releaseDelayNumericUpDown.Value = (decimal)Remapper.MouseReleaseDelay;
-            sensitivityNumericUpDown.Value = (decimal)Remapper.MouseSensitivity;
-            deadzoneNumericUpDown.Value = (decimal)Remapper.MouseDeadzone;
+            decayThresholdNumericUpDown.Value = (decimal)Remapper.MouseDecayThreshold;
+            deadzoneNumericUpDown.Value = (decimal)Remapper.MouseAnalogDeadzone;
             leftStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Left;
             rightStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Right;
             leftMouseComboBox.SelectedIndex = Remapper.LeftMouseMapping;
@@ -376,14 +375,14 @@ namespace PS4Macro.Forms
             Remapper.MouseDecayRate = (double)decayRateNumericUpDown.Value;
         }
 
-        private void releaseDelayNumericUpDown_ValueChanged(object sender, EventArgs e)
+        private void decayThresholdNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Remapper.MouseReleaseDelay = (int)releaseDelayNumericUpDown.Value;
+            Remapper.MouseDecayThreshold = (int)decayThresholdNumericUpDown.Value;
         }
 
         private void deadzoneNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Remapper.MouseDeadzone = (double)deadzoneNumericUpDown.Value;
+            Remapper.MouseAnalogDeadzone = (double)deadzoneNumericUpDown.Value;
         }
 
         private void leftStickRadioButton_CheckedChanged(object sender, EventArgs e)
