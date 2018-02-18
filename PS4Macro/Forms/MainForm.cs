@@ -43,7 +43,8 @@ namespace PS4Macro.Forms
     {
         Macro,
         Script,
-        Remapper
+        Remapper,
+        StatusChecker
     }
 
     public partial class MainForm : Form
@@ -55,6 +56,7 @@ namespace PS4Macro.Forms
 
         private MacroPlayer m_MacroPlayer;
         private Remapper m_Remapper;
+        private StatusChecker m_StatusChecker;
 
         private ControlMode m_ControlMode;
 
@@ -87,6 +89,9 @@ namespace PS4Macro.Forms
             // Create remapper
             m_Remapper = new Remapper();
 
+            // Create status checker
+            m_StatusChecker = new StatusChecker();
+
             // Set control mode
             SetControlMode(ControlMode.Macro);
 
@@ -118,7 +123,9 @@ namespace PS4Macro.Forms
                 {
                     int pid = Interceptor.Inject();
                     m_RemotePlayProcess = Process.GetProcessById(pid);
-                    m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
+
+                    // Set process
+                    ForwardRemotePlayProcess();
                 }
                 // Injection failed
                 catch (InterceptorException ex)
@@ -148,8 +155,7 @@ namespace PS4Macro.Forms
                     // Watchdog callbacks
                     Interceptor.Watchdog.OnInjectionSuccess = () =>
                     {
-                        m_RemotePlayProcess = Interceptor.FindRemotePlayProcess();
-                        m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
+                        ForwardRemotePlayProcess();
                     };
                     Interceptor.Watchdog.OnInjectionFailure = () =>
                     {
@@ -220,20 +226,38 @@ namespace PS4Macro.Forms
 
                 // Setup callback to interceptor
                 Interceptor.Callback = new InterceptionDelegate(m_Remapper.OnReceiveData);
-
-                //recordButton.Enabled = false;
-                //recordToolStripMenuItem.Enabled = false;
-                //loopCheckBox.Enabled = false;
-                //loopCheckBox.Checked = false;
-                //loopToolStripMenuItem.Enabled = false;
-                //recordOnTouchToolStripMenuItem.Enabled = false;
-                //scriptButton.Enabled = false;
-                //saveToolStripMenuItem.Enabled = false;
-                //saveAsToolStripMenuItem.Enabled = false;
-                //clearMacroToolStripMenuItem.Enabled = false;
-                //trimMacroToolStripMenuItem.Enabled = false;
-                //currentTickToolStripStatusLabel.Text = CURRENT_TICK_DEFAULT_TEXT;
             }
+            else if (m_ControlMode == ControlMode.StatusChecker)
+            {
+                // Stop macro player
+                if (m_MacroPlayer.IsRecording) m_MacroPlayer.Record();
+                m_MacroPlayer.Stop();
+
+                // Stop script
+                if (m_ScriptHost != null && m_ScriptHost.IsRunning) m_ScriptHost.Stop();
+
+                // Setup callback to interceptor
+                Interceptor.Callback = new InterceptionDelegate(m_StatusChecker.OnReceiveData);
+            }
+        }
+
+        private void TemporarilySetControlMode(ControlMode controlMode, Action action)
+        {
+            // Store current control mode and temporarily set it
+            ControlMode oldControlMode = m_ControlMode;
+            SetControlMode(controlMode);
+
+            // Invoke action
+            action?.Invoke();
+
+            // Restore control mode
+            SetControlMode(oldControlMode);
+        }
+
+        private void ForwardRemotePlayProcess()
+        {
+            m_Remapper.RemotePlayProcess = m_RemotePlayProcess;
+            m_StatusChecker.RemotePlayProcess = m_RemotePlayProcess;
         }
 
         public void LoadMacro(string path)
@@ -259,6 +283,10 @@ namespace PS4Macro.Forms
             {
                 m_Remapper.OnKeyPressed(sender, e);
             }
+            else if (m_ControlMode == ControlMode.StatusChecker)
+            {
+                m_StatusChecker.OnKeyPressed(sender, e);
+            }
         }
 
         private void OnMouseEvent(object sender, GlobalMouseHookEventArgs e)
@@ -266,6 +294,10 @@ namespace PS4Macro.Forms
             if (m_ControlMode == ControlMode.Remapper)
             {
                 m_Remapper.OnMouseEvent(sender, e);
+            }
+            else if (m_ControlMode == ControlMode.StatusChecker)
+            {
+                m_StatusChecker.OnMouseEvent(sender, e);
             }
         }
 
@@ -609,18 +641,24 @@ namespace PS4Macro.Forms
 
         private void remapperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Store current control mode and temporarily set it to Remapper
-            ControlMode oldControlMode = m_ControlMode;
-            SetControlMode(ControlMode.Remapper);
-
-            new RemapperForm(m_Remapper).ShowDialog(this);
-
-            // Restore control mode
-            SetControlMode(oldControlMode);
+            TemporarilySetControlMode(ControlMode.Remapper, () =>
+            {
+                new RemapperForm(m_Remapper).ShowDialog(this);
+            });
         }
         #endregion
 
         #region Help
+        private void statusCheckerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TemporarilySetControlMode(ControlMode.StatusChecker, () =>
+            {
+                m_StatusChecker.SetActive(true);
+                new StatusCheckerForm(m_StatusChecker).ShowDialog(this);
+                m_StatusChecker.SetActive(false);
+            });
+        }
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var aboutForm = new AboutForm();

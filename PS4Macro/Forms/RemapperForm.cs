@@ -245,6 +245,9 @@ namespace PS4Macro.Forms
 
         private void RemapperForm_Load(object sender, EventArgs e)
         {
+            // Refresh process
+            Remapper.RefreshProcess();
+
             // Bind data to UI
             BindMappingsDataGrid();
             BindMacrosDataGrid();

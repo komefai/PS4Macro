@@ -281,6 +281,18 @@ namespace PS4Macro.Classes.Remapping
             }
         }
 
+        public void RefreshProcess()
+        {
+            try
+            {
+                if (RemotePlayProcess != null && !RemotePlayProcess.HasExited)
+                {
+                    RemotePlayProcess.Refresh();
+                }
+            }
+            catch (Exception) { }
+        }
+
         private bool CheckFocusedWindow()
         {
             return RemapperUtility.IsProcessInForeground(RemotePlayProcess);

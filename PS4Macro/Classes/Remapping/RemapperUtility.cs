@@ -263,11 +263,13 @@ namespace PS4Macro.Classes.Remapping
 
         #region IsProcessInForeground
         [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
+        public static extern IntPtr GetForegroundWindow();
 
         public static bool IsProcessInForeground(Process process)
         {
             if (process == null)
+                return false;
+            if (process.HasExited)
                 return false;
 
             // Check for focused window

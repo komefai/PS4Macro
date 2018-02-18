@@ -69,6 +69,8 @@
             this.statusHighlightLabel = new System.Windows.Forms.Label();
             this.scriptButton = new System.Windows.Forms.Button();
             this.loopCheckBox = new System.Windows.Forms.CheckBox();
+            this.statusCheckerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -368,6 +370,8 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusCheckerToolStripMenuItem,
+            this.toolStripSeparator4,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -376,7 +380,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -411,6 +415,18 @@
             this.loopCheckBox.TabIndex = 9;
             this.loopCheckBox.UseVisualStyleBackColor = true;
             this.loopCheckBox.CheckedChanged += new System.EventHandler(this.loopCheckBox_CheckedChanged);
+            // 
+            // statusCheckerToolStripMenuItem
+            // 
+            this.statusCheckerToolStripMenuItem.Name = "statusCheckerToolStripMenuItem";
+            this.statusCheckerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusCheckerToolStripMenuItem.Text = "Status Checker";
+            this.statusCheckerToolStripMenuItem.Click += new System.EventHandler(this.statusCheckerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // MainForm
             // 
@@ -485,6 +501,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearMacroToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recordOnTouchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem macroCompressorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem statusCheckerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
