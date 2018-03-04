@@ -97,7 +97,7 @@ namespace PS4Macro.Classes.Remapping
 
             EnableMouseInput = false;
             MouseSensitivity = 1;
-            MouseDecayRate = 1.01;
+            MouseDecayRate = 1.2;
             MouseDecayThreshold = 0.1;
             MouseAnalogDeadzone = 14.25;
             MouseMakeupSpeed = 500;
