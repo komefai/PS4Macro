@@ -36,6 +36,16 @@ namespace PS4Macro.Classes.Remapping
         public List<MappingAction> Mappings { get; set; }
         public List<MacroAction> Macros { get; set; }
 
+        public bool EnableMouseInput { get; set; }
+        public double MouseSensitivity { get; set; }
+        public double MouseDecayRate { get; set; }
+        public double MouseDecayThreshold { get; set; }
+        public double MouseAnalogDeadzone { get; set; }
+        public double MouseMakeupSpeed { get; set; }
+        public AnalogStick MouseMovementAnalog { get; set; }
+        public int LeftMouseMapping { get; set; }
+        public int RightMouseMapping { get; set; }
+
         public static void Serialize(string path, BindingsContainer container)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(BindingsContainer));

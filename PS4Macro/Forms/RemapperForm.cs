@@ -282,7 +282,15 @@ namespace PS4Macro.Forms
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Remapper.SaveBindings();
+            try
+            {
+                Remapper.SaveBindings();
+                MessageBox.Show("Bindings saved to " + Remapper.GetBindingsFilePath(), "Save Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("[{0}] - {1}", ex.GetType(), ex.Message), "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void mappingsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)

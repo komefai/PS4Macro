@@ -504,7 +504,7 @@ namespace PS4Macro.Classes.Remapping
             return KeysDict.ContainsKey(key);
         }
 
-        private string GetBindingsFilePath()
+        public string GetBindingsFilePath()
         {
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\" + "bindings.xml";
         }
@@ -515,14 +515,35 @@ namespace PS4Macro.Classes.Remapping
             container.Mappings = MappingsDataBinding;
             container.Macros = MacrosDataBinding;
 
+            container.EnableMouseInput = EnableMouseInput;
+            container.MouseSensitivity = MouseSensitivity;
+            container.MouseDecayRate = MouseDecayRate;
+            container.MouseDecayThreshold = MouseDecayThreshold;
+            container.MouseAnalogDeadzone = MouseAnalogDeadzone;
+            container.MouseMakeupSpeed = MouseMakeupSpeed;
+            container.MouseMovementAnalog = MouseMovementAnalog;
+            container.LeftMouseMapping = LeftMouseMapping;
+            container.RightMouseMapping = RightMouseMapping;
+
             BindingsContainer.Serialize(GetBindingsFilePath(), container);
         }
 
         public void LoadBindings()
         {
             var container = BindingsContainer.Deserialize(GetBindingsFilePath());
+
             MappingsDataBinding = container.Mappings;
             MacrosDataBinding = container.Macros;
+
+            EnableMouseInput = container.EnableMouseInput;
+            MouseSensitivity = container.MouseSensitivity;
+            MouseDecayRate = container.MouseDecayRate;
+            MouseDecayThreshold = container.MouseDecayThreshold;
+            MouseAnalogDeadzone = container.MouseAnalogDeadzone;
+            MouseMakeupSpeed = container.MouseMakeupSpeed;
+            MouseMovementAnalog = container.MouseMovementAnalog;
+            LeftMouseMapping = container.LeftMouseMapping;
+            RightMouseMapping = container.RightMouseMapping;
         }
 
         public void CreateActions()
