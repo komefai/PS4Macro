@@ -58,6 +58,8 @@
             this.decayThresholdLabel = new System.Windows.Forms.Label();
             this.decayRateLabel = new System.Windows.Forms.Label();
             this.sensitivityLabel = new System.Windows.Forms.Label();
+            this.makeupSpeedNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.makeupSpeedLabel = new System.Windows.Forms.Label();
             this.axisDisplay = new PS4Macro.Controls.AxisDisplay();
             this.macrosGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.macrosDataGridView)).BeginInit();
@@ -69,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.decayThresholdNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.makeupSpeedNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
@@ -178,6 +181,8 @@
             // 
             // mouseInputGroupBox
             // 
+            this.mouseInputGroupBox.Controls.Add(this.makeupSpeedNumericUpDown);
+            this.mouseInputGroupBox.Controls.Add(this.makeupSpeedLabel);
             this.mouseInputGroupBox.Controls.Add(this.axisDisplay);
             this.mouseInputGroupBox.Controls.Add(this.movementJoystickLabel);
             this.mouseInputGroupBox.Controls.Add(this.panel1);
@@ -204,7 +209,7 @@
             // movementJoystickLabel
             // 
             this.movementJoystickLabel.AutoSize = true;
-            this.movementJoystickLabel.Location = new System.Drawing.Point(9, 195);
+            this.movementJoystickLabel.Location = new System.Drawing.Point(9, 199);
             this.movementJoystickLabel.Name = "movementJoystickLabel";
             this.movementJoystickLabel.Size = new System.Drawing.Size(98, 13);
             this.movementJoystickLabel.TabIndex = 9;
@@ -214,7 +219,7 @@
             // 
             this.panel1.Controls.Add(this.rightStickRadioButton);
             this.panel1.Controls.Add(this.leftStickRadioButton);
-            this.panel1.Location = new System.Drawing.Point(9, 211);
+            this.panel1.Location = new System.Drawing.Point(9, 215);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(179, 24);
             this.panel1.TabIndex = 10;
@@ -295,37 +300,37 @@
             // deadzoneNumericUpDown
             // 
             this.deadzoneNumericUpDown.DecimalPlaces = 2;
-            this.deadzoneNumericUpDown.Location = new System.Drawing.Point(136, 136);
+            this.deadzoneNumericUpDown.Location = new System.Drawing.Point(132, 136);
             this.deadzoneNumericUpDown.Name = "deadzoneNumericUpDown";
-            this.deadzoneNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.deadzoneNumericUpDown.Size = new System.Drawing.Size(56, 20);
             this.deadzoneNumericUpDown.TabIndex = 8;
             this.deadzoneNumericUpDown.ValueChanged += new System.EventHandler(this.deadzoneNumericUpDown_ValueChanged);
             // 
             // decayThresholdNumericUpDown
             // 
             this.decayThresholdNumericUpDown.DecimalPlaces = 2;
-            this.decayThresholdNumericUpDown.Location = new System.Drawing.Point(136, 110);
+            this.decayThresholdNumericUpDown.Location = new System.Drawing.Point(132, 110);
             this.decayThresholdNumericUpDown.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.decayThresholdNumericUpDown.Name = "decayThresholdNumericUpDown";
-            this.decayThresholdNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.decayThresholdNumericUpDown.Size = new System.Drawing.Size(56, 20);
             this.decayThresholdNumericUpDown.TabIndex = 6;
             this.decayThresholdNumericUpDown.ValueChanged += new System.EventHandler(this.decayThresholdNumericUpDown_ValueChanged);
             // 
             // decayRateNumericUpDown
             // 
             this.decayRateNumericUpDown.DecimalPlaces = 2;
-            this.decayRateNumericUpDown.Location = new System.Drawing.Point(136, 84);
+            this.decayRateNumericUpDown.Location = new System.Drawing.Point(132, 84);
             this.decayRateNumericUpDown.Minimum = new decimal(new int[] {
             101,
             0,
             0,
             131072});
             this.decayRateNumericUpDown.Name = "decayRateNumericUpDown";
-            this.decayRateNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.decayRateNumericUpDown.Size = new System.Drawing.Size(56, 20);
             this.decayRateNumericUpDown.TabIndex = 4;
             this.decayRateNumericUpDown.Value = new decimal(new int[] {
             101,
@@ -337,14 +342,14 @@
             // sensitivityNumericUpDown
             // 
             this.sensitivityNumericUpDown.DecimalPlaces = 2;
-            this.sensitivityNumericUpDown.Location = new System.Drawing.Point(136, 58);
+            this.sensitivityNumericUpDown.Location = new System.Drawing.Point(132, 58);
             this.sensitivityNumericUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.sensitivityNumericUpDown.Name = "sensitivityNumericUpDown";
-            this.sensitivityNumericUpDown.Size = new System.Drawing.Size(52, 20);
+            this.sensitivityNumericUpDown.Size = new System.Drawing.Size(56, 20);
             this.sensitivityNumericUpDown.TabIndex = 2;
             this.sensitivityNumericUpDown.ValueChanged += new System.EventHandler(this.sensitivityNumericUpDown_ValueChanged);
             // 
@@ -384,11 +389,34 @@
             this.sensitivityLabel.TabIndex = 1;
             this.sensitivityLabel.Text = "Sensitivity";
             // 
+            // makeupSpeedNumericUpDown
+            // 
+            this.makeupSpeedNumericUpDown.DecimalPlaces = 2;
+            this.makeupSpeedNumericUpDown.Location = new System.Drawing.Point(132, 162);
+            this.makeupSpeedNumericUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.makeupSpeedNumericUpDown.Name = "makeupSpeedNumericUpDown";
+            this.makeupSpeedNumericUpDown.Size = new System.Drawing.Size(56, 20);
+            this.makeupSpeedNumericUpDown.TabIndex = 17;
+            this.makeupSpeedNumericUpDown.ValueChanged += new System.EventHandler(this.makeupSpeedNumericUpDown_ValueChanged);
+            // 
+            // makeupSpeedLabel
+            // 
+            this.makeupSpeedLabel.AutoSize = true;
+            this.makeupSpeedLabel.Location = new System.Drawing.Point(9, 164);
+            this.makeupSpeedLabel.Name = "makeupSpeedLabel";
+            this.makeupSpeedLabel.Size = new System.Drawing.Size(80, 13);
+            this.makeupSpeedLabel.TabIndex = 16;
+            this.makeupSpeedLabel.Text = "Makeup Speed";
+            // 
             // axisDisplay
             // 
             this.axisDisplay.InnerColor = System.Drawing.Color.GhostWhite;
             this.axisDisplay.InnerSize = 12;
-            this.axisDisplay.Location = new System.Drawing.Point(67, 240);
+            this.axisDisplay.Location = new System.Drawing.Point(67, 244);
             this.axisDisplay.Name = "axisDisplay";
             this.axisDisplay.OuterColor = System.Drawing.Color.DodgerBlue;
             this.axisDisplay.Size = new System.Drawing.Size(60, 60);
@@ -405,6 +433,7 @@
             this.Controls.Add(this.macrosGroupBox);
             this.Controls.Add(this.mappingsGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "RemapperForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Remapper";
@@ -422,6 +451,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.decayThresholdNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.decayRateNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensitivityNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.makeupSpeedNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -458,5 +488,7 @@
         private System.Windows.Forms.RadioButton rightStickRadioButton;
         private System.Windows.Forms.RadioButton leftStickRadioButton;
         private Controls.AxisDisplay axisDisplay;
+        private System.Windows.Forms.NumericUpDown makeupSpeedNumericUpDown;
+        private System.Windows.Forms.Label makeupSpeedLabel;
     }
 }
