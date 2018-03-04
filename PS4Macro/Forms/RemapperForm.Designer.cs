@@ -86,7 +86,7 @@
             this.macrosGroupBox.Controls.Add(this.macrosDataGridView);
             this.macrosGroupBox.Location = new System.Drawing.Point(13, 244);
             this.macrosGroupBox.Name = "macrosGroupBox";
-            this.macrosGroupBox.Size = new System.Drawing.Size(339, 153);
+            this.macrosGroupBox.Size = new System.Drawing.Size(339, 168);
             this.macrosGroupBox.TabIndex = 4;
             this.macrosGroupBox.TabStop = false;
             this.macrosGroupBox.Text = "Macros";
@@ -101,7 +101,7 @@
             this.Path});
             this.macrosDataGridView.Location = new System.Drawing.Point(6, 19);
             this.macrosDataGridView.Name = "macrosDataGridView";
-            this.macrosDataGridView.Size = new System.Drawing.Size(327, 128);
+            this.macrosDataGridView.Size = new System.Drawing.Size(327, 143);
             this.macrosDataGridView.TabIndex = 0;
             this.macrosDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.macrosDataGridView_CellContentClick);
             this.macrosDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.macrosDataGridView_CellValidating);
@@ -196,7 +196,7 @@
             this.mouseInputGroupBox.Controls.Add(this.sensitivityLabel);
             this.mouseInputGroupBox.Location = new System.Drawing.Point(358, 34);
             this.mouseInputGroupBox.Name = "mouseInputGroupBox";
-            this.mouseInputGroupBox.Size = new System.Drawing.Size(194, 363);
+            this.mouseInputGroupBox.Size = new System.Drawing.Size(194, 378);
             this.mouseInputGroupBox.TabIndex = 7;
             this.mouseInputGroupBox.TabStop = false;
             this.mouseInputGroupBox.Text = "Mouse Input";
@@ -204,7 +204,7 @@
             // movementJoystickLabel
             // 
             this.movementJoystickLabel.AutoSize = true;
-            this.movementJoystickLabel.Location = new System.Drawing.Point(9, 172);
+            this.movementJoystickLabel.Location = new System.Drawing.Point(9, 195);
             this.movementJoystickLabel.Name = "movementJoystickLabel";
             this.movementJoystickLabel.Size = new System.Drawing.Size(98, 13);
             this.movementJoystickLabel.TabIndex = 9;
@@ -214,7 +214,7 @@
             // 
             this.panel1.Controls.Add(this.rightStickRadioButton);
             this.panel1.Controls.Add(this.leftStickRadioButton);
-            this.panel1.Location = new System.Drawing.Point(9, 188);
+            this.panel1.Location = new System.Drawing.Point(9, 211);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(179, 24);
             this.panel1.TabIndex = 10;
@@ -247,7 +247,7 @@
             // 
             this.rightMouseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rightMouseComboBox.FormattingEnabled = true;
-            this.rightMouseComboBox.Location = new System.Drawing.Point(81, 331);
+            this.rightMouseComboBox.Location = new System.Drawing.Point(81, 349);
             this.rightMouseComboBox.Name = "rightMouseComboBox";
             this.rightMouseComboBox.Size = new System.Drawing.Size(104, 21);
             this.rightMouseComboBox.TabIndex = 14;
@@ -256,7 +256,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 335);
+            this.label1.Location = new System.Drawing.Point(9, 353);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 13;
@@ -266,7 +266,7 @@
             // 
             this.leftMouseComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leftMouseComboBox.FormattingEnabled = true;
-            this.leftMouseComboBox.Location = new System.Drawing.Point(81, 305);
+            this.leftMouseComboBox.Location = new System.Drawing.Point(81, 323);
             this.leftMouseComboBox.Name = "leftMouseComboBox";
             this.leftMouseComboBox.Size = new System.Drawing.Size(104, 21);
             this.leftMouseComboBox.TabIndex = 12;
@@ -275,7 +275,7 @@
             // leftMouseLabel
             // 
             this.leftMouseLabel.AutoSize = true;
-            this.leftMouseLabel.Location = new System.Drawing.Point(9, 309);
+            this.leftMouseLabel.Location = new System.Drawing.Point(9, 327);
             this.leftMouseLabel.Name = "leftMouseLabel";
             this.leftMouseLabel.Size = new System.Drawing.Size(51, 13);
             this.leftMouseLabel.TabIndex = 11;
@@ -328,10 +328,10 @@
             this.decayRateNumericUpDown.Size = new System.Drawing.Size(52, 20);
             this.decayRateNumericUpDown.TabIndex = 4;
             this.decayRateNumericUpDown.Value = new decimal(new int[] {
-            11,
+            101,
             0,
             0,
-            65536});
+            131072});
             this.decayRateNumericUpDown.ValueChanged += new System.EventHandler(this.decayRateNumericUpDown_ValueChanged);
             // 
             // sensitivityNumericUpDown
@@ -388,7 +388,7 @@
             // 
             this.axisDisplay.InnerColor = System.Drawing.Color.GhostWhite;
             this.axisDisplay.InnerSize = 12;
-            this.axisDisplay.Location = new System.Drawing.Point(67, 221);
+            this.axisDisplay.Location = new System.Drawing.Point(67, 240);
             this.axisDisplay.Name = "axisDisplay";
             this.axisDisplay.OuterColor = System.Drawing.Color.DodgerBlue;
             this.axisDisplay.Size = new System.Drawing.Size(60, 60);
@@ -399,7 +399,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 406);
+            this.ClientSize = new System.Drawing.Size(564, 421);
             this.Controls.Add(this.mouseInputGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.macrosGroupBox);

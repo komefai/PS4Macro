@@ -48,6 +48,7 @@ namespace PS4Macro.Classes.Remapping
         private const int MOUSE_CENTER_X = 500;
         private const int MOUSE_CENTER_Y = 500;
         private const int MOUSE_RELEASE_TIME = 50;
+        private const int MOUSE_SENSITIVITY_DIVISOR = 100000;
 
         // Delegates
         public delegate void OnMouseAxisChangedDelegate(byte x, byte y);
@@ -74,6 +75,7 @@ namespace PS4Macro.Classes.Remapping
         public double MouseDecayRate { get; set; }
         public double MouseDecayThreshold { get; set; }
         public double MouseAnalogDeadzone { get; set; }
+        public double MouseMakeupSpeed { get; set; }
         public AnalogStick MouseMovementAnalog { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
@@ -93,9 +95,10 @@ namespace PS4Macro.Classes.Remapping
 
             EnableMouseInput = false;
             MouseSensitivity = 1;
-            MouseDecayRate = 10;
+            MouseDecayRate = 1.01;
             MouseDecayThreshold = 0.1;
             MouseAnalogDeadzone = 14.25;
+            MouseMakeupSpeed = 500;
             MouseMovementAnalog = AnalogStick.Right;
             LeftMouseMapping = 11; // R2
             RightMouseMapping = 10; // L2
@@ -208,8 +211,8 @@ namespace PS4Macro.Classes.Remapping
                     // Mouse moved
                     if (CurrentMouseStroke.DidMoved)
                     {
-                        MouseSpeedX = (CurrentMouseStroke.VelocityX / 100) * MouseSensitivity;
-                        MouseSpeedY = (CurrentMouseStroke.VelocityY / 100) * MouseSensitivity;
+                        MouseSpeedX = (CurrentMouseStroke.VelocityX * MouseSensitivity) / MOUSE_SENSITIVITY_DIVISOR;
+                        MouseSpeedY = (CurrentMouseStroke.VelocityY * MouseSensitivity) / MOUSE_SENSITIVITY_DIVISOR;
                         CurrentMouseStroke.DidMoved = false;
 
                         // Stop release timer
@@ -260,11 +263,22 @@ namespace PS4Macro.Classes.Remapping
                     const double max = 255;
                     string analogProperty = MouseMovementAnalog == AnalogStick.Left ? "L" : "R";
 
-                    // Scale speed to analog values
+                    // Minimum speed
                     double positiveSpeed = 128 + MouseAnalogDeadzone;
                     double negativeSpeed = 128 - MouseAnalogDeadzone;
-                    double rx = ((MouseSpeedX > 0) ? positiveSpeed : ((MouseSpeedX < 0) ? negativeSpeed : 128)) + (MouseSpeedX * 127);
-                    double ry = ((MouseSpeedY > 0) ? positiveSpeed : ((MouseSpeedY < 0) ? negativeSpeed : 128)) + (MouseSpeedY * 127);
+
+                    // Base speed
+                    double baseX = ((MouseSpeedX > 0) ? positiveSpeed : ((MouseSpeedX < 0) ? negativeSpeed : 128));
+                    double baseY = ((MouseSpeedY > 0) ? positiveSpeed : ((MouseSpeedY < 0) ? negativeSpeed : 128));
+
+                    // Makeup speed
+                    double makeupX = Math.Sign(MouseSpeedX) * MouseMakeupSpeed;
+                    double makeupY = Math.Sign(MouseSpeedY) * MouseMakeupSpeed;
+
+                    // Scale speed to analog values
+                    double rx = baseX + (makeupX * MouseSpeedX * MouseSpeedX * 127);
+                    double ry = baseY + (makeupY * MouseSpeedY * MouseSpeedY * 127);
+
                     byte scaledX = (byte)((rx < min) ? min : (rx > max) ? max : rx);
                     byte scaledY = (byte)((ry < min) ? min : (ry > max) ? max : ry);
 
