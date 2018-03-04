@@ -265,6 +265,8 @@ namespace PS4Macro.Forms
             makeupSpeedNumericUpDown.Value = (decimal)Remapper.MouseMakeupSpeed;
             leftStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Left;
             rightStickRadioButton.Checked = Remapper.MouseMovementAnalog == AnalogStick.Right;
+            invertMouseXCheckBox.Checked = Remapper.MouseInvertXAxis;
+            invertMouseYCheckBox.Checked = Remapper.MouseInvertYAxis;
             leftMouseComboBox.SelectedIndex = Remapper.LeftMouseMapping;
             rightMouseComboBox.SelectedIndex = Remapper.RightMouseMapping;
 
@@ -410,6 +412,16 @@ namespace PS4Macro.Forms
         private void rightStickRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             Remapper.MouseMovementAnalog = AnalogStick.Right;
+        }
+
+        private void invertMouseXCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseInvertXAxis = invertMouseXCheckBox.Checked;
+        }
+
+        private void invertMouseYCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Remapper.MouseInvertYAxis = invertMouseYCheckBox.Checked;
         }
 
         private void leftMouseComboBox_SelectedIndexChanged(object sender, EventArgs e)

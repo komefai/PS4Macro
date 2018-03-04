@@ -43,6 +43,8 @@ namespace PS4Macro.Classes.Remapping
         public double MouseAnalogDeadzone { get; set; }
         public double MouseMakeupSpeed { get; set; }
         public AnalogStick MouseMovementAnalog { get; set; }
+        public bool MouseInvertXAxis { get; set; }
+        public bool MouseInvertYAxis { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
 

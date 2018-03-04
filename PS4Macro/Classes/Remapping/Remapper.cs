@@ -77,6 +77,8 @@ namespace PS4Macro.Classes.Remapping
         public double MouseAnalogDeadzone { get; set; }
         public double MouseMakeupSpeed { get; set; }
         public AnalogStick MouseMovementAnalog { get; set; }
+        public bool MouseInvertXAxis { get; set; }
+        public bool MouseInvertYAxis { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
 
@@ -100,6 +102,8 @@ namespace PS4Macro.Classes.Remapping
             MouseAnalogDeadzone = 14.25;
             MouseMakeupSpeed = 500;
             MouseMovementAnalog = AnalogStick.Right;
+            MouseInvertXAxis = false;
+            MouseInvertYAxis = false;
             LeftMouseMapping = 11; // R2
             RightMouseMapping = 10; // L2
 
@@ -212,7 +216,11 @@ namespace PS4Macro.Classes.Remapping
                     if (CurrentMouseStroke.DidMoved)
                     {
                         MouseSpeedX = (CurrentMouseStroke.VelocityX * MouseSensitivity) / MOUSE_SENSITIVITY_DIVISOR;
+                        if (MouseInvertXAxis) MouseSpeedX *= -1;
+
                         MouseSpeedY = (CurrentMouseStroke.VelocityY * MouseSensitivity) / MOUSE_SENSITIVITY_DIVISOR;
+                        if (MouseInvertYAxis) MouseSpeedY *= -1;
+
                         CurrentMouseStroke.DidMoved = false;
 
                         // Stop release timer
@@ -522,6 +530,8 @@ namespace PS4Macro.Classes.Remapping
             container.MouseAnalogDeadzone = MouseAnalogDeadzone;
             container.MouseMakeupSpeed = MouseMakeupSpeed;
             container.MouseMovementAnalog = MouseMovementAnalog;
+            container.MouseInvertXAxis = MouseInvertXAxis;
+            container.MouseInvertYAxis = MouseInvertYAxis;
             container.LeftMouseMapping = LeftMouseMapping;
             container.RightMouseMapping = RightMouseMapping;
 
@@ -542,6 +552,8 @@ namespace PS4Macro.Classes.Remapping
             MouseAnalogDeadzone = container.MouseAnalogDeadzone;
             MouseMakeupSpeed = container.MouseMakeupSpeed;
             MouseMovementAnalog = container.MouseMovementAnalog;
+            MouseInvertXAxis = container.MouseInvertXAxis;
+            MouseInvertYAxis = container.MouseInvertYAxis;
             LeftMouseMapping = container.LeftMouseMapping;
             RightMouseMapping = container.RightMouseMapping;
         }

@@ -61,6 +61,8 @@
             this.makeupSpeedNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.makeupSpeedLabel = new System.Windows.Forms.Label();
             this.axisDisplay = new PS4Macro.Controls.AxisDisplay();
+            this.invertMouseXCheckBox = new System.Windows.Forms.CheckBox();
+            this.invertMouseYCheckBox = new System.Windows.Forms.CheckBox();
             this.macrosGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.macrosDataGridView)).BeginInit();
             this.mappingsGroupBox.SuspendLayout();
@@ -181,6 +183,8 @@
             // 
             // mouseInputGroupBox
             // 
+            this.mouseInputGroupBox.Controls.Add(this.invertMouseYCheckBox);
+            this.mouseInputGroupBox.Controls.Add(this.invertMouseXCheckBox);
             this.mouseInputGroupBox.Controls.Add(this.makeupSpeedNumericUpDown);
             this.mouseInputGroupBox.Controls.Add(this.makeupSpeedLabel);
             this.mouseInputGroupBox.Controls.Add(this.axisDisplay);
@@ -416,12 +420,34 @@
             // 
             this.axisDisplay.InnerColor = System.Drawing.Color.GhostWhite;
             this.axisDisplay.InnerSize = 12;
-            this.axisDisplay.Location = new System.Drawing.Point(67, 244);
+            this.axisDisplay.Location = new System.Drawing.Point(12, 245);
             this.axisDisplay.Name = "axisDisplay";
             this.axisDisplay.OuterColor = System.Drawing.Color.DodgerBlue;
             this.axisDisplay.Size = new System.Drawing.Size(60, 60);
             this.axisDisplay.TabIndex = 15;
             this.axisDisplay.Value = ((System.Drawing.PointF)(resources.GetObject("axisDisplay.Value")));
+            // 
+            // invertMouseXCheckBox
+            // 
+            this.invertMouseXCheckBox.AutoSize = true;
+            this.invertMouseXCheckBox.Location = new System.Drawing.Point(100, 256);
+            this.invertMouseXCheckBox.Name = "invertMouseXCheckBox";
+            this.invertMouseXCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.invertMouseXCheckBox.TabIndex = 18;
+            this.invertMouseXCheckBox.Text = "Invert X-Axis";
+            this.invertMouseXCheckBox.UseVisualStyleBackColor = true;
+            this.invertMouseXCheckBox.CheckedChanged += new System.EventHandler(this.invertMouseXCheckBox_CheckedChanged);
+            // 
+            // invertMouseYCheckBox
+            // 
+            this.invertMouseYCheckBox.AutoSize = true;
+            this.invertMouseYCheckBox.Location = new System.Drawing.Point(100, 279);
+            this.invertMouseYCheckBox.Name = "invertMouseYCheckBox";
+            this.invertMouseYCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.invertMouseYCheckBox.TabIndex = 19;
+            this.invertMouseYCheckBox.Text = "Invert Y-Axis";
+            this.invertMouseYCheckBox.UseVisualStyleBackColor = true;
+            this.invertMouseYCheckBox.CheckedChanged += new System.EventHandler(this.invertMouseYCheckBox_CheckedChanged);
             // 
             // RemapperForm
             // 
@@ -490,5 +516,7 @@
         private Controls.AxisDisplay axisDisplay;
         private System.Windows.Forms.NumericUpDown makeupSpeedNumericUpDown;
         private System.Windows.Forms.Label makeupSpeedLabel;
+        private System.Windows.Forms.CheckBox invertMouseYCheckBox;
+        private System.Windows.Forms.CheckBox invertMouseXCheckBox;
     }
 }
