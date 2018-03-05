@@ -391,7 +391,7 @@ namespace PS4Macro.Forms
 
         private void decayThresholdNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Remapper.MouseDecayThreshold = (int)decayThresholdNumericUpDown.Value;
+            Remapper.MouseDecayThreshold = (double)decayThresholdNumericUpDown.Value;
         }
 
         private void deadzoneNumericUpDown_ValueChanged(object sender, EventArgs e)
