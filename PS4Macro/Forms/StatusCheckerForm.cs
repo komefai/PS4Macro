@@ -29,6 +29,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -36,6 +37,11 @@ namespace PS4Macro.Forms
 {
     public partial class StatusCheckerForm : Form
     {
+        #region Native API
+        [DllImport("user32.dll")]
+        static extern bool HideCaret(IntPtr hWnd);
+        #endregion
+
         public StatusChecker StatusChecker { get; set; }
 
         public StatusCheckerForm(StatusChecker statusChecker)
@@ -79,6 +85,9 @@ namespace PS4Macro.Forms
 
             // Refresh process
             StatusChecker.RefreshProcess();
+
+            // Get settings
+            settingsRichTextBox.Text = StatusChecker.GetSettingsText();
 
             StatusChecker.OnStatusChanged += OnStatusChanged;
         }

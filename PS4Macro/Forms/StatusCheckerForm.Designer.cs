@@ -40,6 +40,9 @@
             this.remotePlayHandleLabel = new System.Windows.Forms.Label();
             this.foregroundWindowTextLabel = new System.Windows.Forms.Label();
             this.foregroundWindowLabel = new System.Windows.Forms.Label();
+            this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.settingsRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.settingsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // interceptorTextLabel
@@ -150,11 +153,32 @@
             this.foregroundWindowLabel.TabIndex = 11;
             this.foregroundWindowLabel.Text = "-";
             // 
+            // settingsGroupBox
+            // 
+            this.settingsGroupBox.Controls.Add(this.settingsRichTextBox);
+            this.settingsGroupBox.Location = new System.Drawing.Point(194, 12);
+            this.settingsGroupBox.Name = "settingsGroupBox";
+            this.settingsGroupBox.Size = new System.Drawing.Size(360, 197);
+            this.settingsGroupBox.TabIndex = 12;
+            this.settingsGroupBox.TabStop = false;
+            this.settingsGroupBox.Text = "Settings";
+            // 
+            // settingsRichTextBox
+            // 
+            this.settingsRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.settingsRichTextBox.Location = new System.Drawing.Point(6, 19);
+            this.settingsRichTextBox.Name = "settingsRichTextBox";
+            this.settingsRichTextBox.ReadOnly = true;
+            this.settingsRichTextBox.Size = new System.Drawing.Size(348, 172);
+            this.settingsRichTextBox.TabIndex = 0;
+            this.settingsRichTextBox.Text = "";
+            // 
             // StatusCheckerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(224, 181);
+            this.ClientSize = new System.Drawing.Size(566, 221);
+            this.Controls.Add(this.settingsGroupBox);
             this.Controls.Add(this.foregroundWindowLabel);
             this.Controls.Add(this.foregroundWindowTextLabel);
             this.Controls.Add(this.remotePlayHandleLabel);
@@ -175,6 +199,7 @@
             this.Text = "Status Checker";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StatusCheckerForm_FormClosed);
             this.Load += new System.EventHandler(this.StatusCheckerForm_Load);
+            this.settingsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,5 +219,7 @@
         private System.Windows.Forms.Label remotePlayHandleLabel;
         private System.Windows.Forms.Label foregroundWindowTextLabel;
         private System.Windows.Forms.Label foregroundWindowLabel;
+        private System.Windows.Forms.GroupBox settingsGroupBox;
+        private System.Windows.Forms.RichTextBox settingsRichTextBox;
     }
 }

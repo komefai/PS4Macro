@@ -28,9 +28,11 @@ using PS4RemotePlayInterceptor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Xml.Serialization;
 
 namespace PS4Macro.Classes
 {
@@ -90,6 +92,16 @@ namespace PS4Macro.Classes
 
             m_AutoEvent = new AutoResetEvent(false);
             m_Timer = new Timer(CheckStatus, m_AutoEvent, Timeout.Infinite, Timeout.Infinite);
+        }
+
+        public string GetSettingsText()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+            using (StringWriter textWriter = new StringWriter())
+            {
+                serializer.Serialize(textWriter, Program.Settings);
+                return textWriter.ToString();
+            }
         }
 
         private void CheckStatus(object state)
