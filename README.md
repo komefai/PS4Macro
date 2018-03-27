@@ -13,6 +13,8 @@ Automation utility for PS4 Remote Play written in C# using [PS4RemotePlayInterce
 
 ## Usage
 
+⚠️ To use WITHOUT a controller plugged in, see `EmulateController` in [Settings](https://github.com/komefai/PS4Macro#settings) section below.
+
 ##### Easy Way (shortcut)
 
 Press the touch button on your controller (touchpad) to start recording and press it again to stop.
@@ -25,7 +27,7 @@ To record, click on `RECORD` button (Ctrl+R) to arm recording then press `PLAY` 
 
 ## Settings
 
-You can create `settings.xml` and place it with the executable to override default settings.
+You can create `settings.xml` using a text editor and place it in the same folder as `PS4Macro.exe` to override default settings.
 
 | Setting | Description | Default
 | --- | --- | --- |
@@ -144,7 +146,7 @@ public class Script : ScriptBase
 
 ##### EmulateController does not work
 
-=> Make sure you unplug every DualShock 4 controllers from your computer. Start PS4 Remote Play, follow by PS4 Macro and wait for this screen. If you see the text `Press the OPTIONS button on the controller to start.` then it means that the emulated controller is working correctly. You can then press the Start button.
+=> Make sure you unplug every DualShock 4 controllers from your computer (otherwise the real controller will take priority over the emulated one). Start PS4 Remote Play, follow by PS4 Macro and wait for this screen. If you see the text `Press the OPTIONS button on the controller to start.` then it means that the emulated controller is working correctly. You can then press the Start button.
 
 ![Emulate Controller Troubleshoot](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/EmulateControllerTroubleshoot.png)
 
