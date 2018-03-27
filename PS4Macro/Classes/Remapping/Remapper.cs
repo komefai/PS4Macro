@@ -213,7 +213,7 @@ namespace PS4Macro.Classes.Remapping
                     }
 
                     // Mouse moved
-                    if (CurrentMouseStroke.DidMoved)
+                    if (CurrentMouseStroke != null && CurrentMouseStroke.DidMoved)
                     {
                         MouseSpeedX = (CurrentMouseStroke.VelocityX * MouseSensitivity) / MOUSE_SENSITIVITY_DIVISOR;
                         if (MouseInvertXAxis) MouseSpeedX *= -1;
