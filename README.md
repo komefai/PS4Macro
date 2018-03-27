@@ -50,7 +50,7 @@ You can create `settings.xml` and place it with the executable to override defau
 
 ## Command Line Arguments
 
-As of version 0.5.0, you can pass command line arguments to PS4Macro.exe and override the values in settings.xml. This allows you to create multiple shortcuts to PS4Macro.exe and have each of them override the settings when switching between games.
+As of version 0.5.0, you can pass command line arguments to PS4Macro.exe and override the values in settings.xml. This also allows you to create multiple shortcuts to PS4Macro.exe and have each of them override the settings when switching between games (recommended for advanced users).
 
 #### Arguments
 
@@ -71,6 +71,12 @@ C:\> PS4Macro.exe --AutoInject --EmulateController --ShowConsole=false --Startup
 ```bash
 C:\> PS4Macro.exe --SettingsFile="C:\custom-settings.xml"
 ```
+
+##### Using Windows shortcut
+
+Right-click on `PS4Macro.exe` and click on `Create shortcut` to create a new shortcut. Right-click on the newly created shortcut and select `Properties` and append your command line arguments after the existing text in the `Target` field.
+
+![Command Line Shortcut](https://raw.githubusercontent.com/komefai/PS4Macro/master/_resources/CmdShortcut.png)
 
 ## Remapper
 
