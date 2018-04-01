@@ -67,10 +67,12 @@ namespace PS4Macro.Classes.Remapping
         public int CursorOverflowY { get; private set; }
         public bool LeftMouseDown { get; private set; }
         public bool RightMouseDown { get; private set; }
+        public bool MiddleMouseDown { get; private set; }
         public double MouseSpeedX { get; private set; }
         public double MouseSpeedY { get; private set; }
 
         public bool EnableMouseInput { get; set; }
+        public bool DebugCursor { get; set; }
         public double MouseSensitivity { get; set; }
         public double MouseDecayRate { get; set; }
         public double MouseDecayThreshold { get; set; }
@@ -81,6 +83,7 @@ namespace PS4Macro.Classes.Remapping
         public bool MouseInvertYAxis { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
+        public int MiddleMouseMapping { get; set; }
 
         public MacroPlayer MacroPlayer { get; private set; }
         public bool UsingMacroPlayer { get; private set; }
@@ -96,6 +99,7 @@ namespace PS4Macro.Classes.Remapping
             IsCursorShowing = true;
 
             EnableMouseInput = false;
+            DebugCursor = false;
             MouseSensitivity = 1;
             MouseDecayRate = 1.2;
             MouseDecayThreshold = 0.1;
@@ -106,6 +110,7 @@ namespace PS4Macro.Classes.Remapping
             MouseInvertYAxis = false;
             LeftMouseMapping = 11; // R2
             RightMouseMapping = 10; // L2
+            MiddleMouseMapping = 9; // L1
 
             MacroPlayer = new MacroPlayer();
 
@@ -209,6 +214,21 @@ namespace PS4Macro.Classes.Remapping
                         {
                             var defaultValue = RemapperUtility.GetValue(checkState, rightMap.Property);
                             RemapperUtility.SetValue(CurrentState, rightMap.Property, defaultValue);
+                        }
+                    }
+
+                    // Middle mouse
+                    var middleMap = MappingsDataBinding.ElementAtOrDefault(MiddleMouseMapping);
+                    if (middleMap != null)
+                    {
+                        if (MiddleMouseDown)
+                        {
+                            RemapperUtility.SetValue(CurrentState, middleMap.Property, middleMap.Value);
+                        }
+                        else
+                        {
+                            var defaultValue = RemapperUtility.GetValue(checkState, middleMap.Property);
+                            RemapperUtility.SetValue(CurrentState, middleMap.Property, defaultValue);
                         }
                     }
 
@@ -370,7 +390,7 @@ namespace PS4Macro.Classes.Remapping
                 if (EnableMouseInput)
                 {
                     // Hide cursor
-                    if (IsCursorShowing)
+                    if (!DebugCursor && IsCursorShowing)
                     {
                         ShowCursorAndToolbar(false);
                     }
@@ -380,7 +400,7 @@ namespace PS4Macro.Classes.Remapping
             else
             {
                 // Show cursor
-                if (!IsCursorShowing)
+                if (!DebugCursor && !IsCursorShowing)
                 {
                     ShowCursorAndToolbar(true);
                 }
@@ -413,6 +433,17 @@ namespace PS4Macro.Classes.Remapping
             else if (e.MouseState == GlobalMouseHook.MouseState.RightButtonUp)
             {
                 RightMouseDown = false;
+                e.Handled = focusedWindow;
+            }
+            // Middle mouse
+            else if (e.MouseState == GlobalMouseHook.MouseState.MiddleButtonDown)
+            {
+                MiddleMouseDown = true;
+                e.Handled = focusedWindow;
+            }
+            else if (e.MouseState == GlobalMouseHook.MouseState.MiddleButtonUp)
+            {
+                MiddleMouseDown = false;
                 e.Handled = focusedWindow;
             }
             // Mouse move

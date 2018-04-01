@@ -47,6 +47,7 @@ namespace PS4Macro.Classes.Remapping
         public bool MouseInvertYAxis { get; set; }
         public int LeftMouseMapping { get; set; }
         public int RightMouseMapping { get; set; }
+        public int MiddleMouseMapping { get; set; }
 
         public static void Serialize(string path, BindingsContainer container)
         {

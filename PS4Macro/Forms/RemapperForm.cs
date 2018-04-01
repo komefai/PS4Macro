@@ -66,16 +66,25 @@ namespace PS4Macro.Forms
             macrosDataGridView.DataSource = m_MacrosBindingList;
         }
 
+        private void BindMouseComboBox(ComboBox cb)
+        {
+            cb.DataSource = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
+            cb.DisplayMember = "Name";
+        }
+
         private void BindLeftMouseComboBox()
         {
-            leftMouseComboBox.DataSource = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
-            leftMouseComboBox.DisplayMember = "Name";
+            BindMouseComboBox(leftMouseComboBox);
         }
 
         private void BindRightMouseComboBox()
         {
-            rightMouseComboBox.DataSource = new BindingList<MappingAction>(Remapper.MappingsDataBinding);
-            rightMouseComboBox.DisplayMember = "Name";
+            BindMouseComboBox(rightMouseComboBox);
+        }
+
+        private void BindMiddleMouseComboBox()
+        {
+            BindMouseComboBox(middleMouseComboBox);
         }
 
         private bool IsDuplicatedKey(DataGridView dataGridView, DataGridViewCell editingCell, Keys key, ref string duplicatedValue)
@@ -243,6 +252,13 @@ namespace PS4Macro.Forms
             SetAxisDisplay(new PointF(fx, -fy));
         }
 
+        private void OnDebugShowCursorClick(object sender, EventArgs e)
+        {
+            var item = sender as MenuItem;
+            item.Checked = !item.Checked;
+            Remapper.DebugCursor = item.Checked;
+        }
+
         private void RemapperForm_Load(object sender, EventArgs e)
         {
             // Refresh process
@@ -255,6 +271,7 @@ namespace PS4Macro.Forms
             // Bind mouse buttons
             BindLeftMouseComboBox();
             BindRightMouseComboBox();
+            BindMiddleMouseComboBox();
 
             // Load mouse input settings
             enableMouseCheckBox.Checked = Remapper.EnableMouseInput;
@@ -269,9 +286,21 @@ namespace PS4Macro.Forms
             invertMouseYCheckBox.Checked = Remapper.MouseInvertYAxis;
             leftMouseComboBox.SelectedIndex = Remapper.LeftMouseMapping;
             rightMouseComboBox.SelectedIndex = Remapper.RightMouseMapping;
+            middleMouseComboBox.SelectedIndex = Remapper.MiddleMouseMapping;
 
             // Setup mouse delegate
             Remapper.OnMouseAxisChanged += OnMouseAxisChanged;
+
+            // Debug mouse context menu
+            var mouseCm = new ContextMenu();
+            var showCursorItem = new MenuItem()
+            {
+                Text = "[DEBUG] Show Cursor",
+                Checked = false
+            };
+            showCursorItem.Click += OnDebugShowCursorClick;
+            mouseCm.MenuItems.Add(showCursorItem);
+            enableMouseCheckBox.ContextMenu = mouseCm;
 
             // Mark form as loaded
             m_FormLoaded = true;
@@ -279,7 +308,8 @@ namespace PS4Macro.Forms
 
         private void RemapperForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Remapper.OnMouseAxisChanged -= OnMouseAxisChanged;
+            try { Remapper.OnMouseAxisChanged -= OnMouseAxisChanged; } catch (NullReferenceException) { }
+            try { enableMouseCheckBox.ContextMenu.MenuItems[0].Click -= OnDebugShowCursorClick; } catch (NullReferenceException) { }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -434,6 +464,12 @@ namespace PS4Macro.Forms
         {
             if (!m_FormLoaded) return;
             Remapper.RightMouseMapping = rightMouseComboBox.SelectedIndex;
+        }
+
+        private void middleMouseComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_FormLoaded) return;
+            Remapper.MiddleMouseMapping = middleMouseComboBox.SelectedIndex;
         }
     }
 }
