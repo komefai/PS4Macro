@@ -45,9 +45,9 @@ namespace PS4Macro.Classes.Remapping
 
     public class Remapper
     {
-        private const int MOUSE_CENTER_X = 500;
-        private const int MOUSE_CENTER_Y = 500;
-        private const int MOUSE_RELEASE_TIME = 50;
+        //private const int MOUSE_CENTER_X = 500;
+        //private const int MOUSE_CENTER_Y = 500;
+        //private const int MOUSE_RELEASE_TIME = 50;
         private const int MOUSE_SENSITIVITY_DIVISOR = 100000;
 
         // Delegates
@@ -453,8 +453,8 @@ namespace PS4Macro.Classes.Remapping
                 var rawY = e.MouseData.Point.Y;
 
                 // Ignore if at center
-                if (rawX == MOUSE_CENTER_X && rawY == MOUSE_CENTER_Y)
-                    return;
+                //if (rawX == MOUSE_CENTER_X && rawY == MOUSE_CENTER_Y)
+                //    return;
 
                 #region Store mouse stroke
                 var newStroke = new MouseStroke()
@@ -476,35 +476,36 @@ namespace PS4Macro.Classes.Remapping
                 CurrentMouseStroke = newStroke;
                 #endregion
 
-                #region Adjust cursor position
-                var tmpX = rawX;
-                var tmpY = rawY;
+                #region Adjust cursor position;
                 var didSetPosition = false;
-                var workingArea = Screen.PrimaryScreen.WorkingArea;
+                var screen = Screen.FromHandle(RemotePlayProcess.MainWindowHandle);
+                var workingArea = screen.WorkingArea;
+                var tmpX = rawX - workingArea.X;
+                var tmpY = rawY - workingArea.Y;
 
                 if (tmpX >= workingArea.Width)
                 {
                     CursorOverflowX += workingArea.Width;
-                    tmpX = 0;
+                    //tmpX = 0;
                     didSetPosition = true;
                 }
                 else if (tmpX <= 0)
                 {
                     CursorOverflowX -= workingArea.Width;
-                    tmpX = workingArea.Width;
+                    //tmpX = workingArea.Width;
                     didSetPosition = true;
                 }
 
                 if (tmpY >= workingArea.Height)
                 {
                     CursorOverflowY += workingArea.Height;
-                    tmpY = 0;
+                    //tmpY = 0;
                     didSetPosition = true;
                 }
                 else if (tmpY <= 0)
                 {
                     CursorOverflowY -= workingArea.Height;
-                    tmpY = workingArea.Height;
+                    //tmpY = workingArea.Height;
                     didSetPosition = true;
                 }
 
