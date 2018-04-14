@@ -244,11 +244,11 @@ namespace PS4Macro.Classes.Remapping
                         CurrentMouseStroke.DidMoved = false;
 
                         // Stop release timer
-                        if (MouseReleaseTimer != null)
-                        {
-                            MouseReleaseTimer.Stop();
-                            MouseReleaseTimer = null;
-                        }
+                        //if (MouseReleaseTimer != null)
+                        //{
+                        //    MouseReleaseTimer.Stop();
+                        //    MouseReleaseTimer = null;
+                        //}
                     }
                     // Mouse idle
                     else
@@ -258,33 +258,33 @@ namespace PS4Macro.Classes.Remapping
                         MouseSpeedY /= MouseDecayRate;
 
                         // Stop decaying joystick if below threshold
-                        if (Math.Abs(MouseSpeedX) < MouseDecayThreshold || Math.Abs(MouseSpeedY) < MouseDecayThreshold)
-                        {
-                            // Reset mouse speed
-                            if (Math.Abs(MouseSpeedX) < MouseDecayThreshold) MouseSpeedX = 0;
-                            if (Math.Abs(MouseSpeedY) < MouseDecayThreshold) MouseSpeedY = 0;
+                        //if (Math.Abs(MouseSpeedX) < MouseDecayThreshold || Math.Abs(MouseSpeedY) < MouseDecayThreshold)
+                        //{
+                        //    // Reset mouse speed
+                        //    if (Math.Abs(MouseSpeedX) < MouseDecayThreshold) MouseSpeedX = 0;
+                        //    if (Math.Abs(MouseSpeedY) < MouseDecayThreshold) MouseSpeedY = 0;
 
-                            // Start release timer
-                            if (MouseReleaseTimer == null)
-                            {
-                                MouseReleaseTimer = new System.Timers.Timer(MOUSE_RELEASE_TIME);
-                                MouseReleaseTimer.Start();
-                                MouseReleaseTimer.Elapsed += (s, e) =>
-                                {
-                                    // Recenter cursor
-                                    RemapperUtility.SetCursorPosition(MOUSE_CENTER_X, MOUSE_CENTER_Y);
+                        //    // Start release timer
+                        //    if (MouseReleaseTimer == null)
+                        //    {
+                        //        MouseReleaseTimer = new System.Timers.Timer(MOUSE_RELEASE_TIME);
+                        //        MouseReleaseTimer.Start();
+                        //        MouseReleaseTimer.Elapsed += (s, e) =>
+                        //        {
+                        //            // Recenter cursor
+                        //            RemapperUtility.SetCursorPosition(MOUSE_CENTER_X, MOUSE_CENTER_Y);
 
-                                    // Reset cursor overflow
-                                    CursorOverflowX = 0;
-                                    CursorOverflowY = 0;
+                        //            // Reset cursor overflow
+                        //            CursorOverflowX = 0;
+                        //            CursorOverflowY = 0;
 
-                                    // Stop release timer
-                                    MouseReleaseTimer.Stop();
-                                    MouseReleaseTimer = null;
-                                };
+                        //            // Stop release timer
+                        //            MouseReleaseTimer.Stop();
+                        //            MouseReleaseTimer = null;
+                        //        };
 
-                            }
-                        }
+                        //    }
+                        //}
                     }
 
                     const double min = 0;
@@ -508,6 +508,7 @@ namespace PS4Macro.Classes.Remapping
                     didSetPosition = true;
                 }
 
+                // Block cursor
                 if (didSetPosition)
                 {
                     //RemapperUtility.SetCursorPosition(tmpX, tmpY);
@@ -550,21 +551,23 @@ namespace PS4Macro.Classes.Remapping
 
         public void SaveBindings()
         {
-            var container = new BindingsContainer();
-            container.Mappings = MappingsDataBinding;
-            container.Macros = MacrosDataBinding;
+            var container = new BindingsContainer
+            {
+                Mappings = MappingsDataBinding,
+                Macros = MacrosDataBinding,
+                EnableMouseInput = EnableMouseInput,
+                MouseSensitivity = MouseSensitivity,
+                MouseDecayRate = MouseDecayRate,
+                MouseDecayThreshold = MouseDecayThreshold,
+                MouseAnalogDeadzone = MouseAnalogDeadzone,
+                MouseMakeupSpeed = MouseMakeupSpeed,
+                MouseMovementAnalog = MouseMovementAnalog,
+                MouseInvertXAxis = MouseInvertXAxis,
+                MouseInvertYAxis = MouseInvertYAxis,
+                LeftMouseMapping = LeftMouseMapping,
+                RightMouseMapping = RightMouseMapping
+            };
 
-            container.EnableMouseInput = EnableMouseInput;
-            container.MouseSensitivity = MouseSensitivity;
-            container.MouseDecayRate = MouseDecayRate;
-            container.MouseDecayThreshold = MouseDecayThreshold;
-            container.MouseAnalogDeadzone = MouseAnalogDeadzone;
-            container.MouseMakeupSpeed = MouseMakeupSpeed;
-            container.MouseMovementAnalog = MouseMovementAnalog;
-            container.MouseInvertXAxis = MouseInvertXAxis;
-            container.MouseInvertYAxis = MouseInvertYAxis;
-            container.LeftMouseMapping = LeftMouseMapping;
-            container.RightMouseMapping = RightMouseMapping;
 
             BindingsContainer.Serialize(GetBindingsFilePath(), container);
         }
