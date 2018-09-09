@@ -82,7 +82,7 @@ Right-click on `PS4Macro.exe` and click on `Create shortcut` to create a new sho
 
 ## Remapper
 
-Remapper allows you to use your keyboard to control PS4 games with customizable key bindings. To use Remapper, go to Tools->Remapper and focus on PS4 Remote Play to control the game. Simply close the window to return to marco or script mode.
+Remapper allows you to use your keyboard to control PS4 games with customizable key bindings. To use Remapper, go to Tools->Remapper and focus on PS4 Remote Play to control the game. Simply close the window to return to macro or script mode.
 
 To map a key to a button or a macro, edit the **Key** cell and enter your desire key. You can find the key from the **Member name** column in [this table](https://msdn.microsoft.com/en-us/library/system.windows.forms.keys(v=vs.110).aspx) (eg. `Delete`, `NumPad4`, `PageDown`). Use key `None` to completely disable the key.
 
